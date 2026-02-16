@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Carbon Analytics - RePlate Admin</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="bg-gray-50">
+    <nav class="bg-white shadow-md fixed w-full top-0 z-50">
+        <div class="flex items-center justify-between px-6 py-4">
+            <div class="flex items-center space-x-2">
+                <i class="fas fa-leaf text-blue-500 text-2xl"></i>
+                <span class="text-xl font-bold">RePlate <span class="text-blue-500">Admin</span></span>
+            </div>
+        </div>
+    </nav>
+    
+    <div class="flex pt-16">
+        <aside class="bg-white w-64 min-h-screen shadow-lg">
+            <nav class="p-4 space-y-2">
+                <a href="admin_dashboard.html" class="flex items-center space-x-3 px-4 py-3 text-gray-700 hover:bg-gray-100 rounded-lg"><i class="fas fa-chart-line"></i><span>Dashboard</span></a>
+                <a href="admin_sellers.html" class="flex items-center space-x-3 px-4 py-3 text-gray-700 hover:bg-gray-100 rounded-lg"><i class="fas fa-user-check"></i><span>Approve Sellers</span></a>
+                <a href="admin_listings.html" class="flex items-center space-x-3 px-4 py-3 text-gray-700 hover:bg-gray-100 rounded-lg"><i class="fas fa-list"></i><span>Manage Listings</span></a>
+                <a href="admin_users.html" class="flex items-center space-x-3 px-4 py-3 text-gray-700 hover:bg-gray-100 rounded-lg"><i class="fas fa-users"></i><span>Users Management</span></a>
+                <a href="admin_orders.html" class="flex items-center space-x-3 px-4 py-3 text-gray-700 hover:bg-gray-100 rounded-lg"><i class="fas fa-shopping-cart"></i><span>Orders Management</span></a>
+                <a href="admin_analytics.html" class="flex items-center space-x-3 px-4 py-3 bg-blue-50 text-blue-500 rounded-lg font-medium"><i class="fas fa-leaf"></i><span>Carbon Analytics</span></a>
+                <a href="admin_cities.html" class="flex items-center space-x-3 px-4 py-3 text-gray-700 hover:bg-gray-100 rounded-lg"><i class="fas fa-city"></i><span>City Insights</span></a>
+                <a href="admin_reports.html" class="flex items-center space-x-3 px-4 py-3 text-gray-700 hover:bg-gray-100 rounded-lg"><i class="fas fa-file-alt"></i><span>Reports</span></a>
+                <a href="admin_settings.html" class="flex items-center space-x-3 px-4 py-3 text-gray-700 hover:bg-gray-100 rounded-lg"><i class="fas fa-cog"></i><span>Settings</span></a>
+            </nav>
+        </aside>
+        
+        <main class="flex-1 p-6">
+            <h1 class="text-3xl font-bold mb-2">Carbon Analytics</h1>
+            <p class="text-gray-600 mb-6">Track the platform's environmental impact and sustainability metrics.</p>
+            
+            <div class="bg-gradient-to-r from-green-500 to-emerald-600 text-white rounded-lg shadow-lg p-8 mb-6">
+                <div class="flex items-center space-x-3">
+                    <i class="fas fa-leaf text-5xl"></i>
+                    <div>
+                        <h2 class="text-2xl font-bold">Platform has prevented 21,612 kg of CO₂ emissions 🌱</h2>
+                        <p class="mt-2 opacity-90">Together, we're making a real difference for our planet!</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="grid grid-cols-4 gap-6 mb-6">
+                <div class="bg-white p-6 rounded-lg shadow-md border-l-4 border-green-500">
+                    <p class="text-gray-600 text-sm">Total Food Saved</p>
+                    <h3 class="text-3xl font-bold mt-2">8,645 kg</h3>
+                    <p class="text-green-500 text-sm mt-2"><i class="fas fa-arrow-up"></i> 18% increase</p>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-md border-l-4 border-emerald-500">
+                    <p class="text-gray-600 text-sm">Total CO₂ Reduced</p>
+                    <h3 class="text-3xl font-bold mt-2">21,612 kg</h3>
+                    <p class="text-green-500 text-sm mt-2"><i class="fas fa-arrow-up"></i> 18% increase</p>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-md border-l-4 border-teal-500">
+                    <p class="text-gray-600 text-sm">Trees Equivalent</p>
+                    <h3 class="text-3xl font-bold mt-2">986</h3>
+                    <p class="text-gray-500 text-xs mt-2">trees planted equivalent</p>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-md border-l-4 border-blue-500">
+                    <p class="text-gray-600 text-sm">Top Sustainable Seller</p>
+                    <h3 class="text-xl font-bold mt-2">Green Bistro</h3>
+                    <p class="text-gray-500 text-xs mt-2">1,245 kg CO₂ saved</p>
+                </div>
+            </div>
+            
+            <div class="grid grid-cols-2 gap-6 mb-6">
+                <div class="bg-white rounded-lg shadow-md p-6">
+                    <h3 class="text-xl font-bold mb-4">CO₂ Reduction Over Time</h3>
+                    <canvas id="co2TrendChart"></canvas>
+                </div>
+                
+                <div class="bg-white rounded-lg shadow-md p-6">
+                    <h3 class="text-xl font-bold mb-4">Food Saved by Category</h3>
+                    <canvas id="categoryChart"></canvas>
+                </div>
+            </div>
+            
+            <div class="bg-white rounded-lg shadow-md p-6">
+                <h3 class="text-xl font-bold mb-4">Monthly Impact Overview</h3>
+                <canvas id="monthlyChart"></canvas>
+            </div>
+        </main>
+    </div>
+    
+    <script>
+        const co2Trend = document.getElementById('co2TrendChart').getContext('2d');
+        new Chart(co2Trend, {
+            type: 'line',
+            data: {
+                labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+                datasets: [{
+                    label: 'CO₂ Reduced (kg)',
+                    data: [2400, 3200, 4100, 4900, 5800, 6500],
+                    borderColor: '#10B981',
+                    backgroundColor: 'rgba(16, 185, 129, 0.1)',
+                    tension: 0.4,
+                    fill: true
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: { legend: { display: false } },
+                scales: { y: { beginAtZero: true } }
+            }
+        });
+        
+        const categoryChart = document.getElementById('categoryChart').getContext('2d');
+        new Chart(categoryChart, {
+            type: 'doughnut',
+            data: {
+                labels: ['Bakery', 'Vegetables', 'Fruits', 'Dairy', 'Others'],
+                datasets: [{
+                    data: [2500, 2100, 1800, 1400, 845],
+                    backgroundColor: ['#3B82F6', '#10B981', '#F59E0B', '#EF4444', '#8B5CF6']
+                }]
+            },
+            options: { responsive: true }
+        });
+        
+        const monthlyChart = document.getElementById('monthlyChart').getContext('2d');
+        new Chart(monthlyChart, {
+            type: 'bar',
+            data: {
+                labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+                datasets: [{
+                    label: 'Food Saved (kg)',
+                    data: [960, 1280, 1640, 1960, 2320, 2600],
+                    backgroundColor: '#3B82F6'
+                }, {
+                    label: 'CO₂ Reduced (kg)',
+                    data: [2400, 3200, 4100, 4900, 5800, 6500],
+                    backgroundColor: '#10B981'
+                }]
+            },
+            options: {
+                responsive: true,
+                scales: { y: { beginAtZero: true } }
+            }
+        });
+    </script>
+</body>
+</html>

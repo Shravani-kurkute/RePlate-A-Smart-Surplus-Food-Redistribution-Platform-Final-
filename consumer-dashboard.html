@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Consumer Dashboard - RePlate</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        .sidebar-active {
+            background-color: #d1fae5;
+            color: #059669;
+            border-left: 4px solid #10b981;
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-green-50 to-emerald-50 min-h-screen">
+    
+    <!-- Top Navbar -->
+    <nav class="bg-white shadow-sm fixed top-0 left-0 right-0 z-50">
+        <div class="flex items-center justify-between px-6 py-4">
+            <div class="flex items-center space-x-4">
+                <div class="flex items-center space-x-2">
+                    <div class="w-10 h-10 bg-green-500 rounded-xl flex items-center justify-center">
+                        <i class="fas fa-leaf text-white text-xl"></i>
+                    </div>
+                    <div>
+                        <h1 class="text-xl font-bold text-gray-800">RePlate</h1>
+                        <p class="text-xs text-gray-500">Consumer Dashboard</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="flex items-center space-x-6">
+                <a href="consumer_notifications.html" class="relative">
+                    <i class="fas fa-bell text-gray-600 text-xl"></i>
+                    <span class="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">3</span>
+                </a>
+                
+                <div class="flex items-center space-x-2 bg-green-50 px-4 py-2 rounded-full cursor-pointer">
+                    <i class="fas fa-leaf text-green-600"></i>
+                    <span class="text-sm font-medium text-green-700"><a href="consumer_my-impact.html">My Impact</a></span>
+                </div>
+
+                <div class="flex items-center space-x-3 cursor-pointer">
+                    <div class="w-10 h-10 bg-green-500 rounded-full flex items-center justify-center">
+                        <span class="text-white font-bold" id="avatarInitials"></span>
+                    </div>
+                    <div>
+                        <p class="text-sm font-semibold text-gray-800" id="profileName"></p>
+                        <p class="text-xs text-gray-500">Consumer</p>
+                    </div>
+                    <i class="fas fa-chevron-down text-gray-400 text-sm"></i>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Container -->
+    <div class="flex pt-20">
+        <!-- Left Sidebar -->
+        <aside class="w-64 bg-white h-screen fixed left-0 shadow-lg">
+            <div class="p-6 space-y-2">
+                <a href="consumer-dashboard.html" class="flex items-center space-x-3 px-4 py-3 rounded-lg sidebar-active">
+                    <i class="fas fa-home"></i>
+                    <span class="font-medium">Dashboard</span>
+                </a>
+                <a href="consumer_marketplace.html" class="flex items-center space-x-3 px-4 py-3 rounded-lg hover:bg-gray-100 text-gray-600">
+                    <i class="fas fa-shopping-bag"></i>
+                    <span class="font-medium">Marketplace</span>
+                </a>
+                <a href="consumer_my-orders.html" class="flex items-center space-x-3 px-4 py-3 rounded-lg hover:bg-gray-100 text-gray-600">
+                    <i class="fas fa-receipt"></i>
+                    <span class="font-medium">My Orders</span>
+                </a>
+                <a href="consumer_my-impact.html" class="flex items-center space-x-3 px-4 py-3 rounded-lg hover:bg-gray-100 text-gray-600">
+                    <i class="fas fa-chart-line"></i>
+                    <span class="font-medium">My Impact</span>
+                </a>
+                <a href="consumer_profile.html" class="flex items-center space-x-3 px-4 py-3 rounded-lg hover:bg-gray-100 text-gray-600">
+                    <i class="fas fa-user"></i>
+                    <span class="font-medium">Profile</span>
+                </a>
+                <a href="consumer_notifications.html" class="flex items-center space-x-3 px-4 py-3 bg-green-50 text-primary rounded-lg font-medium">
+                    <i class="fas fa-bell"></i>
+                    <span>Notifications</span>
+                    <span class="ml-auto bg-red-500 text-white text-xs rounded-full px-2 py-0.5">5</span>
+                </a>
+                <hr class="my-4">
+                <a href="selection.html" class="flex items-center space-x-3 px-4 py-3 rounded-lg hover:bg-red-50 text-red-600">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <span class="font-medium">Logout</span>
+                </a>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="ml-64 flex-1 p-8">
+            <!-- Welcome Section -->
+            <div class="bg-gradient-to-r from-green-50 to-emerald-100 rounded-2xl p-8 mb-8 border border-green-200">
+                <div class="flex items-center justify-between">
+                    <div>
+                        Welcome back, <span class="text-green-600" id="welcomeName"></span> 👋
+                        <p class="text-gray-600 mt-2">Every plate saved is a step towards a sustainable future. Keep making an impact!</p>
+                    </div>
+                    <div class="text-right">
+                        <div class="flex items-center space-x-2">
+                            <i class="fas fa-check-circle text-green-600"></i>
+                            <span class="text-sm font-medium text-green-700">Active Consumer</span>
+                        </div>
+                        <p class="text-xs text-gray-500 mt-1">Member since Jan 2024</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Summary Cards -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+                <!-- Total Orders -->
+                <div class="bg-white rounded-2xl p-6 shadow-sm hover:shadow-md transition-shadow">
+                    <div class="flex items-center justify-between mb-4">
+                        <div class="w-12 h-12 bg-green-100 rounded-xl flex items-center justify-center">
+                            <i class="fas fa-receipt text-green-600 text-xl"></i>
+                        </div>
+                        <span class="text-green-600 text-sm font-semibold flex items-center">
+                            <i class="fas fa-arrow-up mr-1"></i> 12%
+                        </span>
+                    </div>
+                    <p class="text-gray-500 text-sm mb-1">Total Orders</p>
+                    <h3 class="text-3xl font-bold text-gray-800">47</h3>
+                </div>
+
+                <!-- Money Saved -->
+                <div class="bg-white rounded-2xl p-6 shadow-sm hover:shadow-md transition-shadow">
+                    <div class="flex items-center justify-between mb-4">
+                        <div class="w-12 h-12 bg-yellow-100 rounded-xl flex items-center justify-center">
+                            <i class="fas fa-rupee-sign text-yellow-600 text-xl"></i>
+                        </div>
+                        <span class="text-green-600 text-sm font-semibold flex items-center">
+                            <i class="fas fa-arrow-up mr-1"></i> 25%
+                        </span>
+                    </div>
+                    <p class="text-gray-500 text-sm mb-1">Money Saved</p>
+                    <h3 class="text-3xl font-bold text-gray-800">₹8,450</h3>
+                </div>
+
+                <!-- Food Saved -->
+                <div class="bg-white rounded-2xl p-6 shadow-sm hover:shadow-md transition-shadow">
+                    <div class="flex items-center justify-between mb-4">
+                        <div class="w-12 h-12 bg-green-100 rounded-xl flex items-center justify-center">
+                            <i class="fas fa-utensils text-green-600 text-xl"></i>
+                        </div>
+                        <span class="text-green-600 text-sm font-semibold flex items-center">
+                            <i class="fas fa-arrow-up mr-1"></i> 18%
+                        </span>
+                    </div>
+                    <p class="text-gray-500 text-sm mb-1">Food Saved</p>
+                    <h3 class="text-3xl font-bold text-gray-800">62 kg</h3>
+                </div>
+
+                <!-- CO2 Reduced -->
+                <div class="bg-white rounded-2xl p-6 shadow-sm hover:shadow-md transition-shadow">
+                    <div class="flex items-center justify-between mb-4">
+                        <div class="w-12 h-12 bg-emerald-100 rounded-xl flex items-center justify-center">
+                            <i class="fas fa-leaf text-emerald-600 text-xl"></i>
+                        </div>
+                        <span class="text-green-600 text-sm font-semibold flex items-center">
+                            <i class="fas fa-arrow-up mr-1"></i> 20%
+                        </span>
+                    </div>
+                    <p class="text-gray-500 text-sm mb-1">CO₂ Reduced</p>
+                    <h3 class="text-3xl font-bold text-gray-800">148 kg</h3>
+                </div>
+            </div>
+
+            <!-- Quick Actions -->
+            <div class="bg-white rounded-2xl p-6 shadow-sm mb-8">
+                <h3 class="text-xl font-bold text-gray-800 mb-6">Quick Actions</h3>
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+                    <button class="bg-green-600 hover:bg-green-700 text-white px-6 py-4 rounded-xl font-semibold flex items-center justify-center space-x-2 transition-colors">
+                        <i class="fas fa-plus-circle"></i>
+                        <span>Browse Marketplace</span>
+                    </button>
+                    <a href="consumer_my-orders.html" class="border-2 border-green-600 text-green-600 hover:bg-green-50 px-6 py-4 rounded-xl font-semibold flex items-center justify-center space-x-2 transition-colors">
+                        <i class="fas fa-receipt"></i>
+                        <span>View Orders</span>
+                    </a>
+                    <a href="consumer_my-impact.html" class="border-2 border-blue-600 text-blue-600 hover:bg-blue-50 px-6 py-4 rounded-xl font-semibold flex items-center justify-center space-x-2 transition-colors">
+                        <i class="fas fa-chart-line"></i>
+                        <span>View My Impact</span>
+                    </a>
+                    <a href="consumer_sustainability-tips.html" class="border-2 border-emerald-600 text-emerald-600 hover:bg-emerald-50 px-6 py-4 rounded-xl font-semibold flex items-center justify-center space-x-2 transition-colors">
+                        <i class="fas fa-leaf"></i>
+                        <span>Sustainability Tips</span>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Recent Orders -->
+            <div class="bg-white rounded-2xl p-6 shadow-sm mb-8">
+                <div class="flex items-center justify-between mb-6">
+                    <h3 class="text-xl font-bold text-gray-800">Recent Orders</h3>
+                    <a href="#orders" class="text-green-600 hover:text-green-700 font-medium flex items-center">
+                        View All <i class="fas fa-arrow-right ml-2"></i>
+                    </a>
+                </div>
+
+                <div class="overflow-x-auto">
+                    <table class="w-full">
+                        <thead>
+                            <tr class="border-b border-gray-200">
+                                <th class="text-left py-3 px-4 text-sm font-semibold text-gray-600">Order ID</th>
+                                <th class="text-left py-3 px-4 text-sm font-semibold text-gray-600">Food Name</th>
+                                <th class="text-left py-3 px-4 text-sm font-semibold text-gray-600">Seller</th>
+                                <th class="text-left py-3 px-4 text-sm font-semibold text-gray-600">Date</th>
+                                <th class="text-left py-3 px-4 text-sm font-semibold text-gray-600">Status</th>
+                                <th class="text-left py-3 px-4 text-sm font-semibold text-gray-600">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody id="recentOrdersTable">
+                            <tr class="border-b border-gray-100 hover:bg-gray-50">
+                                <td class="py-4 px-4 text-sm font-medium text-gray-800">#ORD-001</td>
+                                <td class="py-4 px-4 text-sm text-gray-700">Paneer Butter Masala</td>
+                                <td class="py-4 px-4 text-sm text-gray-700">Green Cafe</td>
+                                <td class="py-4 px-4 text-sm text-gray-500">12 Feb 2026</td>
+                                <td class="py-4 px-4">
+                                    <span class="px-3 py-1 bg-green-100 text-green-700 rounded-full text-xs font-semibold">Completed</span>
+                                </td>
+                                <td class="py-4 px-4">
+                                    <button class="text-green-600 hover:text-green-700 font-medium text-sm">View Details</button>
+                                </td>
+                            </tr>
+                            <tr class="border-b border-gray-100 hover:bg-gray-50">
+                                <td class="py-4 px-4 text-sm font-medium text-gray-800">#ORD-002</td>
+                                <td class="py-4 px-4 text-sm text-gray-700">Veg Biryani</td>
+                                <td class="py-4 px-4 text-sm text-gray-700">Spice Garden</td>
+                                <td class="py-4 px-4 text-sm text-gray-500">11 Feb 2026</td>
+                                <td class="py-4 px-4">
+                                    <span class="px-3 py-1 bg-blue-100 text-blue-700 rounded-full text-xs font-semibold">Booked</span>
+                                </td>
+                                <td class="py-4 px-4">
+                                    <button class="text-green-600 hover:text-green-700 font-medium text-sm">View Details</button>
+                                </td>
+                            </tr>
+                            <tr class="border-b border-gray-100 hover:bg-gray-50">
+                                <td class="py-4 px-4 text-sm font-medium text-gray-800">#ORD-003</td>
+                                <td class="py-4 px-4 text-sm text-gray-700">Assorted Pastries</td>
+                                <td class="py-4 px-4 text-sm text-gray-700">Sweet Delights</td>
+                                <td class="py-4 px-4 text-sm text-gray-500">10 Feb 2026</td>
+                                <td class="py-4 px-4">
+                                    <span class="px-3 py-1 bg-green-100 text-green-700 rounded-full text-xs font-semibold">Completed</span>
+                                </td>
+                                <td class="py-4 px-4">
+                                    <button class="text-green-600 hover:text-green-700 font-medium text-sm">View Details</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Impact Message -->
+            <div class="bg-gradient-to-r from-green-500 to-emerald-600 rounded-2xl p-6 shadow-lg">
+                <div class="flex items-center space-x-4">
+                    <div class="w-16 h-16 bg-white/20 rounded-full flex items-center justify-center">
+                        <i class="fas fa-leaf text-white text-3xl"></i>
+                    </div>
+                    <div class="flex-1">
+                        <h3 class="text-xl font-bold text-white mb-1">🌱 Amazing Impact!</h3>
+                        <p class="text-green-50">You have reduced <strong>148 kg CO₂</strong> - equivalent to planting <strong>7 trees</strong>!</p>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+const user = JSON.parse(localStorage.getItem("user"));
+
+if (!user) {
+    window.location.href = "login_consumer.html";
+}
+
+// Set profile name
+document.getElementById("profileName").textContent = user.fullName;
+document.getElementById("welcomeName").textContent = user.fullName;
+
+// Set avatar initials
+const initials = user.fullName
+    .split(" ")
+    .map(word => word[0])
+    .join("");
+
+document.getElementById("avatarInitials").textContent = initials;
+
+// Logout function
+function logout() {
+    localStorage.removeItem("user");
+    window.location.href = "selection.html";
+}
+</script>
+
+</body>
+</html>

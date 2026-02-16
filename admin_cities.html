@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>City Insights - RePlate Admin</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="bg-gray-50">
+    <nav class="bg-white shadow-md fixed w-full top-0 z-50">
+        <div class="flex items-center justify-between px-6 py-4">
+            <div class="flex items-center space-x-2">
+                <i class="fas fa-leaf text-blue-500 text-2xl"></i>
+                <span class="text-xl font-bold">RePlate <span class="text-blue-500">Admin</span></span>
+            </div>
+        </div>
+    </nav>
+    
+    <div class="flex pt-16">
+        <aside class="bg-white w-64 min-h-screen shadow-lg">
+            <nav class="p-4 space-y-2">
+                <a href="admin_dashboard.html" class="flex items-center space-x-3 px-4 py-3 text-gray-700 hover:bg-gray-100 rounded-lg"><i class="fas fa-chart-line"></i><span>Dashboard</span></a>
+                <a href="admin_sellers.html" class="flex items-center space-x-3 px-4 py-3 text-gray-700 hover:bg-gray-100 rounded-lg"><i class="fas fa-user-check"></i><span>Approve Sellers</span></a>
+                <a href="admin_listings.html" class="flex items-center space-x-3 px-4 py-3 text-gray-700 hover:bg-gray-100 rounded-lg"><i class="fas fa-list"></i><span>Manage Listings</span></a>
+                <a href="admin_users.html" class="flex items-center space-x-3 px-4 py-3 text-gray-700 hover:bg-gray-100 rounded-lg"><i class="fas fa-users"></i><span>Users Management</span></a>
+                <a href="admin_orders.html" class="flex items-center space-x-3 px-4 py-3 text-gray-700 hover:bg-gray-100 rounded-lg"><i class="fas fa-shopping-cart"></i><span>Orders Management</span></a>
+                <a href="admin_analytics.html" class="flex items-center space-x-3 px-4 py-3 text-gray-700 hover:bg-gray-100 rounded-lg"><i class="fas fa-leaf"></i><span>Carbon Analytics</span></a>
+                <a href="admin_cities.html" class="flex items-center space-x-3 px-4 py-3 bg-blue-50 text-blue-500 rounded-lg font-medium"><i class="fas fa-city"></i><span>City Insights</span></a>
+                <a href="admin_reports.html" class="flex items-center space-x-3 px-4 py-3 text-gray-700 hover:bg-gray-100 rounded-lg"><i class="fas fa-file-alt"></i><span>Reports</span></a>
+                <a href="admin_settings.html" class="flex items-center space-x-3 px-4 py-3 text-gray-700 hover:bg-gray-100 rounded-lg"><i class="fas fa-cog"></i><span>Settings</span></a>
+            </nav>
+        </aside>
+        
+        <main class="flex-1 p-6">
+            <h1 class="text-3xl font-bold mb-6">City Insights</h1>
+            
+            <div class="bg-white rounded-lg shadow-md p-6 mb-6">
+                <h3 class="text-xl font-bold mb-4">Top Performing Cities</h3>
+                <canvas id="citiesChart"></canvas>
+            </div>
+            
+            <div class="bg-white rounded-lg shadow-md overflow-hidden">
+                <table class="w-full">
+                    <thead class="bg-gray-100">
+                        <tr>
+                            <th class="px-6 py-4 text-left text-sm font-semibold">City</th>
+                            <th class="px-6 py-4 text-left text-sm font-semibold">Total Sellers</th>
+                            <th class="px-6 py-4 text-left text-sm font-semibold">Total Orders</th>
+                            <th class="px-6 py-4 text-left text-sm font-semibold">Food Saved (kg)</th>
+                            <th class="px-6 py-4 text-left text-sm font-semibold">CO₂ Reduced (kg)</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y">
+                        <tr class="hover:bg-gray-50">
+                            <td class="px-6 py-4 font-medium"><i class="fas fa-city text-blue-500 mr-2"></i>Mumbai</td>
+                            <td class="px-6 py-4">42</td>
+                            <td class="px-6 py-4">1,245</td>
+                            <td class="px-6 py-4">2,890 kg</td>
+                            <td class="px-6 py-4 font-semibold text-green-600">7,225 kg</td>
+                        </tr>
+                        <tr class="hover:bg-gray-50">
+                            <td class="px-6 py-4 font-medium"><i class="fas fa-city text-blue-500 mr-2"></i>Delhi</td>
+                            <td class="px-6 py-4">38</td>
+                            <td class="px-6 py-4">1,102</td>
+                            <td class="px-6 py-4">2,456 kg</td>
+                            <td class="px-6 py-4 font-semibold text-green-600">6,140 kg</td>
+                        </tr>
+                        <tr class="hover:bg-gray-50">
+                            <td class="px-6 py-4 font-medium"><i class="fas fa-city text-blue-500 mr-2"></i>Bangalore</td>
+                            <td class="px-6 py-4">35</td>
+                            <td class="px-6 py-4">982</td>
+                            <td class="px-6 py-4">2,145 kg</td>
+                            <td class="px-6 py-4 font-semibold text-green-600">5,362 kg</td>
+                        </tr>
+                        <tr class="hover:bg-gray-50">
+                            <td class="px-6 py-4 font-medium"><i class="fas fa-city text-blue-500 mr-2"></i>Pune</td>
+                            <td class="px-6 py-4">21</td>
+                            <td class="px-6 py-4">612</td>
+                            <td class="px-6 py-4">1,234 kg</td>
+                            <td class="px-6 py-4 font-semibold text-green-600">3,085 kg</td>
+                        </tr>
+                        <tr class="hover:bg-gray-50">
+                            <td class="px-6 py-4 font-medium"><i class="fas fa-city text-blue-500 mr-2"></i>Hyderabad</td>
+                            <td class="px-6 py-4">20</td>
+                            <td class="px-6 py-4">550</td>
+                            <td class="px-6 py-4">920 kg</td>
+                            <td class="px-6 py-4 font-semibold text-green-600">2,300 kg</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </main>
+    </div>
+    
+    <script>
+        const citiesChart = document.getElementById('citiesChart').getContext('2d');
+        new Chart(citiesChart, {
+            type: 'bar',
+            data: {
+                labels: ['Mumbai', 'Delhi', 'Bangalore', 'Pune', 'Hyderabad'],
+                datasets: [{
+                    label: 'CO₂ Reduced (kg)',
+                    data: [7225, 6140, 5362, 3085, 2300],
+                    backgroundColor: '#3B82F6',
+                    borderRadius: 8
+                }]
+            },
+            options: {
+                responsive: true,
+                indexAxis: 'y',
+                plugins: { legend: { display: false } },
+                scales: { x: { beginAtZero: true } }
+            }
+        });
+    </script>
+</body>
+</html>

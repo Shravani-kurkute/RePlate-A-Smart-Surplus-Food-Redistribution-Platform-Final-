@@ -1,0 +1,841 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Orders Management - RePlate</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+        
+        * {
+            font-family: 'Inter', sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 50%, #bbf7d0 100%);
+            min-height: 100vh;
+        }
+        
+        .glass-card {
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+        
+        .sidebar-link {
+            transition: all 0.2s ease;
+        }
+        
+        .sidebar-link:hover {
+            background: rgba(34, 197, 94, 0.1);
+            padding-left: 1.5rem;
+        }
+        
+        .sidebar-link.active {
+            background: linear-gradient(90deg, rgba(34, 197, 94, 0.2) 0%, transparent 100%);
+            border-left: 3px solid #22c55e;
+            color: #16a34a;
+            font-weight: 600;
+        }
+        
+        .gradient-text {
+            background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .stat-card {
+            transition: all 0.3s ease;
+        }
+        
+        .stat-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 30px -5px rgba(34, 197, 94, 0.2);
+        }
+        
+        .filter-tab {
+            transition: all 0.3s ease;
+        }
+        
+        .filter-tab:hover {
+            background: rgba(34, 197, 94, 0.1);
+        }
+        
+        .filter-tab.active {
+            background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%);
+            color: white;
+            box-shadow: 0 4px 12px rgba(34, 197, 94, 0.3);
+        }
+        
+        .badge {
+            padding: 0.375rem 0.875rem;
+            border-radius: 9999px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+        }
+        
+        .badge-booked {
+            background: #dbeafe;
+            color: #1e40af;
+        }
+        
+        .badge-completed {
+            background: #dcfce7;
+            color: #166534;
+        }
+        
+        .badge-cancelled {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+        
+        .badge-paid {
+            background: #d1fae5;
+            color: #065f46;
+        }
+        
+        .badge-pending {
+            background: #fef3c7;
+            color: #92400e;
+        }
+        
+        .table-row {
+            transition: all 0.2s ease;
+            cursor: pointer;
+        }
+        
+        .table-row:hover {
+            background: rgba(34, 197, 94, 0.05);
+            transform: scale(1.005);
+        }
+        
+        .action-btn {
+            transition: all 0.2s ease;
+        }
+        
+        .action-btn:hover {
+            transform: translateY(-2px);
+        }
+        
+        .details-panel {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease-in-out;
+        }
+        
+        .details-panel.open {
+            max-height: 1200px;
+        }
+        
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(100%);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+        
+        .slide-in-panel {
+            animation: slideIn 0.3s ease-out;
+        }
+        
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .animate-fade-in {
+            animation: fadeIn 0.5s ease-out;
+        }
+        
+        .qr-container {
+            display: inline-block;
+            padding: 1rem;
+            background: white;
+            border-radius: 0.5rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        .impact-card {
+            background: linear-gradient(135deg, #dcfce7 0%, #bbf7d0 100%);
+            border: 2px solid #22c55e;
+        }
+    </style>
+</head>
+<body>
+    <!-- Top Navigation -->
+    <nav class="glass-card sticky top-0 z-50 shadow-lg">
+        <div class="max-w-full mx-auto px-6 py-4">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center space-x-8">
+                    <div class="flex items-center space-x-3">
+                        <div class="w-10 h-10 bg-gradient-to-br from-green-400 to-green-600 rounded-xl flex items-center justify-center">
+                            <i class="fas fa-leaf text-white text-xl"></i>
+                        </div>
+                        <div>
+                            <h1 class="text-2xl font-bold gradient-text">RePlate</h1>
+                            <p class="text-xs text-gray-500">Orders Management</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="flex items-center space-x-6">
+                    <div class="relative">
+                        <a href="notifications_seller.html" class="p-2 hover:bg-green-50 rounded-lg transition">
+                            <i class="fas fa-bell text-gray-600"></i>
+                            <span class="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full"></span>
+                        </a>
+                    </div>
+                    
+                    <div class="flex items-center space-x-3 pl-4 border-l border-gray-200">
+                        <img src="https://ui-avatars.com/api/?name=Green+Cafe&background=22c55e&color=fff" class="w-10 h-10 rounded-full" alt="Profile">
+                        <div class="text-left">
+                            <p class="text-sm font-semibold text-gray-800">Green Cafe</p>
+                            <p class="text-xs text-gray-500">Verified Seller</p>
+                        </div>
+                        <i class="fas fa-chevron-down text-gray-400 text-sm"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="flex">
+        <!-- Sidebar -->
+        <aside class="w-64 glass-card min-h-screen shadow-xl">
+            <div class="p-6 space-y-2">
+                <a href="seller-dashboard.html" class="sidebar-link flex items-center space-x-3 px-4 py-3 rounded-lg text-gray-600 hover:text-green-600">
+                    <i class="fas fa-home w-5"></i>
+                    <span>Dashboard</span>
+                </a>
+                <a href="add-surplus-item.html" class="sidebar-link flex items-center space-x-3 px-4 py-3 rounded-lg text-gray-600 hover:text-green-600">
+                    <i class="fas fa-plus-circle w-5"></i>
+                    <span>Add Surplus Item</span>
+                </a>
+                <a href="manage-listings.html" class="sidebar-link flex items-center space-x-3 px-4 py-3 rounded-lg text-gray-600 hover:text-green-600">
+                    <i class="fas fa-list w-5"></i>
+                    <span>Manage Listings</span>
+                </a>
+                <a href="orders-management_seller.html" class="sidebar-link active flex items-center space-x-3 px-4 py-3 rounded-lg">
+                    <i class="fas fa-shopping-bag w-5"></i>
+                    <span>Orders</span>
+                </a>
+                <a href="impact-analytics_seller.html" class="sidebar-link flex items-center space-x-3 px-4 py-3 rounded-lg text-gray-600 hover:text-green-600">
+                    <i class="fas fa-chart-line w-5"></i>
+                    <span>Impact & Analytics</span>
+                </a>
+                
+                <div class="pt-4 border-t border-gray-200 mt-4">
+                    <a href="profile-settings_seller.html" class="sidebar-link flex items-center space-x-3 px-4 py-3 rounded-lg text-gray-600 hover:text-green-600">
+                        <i class="fas fa-user w-5"></i>
+                        <span>Profile</span>
+                    </a>
+                    <a href="profile-settings_seller.html" class="sidebar-link flex items-center space-x-3 px-4 py-3 rounded-lg text-gray-600 hover:text-green-600">
+                        <i class="fas fa-cog w-5"></i>
+                        <span>Settings</span>
+                    </a>
+                    <a href="selection.html" class="sidebar-link flex items-center space-x-3 px-4 py-3 rounded-lg text-gray-600 hover:text-red-600">
+                        <i class="fas fa-sign-out-alt w-5"></i>
+                        <span>Logout</span>
+                    </a>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="flex-1 p-8">
+            <!-- Page Header -->
+            <div class="mb-8 animate-fade-in">
+                <h2 class="text-3xl font-bold text-gray-800">Orders Management</h2>
+                <p class="text-gray-600 mt-2">Track and manage all customer orders efficiently 📦</p>
+            </div>
+
+            <!-- Summary Cards -->
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+                <div class="stat-card glass-card rounded-xl p-6 shadow-lg">
+                    <div class="flex items-center justify-between mb-3">
+                        <div class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">
+                            <i class="fas fa-calendar-day text-blue-600 text-xl"></i>
+                        </div>
+                        <span class="text-green-600 text-sm font-semibold flex items-center">
+                            <i class="fas fa-arrow-up mr-1"></i> 12%
+                        </span>
+                    </div>
+                    <h3 class="text-gray-600 text-sm font-medium">Orders Today</h3>
+                    <p class="text-3xl font-bold text-gray-800 mt-2">18</p>
+                </div>
+
+                <div class="stat-card glass-card rounded-xl p-6 shadow-lg">
+                    <div class="flex items-center justify-between mb-3">
+                        <div class="w-12 h-12 bg-yellow-100 rounded-lg flex items-center justify-center">
+                            <i class="fas fa-clock text-yellow-600 text-xl"></i>
+                        </div>
+                        <span class="text-yellow-600 text-sm font-semibold">Pending</span>
+                    </div>
+                    <h3 class="text-gray-600 text-sm font-medium">Pending Pickups</h3>
+                    <p class="text-3xl font-bold text-gray-800 mt-2">7</p>
+                </div>
+
+                <div class="stat-card glass-card rounded-xl p-6 shadow-lg">
+                    <div class="flex items-center justify-between mb-3">
+                        <div class="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center">
+                            <i class="fas fa-check-circle text-green-600 text-xl"></i>
+                        </div>
+                        <span class="text-green-600 text-sm font-semibold flex items-center">
+                            <i class="fas fa-arrow-up mr-1"></i> 8%
+                        </span>
+                    </div>
+                    <h3 class="text-gray-600 text-sm font-medium">Completed Orders</h3>
+                    <p class="text-3xl font-bold text-gray-800 mt-2">142</p>
+                </div>
+
+                <div class="stat-card glass-card rounded-xl p-6 shadow-lg">
+                    <div class="flex items-center justify-between mb-3">
+                        <div class="w-12 h-12 bg-emerald-100 rounded-lg flex items-center justify-center">
+                            <i class="fas fa-rupee-sign text-emerald-600 text-xl"></i>
+                        </div>
+                        <span class="text-green-600 text-sm font-semibold flex items-center">
+                            <i class="fas fa-arrow-up mr-1"></i> 15%
+                        </span>
+                    </div>
+                    <h3 class="text-gray-600 text-sm font-medium">Revenue from Orders</h3>
+                    <p class="text-3xl font-bold text-gray-800 mt-2">₹12,450</p>
+                </div>
+            </div>
+
+            <!-- Filters and Search -->
+            <div class="glass-card rounded-2xl p-6 shadow-lg mb-8 animate-fade-in">
+                <div class="flex flex-col md:flex-row items-center justify-between gap-4">
+                    <div class="flex flex-wrap gap-3">
+                        <button class="filter-tab active px-6 py-3 rounded-lg font-semibold" data-filter="all">
+                            <i class="fas fa-list mr-2"></i>All Orders
+                        </button>
+                        <button class="filter-tab px-6 py-3 rounded-lg font-semibold bg-white" data-filter="booked">
+                            <i class="fas fa-bookmark mr-2"></i>Booked
+                        </button>
+                        <button class="filter-tab px-6 py-3 rounded-lg font-semibold bg-white" data-filter="completed">
+                            <i class="fas fa-check-circle mr-2"></i>Completed
+                        </button>
+                        <button class="filter-tab px-6 py-3 rounded-lg font-semibold bg-white" data-filter="cancelled">
+                            <i class="fas fa-times-circle mr-2"></i>Cancelled
+                        </button>
+                    </div>
+                    
+                    <div class="relative">
+                        <input 
+                            type="text" 
+                            id="searchInput"
+                            placeholder="Search by Order ID..."
+                            class="pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-green-500 focus:ring-2 focus:ring-green-200 transition"
+                        >
+                        <i class="fas fa-search absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Orders Table -->
+            <div class="glass-card rounded-2xl shadow-lg overflow-hidden animate-fade-in">
+                <div class="overflow-x-auto">
+                    <table class="w-full">
+                        <thead class="bg-gradient-to-r from-green-50 to-emerald-50">
+                            <tr>
+                                <th class="text-left py-4 px-6 text-sm font-bold text-gray-700">Order ID</th>
+                                <th class="text-left py-4 px-6 text-sm font-bold text-gray-700">Food Name</th>
+                                <th class="text-left py-4 px-6 text-sm font-bold text-gray-700">Customer</th>
+                                <th class="text-left py-4 px-6 text-sm font-bold text-gray-700">Qty</th>
+                                <th class="text-left py-4 px-6 text-sm font-bold text-gray-700">Booking Date</th>
+                                <th class="text-left py-4 px-6 text-sm font-bold text-gray-700">Pickup Time</th>
+                                <th class="text-left py-4 px-6 text-sm font-bold text-gray-700">Payment</th>
+                                <th class="text-left py-4 px-6 text-sm font-bold text-gray-700">Status</th>
+                                <th class="text-left py-4 px-6 text-sm font-bold text-gray-700">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="ordersTableBody">
+                            <!-- Orders will be dynamically inserted here -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Side Panel for Order Details -->
+    <div id="orderDetailsPanel" class="fixed right-0 top-0 h-full w-full md:w-1/3 bg-white shadow-2xl transform translate-x-full transition-transform duration-300 z-50 overflow-y-auto">
+        <div class="p-8">
+            <div class="flex items-center justify-between mb-6">
+                <h3 class="text-2xl font-bold text-gray-800">Order Details</h3>
+                <button onclick="closeDetailsPanel()" class="w-10 h-10 bg-gray-100 rounded-lg hover:bg-gray-200 transition">
+                    <i class="fas fa-times text-gray-600"></i>
+                </button>
+            </div>
+            <div id="orderDetailsContent">
+                <!-- Details will be populated dynamically -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Sample orders data
+        const orders = [
+            {
+                id: 'RP-2451',
+                foodName: 'Paneer Butter Masala',
+                customer: 'Rahul Sharma',
+                phone: '+91 98765 43210',
+                city: 'Pune',
+                quantity: 3,
+                bookingDate: '2024-02-12',
+                pickupTime: '6:30 PM',
+                originalPrice: 180,
+                discount: 40,
+                paymentStatus: 'paid',
+                orderStatus: 'booked',
+                weight: 1.5,
+                qrToken: 'RP2451XYZ'
+            },
+            {
+                id: 'RP-2450',
+                foodName: 'Veg Biryani',
+                customer: 'Priya Patel',
+                phone: '+91 87654 32109',
+                city: 'Mumbai',
+                quantity: 2,
+                bookingDate: '2024-02-12',
+                pickupTime: '7:00 PM',
+                originalPrice: 200,
+                discount: 35,
+                paymentStatus: 'paid',
+                orderStatus: 'booked',
+                weight: 2.0,
+                qrToken: 'RP2450ABC'
+            },
+            {
+                id: 'RP-2449',
+                foodName: 'Masala Dosa',
+                customer: 'Amit Kumar',
+                phone: '+91 76543 21098',
+                city: 'Bangalore',
+                quantity: 2,
+                bookingDate: '2024-02-12',
+                pickupTime: '5:45 PM',
+                originalPrice: 80,
+                discount: 30,
+                paymentStatus: 'paid',
+                orderStatus: 'completed',
+                weight: 0.8,
+                qrToken: 'RP2449DEF'
+            },
+            {
+                id: 'RP-2448',
+                foodName: 'Chole Bhature',
+                customer: 'Sneha Reddy',
+                phone: '+91 65432 10987',
+                city: 'Hyderabad',
+                quantity: 4,
+                bookingDate: '2024-02-12',
+                pickupTime: '8:15 PM',
+                originalPrice: 120,
+                discount: 45,
+                paymentStatus: 'pending',
+                orderStatus: 'booked',
+                weight: 2.4,
+                qrToken: 'RP2448GHI'
+            },
+            {
+                id: 'RP-2447',
+                foodName: 'Paneer Tikka',
+                customer: 'Karan Singh',
+                phone: '+91 54321 09876',
+                city: 'Delhi',
+                quantity: 3,
+                bookingDate: '2024-02-11',
+                pickupTime: '6:00 PM',
+                originalPrice: 150,
+                discount: 40,
+                paymentStatus: 'paid',
+                orderStatus: 'completed',
+                weight: 1.2,
+                qrToken: 'RP2447JKL'
+            },
+            {
+                id: 'RP-2446',
+                foodName: 'Veg Sandwich',
+                customer: 'Neha Gupta',
+                phone: '+91 43210 98765',
+                city: 'Chennai',
+                quantity: 1,
+                bookingDate: '2024-02-11',
+                pickupTime: '7:30 PM',
+                originalPrice: 60,
+                discount: 25,
+                paymentStatus: 'paid',
+                orderStatus: 'cancelled',
+                weight: 0.3,
+                qrToken: 'RP2446MNO'
+            },
+            {
+                id: 'RP-2445',
+                foodName: 'Dal Makhani',
+                customer: 'Vikas Mehta',
+                phone: '+91 32109 87654',
+                city: 'Pune',
+                quantity: 5,
+                bookingDate: '2024-02-11',
+                pickupTime: '8:00 PM',
+                originalPrice: 140,
+                discount: 30,
+                paymentStatus: 'paid',
+                orderStatus: 'completed',
+                weight: 2.5,
+                qrToken: 'RP2445PQR'
+            }
+        ];
+
+        let currentFilter = 'all';
+
+        // Get status badge
+        function getStatusBadge(status) {
+            const badges = {
+                booked: '<span class="badge badge-booked"><i class="fas fa-bookmark mr-1"></i>Booked</span>',
+                completed: '<span class="badge badge-completed"><i class="fas fa-check-circle mr-1"></i>Completed</span>',
+                cancelled: '<span class="badge badge-cancelled"><i class="fas fa-times-circle mr-1"></i>Cancelled</span>'
+            };
+            return badges[status] || '';
+        }
+
+        // Get payment badge
+        function getPaymentBadge(status) {
+            const badges = {
+                paid: '<span class="badge badge-paid"><i class="fas fa-check mr-1"></i>Paid</span>',
+                pending: '<span class="badge badge-pending"><i class="fas fa-clock mr-1"></i>Pending</span>'
+            };
+            return badges[status] || '';
+        }
+
+        // Render orders table
+        function renderOrders() {
+            const tbody = document.getElementById('ordersTableBody');
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+            
+            const filteredOrders = orders.filter(order => {
+                const matchesFilter = currentFilter === 'all' || order.orderStatus === currentFilter;
+                const matchesSearch = order.id.toLowerCase().includes(searchTerm) || 
+                                     order.customer.toLowerCase().includes(searchTerm) ||
+                                     order.foodName.toLowerCase().includes(searchTerm);
+                return matchesFilter && matchesSearch;
+            });
+
+            tbody.innerHTML = filteredOrders.map(order => {
+                const finalPrice = order.originalPrice * (1 - order.discount / 100);
+                return `
+                    <tr class="table-row border-b border-gray-100" onclick="showOrderDetails('${order.id}')">
+                        <td class="py-4 px-6">
+                            <p class="font-semibold text-gray-800">#${order.id}</p>
+                        </td>
+                        <td class="py-4 px-6">
+                            <p class="text-gray-800">${order.foodName}</p>
+                        </td>
+                        <td class="py-4 px-6">
+                            <p class="text-gray-800">${order.customer}</p>
+                        </td>
+                        <td class="py-4 px-6">
+                            <p class="font-semibold text-gray-800">${order.quantity}</p>
+                        </td>
+                        <td class="py-4 px-6">
+                            <p class="text-sm text-gray-600">${order.bookingDate}</p>
+                        </td>
+                        <td class="py-4 px-6">
+                            <p class="text-sm text-gray-600">${order.pickupTime}</p>
+                        </td>
+                        <td class="py-4 px-6">
+                            ${getPaymentBadge(order.paymentStatus)}
+                        </td>
+                        <td class="py-4 px-6">
+                            ${getStatusBadge(order.orderStatus)}
+                        </td>
+                        <td class="py-4 px-6">
+                            <div class="flex space-x-2" onclick="event.stopPropagation()">
+                                <button onclick="showOrderDetails('${order.id}')" class="action-btn p-2 bg-blue-100 text-blue-600 rounded-lg hover:bg-blue-200 transition" title="View Details">
+                                    <i class="fas fa-eye"></i>
+                                </button>
+                                ${order.orderStatus === 'booked' ? `
+                                    <button onclick="confirmPickup('${order.id}')" class="action-btn p-2 bg-green-100 text-green-600 rounded-lg hover:bg-green-200 transition" title="Confirm Pickup">
+                                        <i class="fas fa-check"></i>
+                                    </button>
+                                ` : ''}
+                            </div>
+                        </td>
+                    </tr>
+                `;
+            }).join('');
+        }
+
+        // Show order details in side panel
+        function showOrderDetails(orderId) {
+            const order = orders.find(o => o.id === orderId);
+            if (!order) return;
+
+            const finalPrice = order.originalPrice * (1 - order.discount / 100);
+            const savings = order.originalPrice - finalPrice;
+            const co2Reduced = (order.weight * 2.5).toFixed(1);
+            const treesEquivalent = Math.ceil(parseFloat(co2Reduced) / 20);
+
+            const content = `
+                <div class="space-y-6">
+                    <!-- Order Information -->
+                    <div class="bg-gray-50 rounded-xl p-6">
+                        <h4 class="text-lg font-bold text-gray-800 mb-4 flex items-center">
+                            <i class="fas fa-receipt text-green-600 mr-2"></i>
+                            Order Information
+                        </h4>
+                        <div class="space-y-3">
+                            <div class="flex justify-between">
+                                <span class="text-gray-600">Order ID:</span>
+                                <span class="font-semibold text-gray-800">#${order.id}</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-gray-600">Booking Date:</span>
+                                <span class="font-semibold text-gray-800">${order.bookingDate}</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-gray-600">Pickup Time:</span>
+                                <span class="font-semibold text-gray-800">${order.pickupTime}</span>
+                            </div>
+                            <div class="flex justify-between items-center">
+                                <span class="text-gray-600">Order Status:</span>
+                                ${getStatusBadge(order.orderStatus)}
+                            </div>
+                            <div class="flex justify-between items-center">
+                                <span class="text-gray-600">Payment Status:</span>
+                                ${getPaymentBadge(order.paymentStatus)}
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Customer Details -->
+                    <div class="bg-blue-50 rounded-xl p-6">
+                        <h4 class="text-lg font-bold text-gray-800 mb-4 flex items-center">
+                            <i class="fas fa-user text-blue-600 mr-2"></i>
+                            Customer Details
+                        </h4>
+                        <div class="space-y-3">
+                            <div class="flex justify-between">
+                                <span class="text-gray-600">Name:</span>
+                                <span class="font-semibold text-gray-800">${order.customer}</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-gray-600">Phone:</span>
+                                <span class="font-semibold text-gray-800">${order.phone}</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-gray-600">City:</span>
+                                <span class="font-semibold text-gray-800">${order.city}</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Food Details -->
+                    <div class="bg-yellow-50 rounded-xl p-6">
+                        <h4 class="text-lg font-bold text-gray-800 mb-4 flex items-center">
+                            <i class="fas fa-utensils text-yellow-600 mr-2"></i>
+                            Food Details
+                        </h4>
+                        <div class="space-y-3">
+                            <div class="flex justify-between">
+                                <span class="text-gray-600">Item:</span>
+                                <span class="font-semibold text-gray-800">${order.foodName}</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-gray-600">Quantity:</span>
+                                <span class="font-semibold text-gray-800">${order.quantity} portions</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-gray-600">Original Price:</span>
+                                <span class="font-semibold text-gray-800">₹${order.originalPrice}</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-gray-600">Discount:</span>
+                                <span class="font-semibold text-yellow-600">${order.discount}%</span>
+                            </div>
+                            <div class="flex justify-between border-t border-yellow-200 pt-3 mt-3">
+                                <span class="text-gray-800 font-semibold">Final Amount Paid:</span>
+                                <span class="font-bold text-green-600 text-xl">₹${(finalPrice * order.quantity).toFixed(0)}</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- QR Verification -->
+                    ${order.orderStatus === 'booked' ? `
+                    <div class="bg-white rounded-xl p-6 border-2 border-green-200">
+                        <h4 class="text-lg font-bold text-gray-800 mb-4 flex items-center">
+                            <i class="fas fa-qrcode text-green-600 mr-2"></i>
+                            QR Verification
+                        </h4>
+                        <div class="text-center">
+                            <div id="qrcode-${order.id}" class="qr-container inline-block mb-4"></div>
+                            <p class="text-sm text-gray-600 mb-4">Customer should scan this QR code at pickup</p>
+                            
+                            <div class="mt-4">
+                                <label class="block text-sm font-semibold text-gray-700 mb-2">Or Enter Token Manually:</label>
+                                <div class="flex space-x-2">
+                                    <input 
+                                        type="text" 
+                                        id="tokenInput-${order.id}"
+                                        class="flex-1 px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-green-500 focus:ring-2 focus:ring-green-200"
+                                        placeholder="Enter pickup token"
+                                    >
+                                    <button onclick="validateToken('${order.id}')" class="px-6 py-3 bg-gradient-to-r from-green-500 to-green-600 text-white rounded-lg font-semibold hover:from-green-600 hover:to-green-700 transition">
+                                        Validate
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    ` : ''}
+
+                    <!-- Sustainability Impact -->
+                    <div class="impact-card rounded-xl p-6">
+                        <h4 class="text-lg font-bold text-gray-800 mb-4 flex items-center">
+                            <i class="fas fa-seedling text-green-600 mr-2"></i>
+                            Sustainability Impact
+                        </h4>
+                        <div class="grid grid-cols-3 gap-4 mb-4">
+                            <div class="text-center bg-white rounded-lg p-4">
+                                <p class="text-2xl font-bold text-green-600">${order.weight} kg</p>
+                                <p class="text-xs text-gray-600 mt-1">Food Saved</p>
+                            </div>
+                            <div class="text-center bg-white rounded-lg p-4">
+                                <p class="text-2xl font-bold text-green-600">${co2Reduced} kg</p>
+                                <p class="text-xs text-gray-600 mt-1">CO₂ Reduced</p>
+                            </div>
+                            <div class="text-center bg-white rounded-lg p-4">
+                                <p class="text-2xl font-bold text-green-600">${treesEquivalent} 🌳</p>
+                                <p class="text-xs text-gray-600 mt-1">Tree Equivalent</p>
+                            </div>
+                        </div>
+                        <div class="bg-white rounded-lg p-4 text-center">
+                            <p class="text-sm text-gray-700">
+                                <i class="fas fa-leaf text-green-600 mr-2"></i>
+                                This order prevented food waste and reduced carbon emissions equivalent to planting ${treesEquivalent} ${treesEquivalent === 1 ? 'tree' : 'trees'}!
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Action Buttons -->
+                    <div class="flex flex-col space-y-3">
+                        ${order.orderStatus === 'booked' ? `
+                        <button onclick="confirmPickup('${order.id}')" class="w-full px-6 py-4 bg-gradient-to-r from-green-500 to-green-600 text-white rounded-lg font-semibold hover:from-green-600 hover:to-green-700 transition shadow-lg">
+                            <i class="fas fa-check-circle mr-2"></i>Confirm Pickup
+                        </button>
+                        <button onclick="markCompleted('${order.id}')" class="w-full px-6 py-4 bg-gradient-to-r from-blue-500 to-blue-600 text-white rounded-lg font-semibold hover:from-blue-600 hover:to-blue-700 transition shadow-lg">
+                            <i class="fas fa-box-check mr-2"></i>Mark as Completed
+                        </button>
+                        <button onclick="cancelOrder('${order.id}')" class="w-full px-6 py-4 bg-white border-2 border-red-500 text-red-600 rounded-lg font-semibold hover:bg-red-50 transition">
+                            <i class="fas fa-times-circle mr-2"></i>Cancel Order
+                        </button>
+                        ` : ''}
+                    </div>
+                </div>
+            `;
+
+            document.getElementById('orderDetailsContent').innerHTML = content;
+            document.getElementById('orderDetailsPanel').classList.remove('translate-x-full');
+
+            // Generate QR code if order is booked
+            if (order.orderStatus === 'booked') {
+                setTimeout(() => {
+                    const qrContainer = document.getElementById(`qrcode-${order.id}`);
+                    if (qrContainer) {
+                        qrContainer.innerHTML = '';
+                        new QRCode(qrContainer, {
+                            text: order.qrToken,
+                            width: 200,
+                            height: 200,
+                            colorDark: "#16a34a",
+                            colorLight: "#ffffff",
+                            correctLevel: QRCode.CorrectLevel.H
+                        });
+                    }
+                }, 100);
+            }
+        }
+
+        function closeDetailsPanel() {
+            document.getElementById('orderDetailsPanel').classList.add('translate-x-full');
+        }
+
+        function validateToken(orderId) {
+            const order = orders.find(o => o.id === orderId);
+            const inputToken = document.getElementById(`tokenInput-${orderId}`).value.trim();
+            
+            if (inputToken === order.qrToken) {
+                alert('✅ Token validated successfully! You can now mark the order as completed.');
+            } else {
+                alert('❌ Invalid token. Please check and try again.');
+            }
+        }
+
+        function confirmPickup(orderId) {
+            if (confirm(`Confirm pickup for order #${orderId}?`)) {
+                alert(`✅ Pickup confirmed for order #${orderId}`);
+                closeDetailsPanel();
+            }
+        }
+
+        function markCompleted(orderId) {
+            if (confirm(`Mark order #${orderId} as completed?`)) {
+                const order = orders.find(o => o.id === orderId);
+                order.orderStatus = 'completed';
+                renderOrders();
+                closeDetailsPanel();
+                alert(`✅ Order #${orderId} marked as completed!`);
+            }
+        }
+
+        function cancelOrder(orderId) {
+            if (confirm(`Are you sure you want to cancel order #${orderId}? This action cannot be undone.`)) {
+                const order = orders.find(o => o.id === orderId);
+                order.orderStatus = 'cancelled';
+                renderOrders();
+                closeDetailsPanel();
+                alert(`Order #${orderId} has been cancelled.`);
+            }
+        }
+
+        // Filter tabs
+        document.querySelectorAll('.filter-tab').forEach(tab => {
+            tab.addEventListener('click', function() {
+                document.querySelectorAll('.filter-tab').forEach(t => {
+                    t.classList.remove('active');
+                    t.classList.add('bg-white');
+                });
+                this.classList.add('active');
+                this.classList.remove('bg-white');
+                currentFilter = this.getAttribute('data-filter');
+                renderOrders();
+            });
+        });
+
+        // Search functionality
+        document.getElementById('searchInput').addEventListener('input', renderOrders);
+
+        // Initial render
+        renderOrders();
+    </script>
+</body>
+</html>

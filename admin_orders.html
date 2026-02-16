@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Orders - RePlate Admin</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="bg-gray-50">
+    <nav class="bg-white shadow-md fixed w-full top-0 z-50">
+        <div class="flex items-center justify-between px-6 py-4">
+            <div class="flex items-center space-x-2">
+                <i class="fas fa-leaf text-blue-500 text-2xl"></i>
+                <span class="text-xl font-bold">RePlate <span class="text-blue-500">Admin</span></span>
+            </div>
+        </div>
+    </nav>
+    
+    <div class="flex pt-16">
+        <aside class="bg-white w-64 min-h-screen shadow-lg">
+            <nav class="p-4 space-y-2">
+                <a href="admin_dashboard.html" class="flex items-center space-x-3 px-4 py-3 text-gray-700 hover:bg-gray-100 rounded-lg"><i class="fas fa-chart-line"></i><span>Dashboard</span></a>
+                <a href="admin_sellers.html" class="flex items-center space-x-3 px-4 py-3 text-gray-700 hover:bg-gray-100 rounded-lg"><i class="fas fa-user-check"></i><span>Approve Sellers</span></a>
+                <a href="admin_listings.html" class="flex items-center space-x-3 px-4 py-3 text-gray-700 hover:bg-gray-100 rounded-lg"><i class="fas fa-list"></i><span>Manage Listings</span></a>
+                <a href="admin_users.html" class="flex items-center space-x-3 px-4 py-3 text-gray-700 hover:bg-gray-100 rounded-lg"><i class="fas fa-users"></i><span>Users Management</span></a>
+                <a href="admin_orders.html" class="flex items-center space-x-3 px-4 py-3 bg-blue-50 text-blue-500 rounded-lg font-medium"><i class="fas fa-shopping-cart"></i><span>Orders Management</span></a>
+                <a href="admin_analytics.html" class="flex items-center space-x-3 px-4 py-3 text-gray-700 hover:bg-gray-100 rounded-lg"><i class="fas fa-leaf"></i><span>Carbon Analytics</span></a>
+                <a href="admin_cities.html" class="flex items-center space-x-3 px-4 py-3 text-gray-700 hover:bg-gray-100 rounded-lg"><i class="fas fa-city"></i><span>City Insights</span></a>
+                <a href="admin_reports.html" class="flex items-center space-x-3 px-4 py-3 text-gray-700 hover:bg-gray-100 rounded-lg"><i class="fas fa-file-alt"></i><span>Reports</span></a>
+                <a href="admin_settings.html" class="flex items-center space-x-3 px-4 py-3 text-gray-700 hover:bg-gray-100 rounded-lg"><i class="fas fa-cog"></i><span>Settings</span></a>
+            </nav>
+        </aside>
+        
+        <main class="flex-1 p-6">
+            <h1 class="text-3xl font-bold mb-6">Orders Management</h1>
+            
+            <div class="grid grid-cols-4 gap-6 mb-6">
+                <div class="bg-white p-6 rounded-lg shadow-md border-l-4 border-blue-500">
+                    <p class="text-gray-600 text-sm">Total Orders</p>
+                    <h3 class="text-3xl font-bold mt-2">4,291</h3>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-md border-l-4 border-green-500">
+                    <p class="text-gray-600 text-sm">Completed</p>
+                    <h3 class="text-3xl font-bold mt-2">3,892</h3>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-md border-l-4 border-yellow-500">
+                    <p class="text-gray-600 text-sm">Pending</p>
+                    <h3 class="text-3xl font-bold mt-2">324</h3>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-md border-l-4 border-red-500">
+                    <p class="text-gray-600 text-sm">Cancelled</p>
+                    <h3 class="text-3xl font-bold mt-2">75</h3>
+                </div>
+            </div>
+            
+            <div class="bg-white rounded-lg shadow-md p-6 mb-6">
+                <div class="flex gap-4">
+                    <button class="px-4 py-2 bg-blue-500 text-white rounded-lg">All</button>
+                    <button class="px-4 py-2 bg-gray-200 text-gray-700 rounded-lg">Completed</button>
+                    <button class="px-4 py-2 bg-gray-200 text-gray-700 rounded-lg">Pending</button>
+                    <button class="px-4 py-2 bg-gray-200 text-gray-700 rounded-lg">Cancelled</button>
+                </div>
+            </div>
+            
+            <div class="bg-white rounded-lg shadow-md overflow-hidden">
+                <table class="w-full">
+                    <thead class="bg-gray-100">
+                        <tr>
+                            <th class="px-6 py-4 text-left text-sm font-semibold">Order ID</th>
+                            <th class="px-6 py-4 text-left text-sm font-semibold">Consumer</th>
+                            <th class="px-6 py-4 text-left text-sm font-semibold">Seller</th>
+                            <th class="px-6 py-4 text-left text-sm font-semibold">Food</th>
+                            <th class="px-6 py-4 text-left text-sm font-semibold">Payment</th>
+                            <th class="px-6 py-4 text-left text-sm font-semibold">Status</th>
+                            <th class="px-6 py-4 text-left text-sm font-semibold">Date</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y">
+                        <tr class="hover:bg-gray-50">
+                            <td class="px-6 py-4 font-medium">#RP-4291</td>
+                            <td class="px-6 py-4">John Doe</td>
+                            <td class="px-6 py-4">Green Bistro</td>
+                            <td class="px-6 py-4">Salad Bowl</td>
+                            <td class="px-6 py-4"><span class="bg-green-100 text-green-700 px-3 py-1 rounded-full text-xs">Paid</span></td>
+                            <td class="px-6 py-4"><span class="bg-green-100 text-green-700 px-3 py-1 rounded-full text-xs">Completed</span></td>
+                            <td class="px-6 py-4">Feb 12, 2026</td>
+                        </tr>
+                        <tr class="hover:bg-gray-50">
+                            <td class="px-6 py-4 font-medium">#RP-4290</td>
+                            <td class="px-6 py-4">Sarah Smith</td>
+                            <td class="px-6 py-4">Healthy Bites</td>
+                            <td class="px-6 py-4">Sandwich</td>
+                            <td class="px-6 py-4"><span class="bg-green-100 text-green-700 px-3 py-1 rounded-full text-xs">Paid</span></td>
+                            <td class="px-6 py-4"><span class="bg-yellow-100 text-yellow-700 px-3 py-1 rounded-full text-xs">Pending</span></td>
+                            <td class="px-6 py-4">Feb 12, 2026</td>
+                        </tr>
+                        <tr class="hover:bg-gray-50">
+                            <td class="px-6 py-4 font-medium">#RP-4289</td>
+                            <td class="px-6 py-4">Raj Kumar</td>
+                            <td class="px-6 py-4">Fresh Corner</td>
+                            <td class="px-6 py-4">Pastries</td>
+                            <td class="px-6 py-4"><span class="bg-red-100 text-red-700 px-3 py-1 rounded-full text-xs">Failed</span></td>
+                            <td class="px-6 py-4"><span class="bg-red-100 text-red-700 px-3 py-1 rounded-full text-xs">Cancelled</span></td>
+                            <td class="px-6 py-4">Feb 11, 2026</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </main>
+    </div>
+</body>
+</html>

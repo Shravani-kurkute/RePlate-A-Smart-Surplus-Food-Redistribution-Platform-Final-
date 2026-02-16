@@ -1,0 +1,713 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Surplus Item - RePlate</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+        
+        * {
+            font-family: 'Inter', sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 50%, #bbf7d0 100%);
+            min-height: 100vh;
+        }
+        
+        .glass-card {
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+        
+        .sidebar-link {
+            transition: all 0.2s ease;
+        }
+        
+        .sidebar-link:hover {
+            background: rgba(34, 197, 94, 0.1);
+            padding-left: 1.5rem;
+        }
+        
+        .sidebar-link.active {
+            background: linear-gradient(90deg, rgba(34, 197, 94, 0.2) 0%, transparent 100%);
+            border-left: 3px solid #22c55e;
+            color: #16a34a;
+            font-weight: 600;
+        }
+        
+        .gradient-text {
+            background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .form-input {
+            transition: all 0.3s ease;
+        }
+        
+        .form-input:focus {
+            border-color: #22c55e;
+            box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.1);
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%);
+            transition: all 0.3s ease;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px -5px rgba(34, 197, 94, 0.4);
+        }
+        
+        .btn-secondary {
+            transition: all 0.3s ease;
+        }
+        
+        .btn-secondary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px -5px rgba(0, 0, 0, 0.2);
+        }
+        
+        .image-preview {
+            transition: all 0.3s ease;
+        }
+        
+        .image-preview:hover {
+            transform: scale(1.02);
+        }
+        
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .animate-slide-in {
+            animation: slideIn 0.5s ease-out;
+        }
+        
+        .impact-badge {
+            background: linear-gradient(135deg, #dcfce7 0%, #bbf7d0 100%);
+            border: 2px solid #22c55e;
+        }
+        
+        .upload-area {
+            border: 2px dashed #d1d5db;
+            transition: all 0.3s ease;
+        }
+        
+        .upload-area:hover {
+            border-color: #22c55e;
+            background: rgba(34, 197, 94, 0.05);
+        }
+        
+        .upload-area.drag-over {
+            border-color: #22c55e;
+            background: rgba(34, 197, 94, 0.1);
+        }
+    </style>
+</head>
+<body>
+    <!-- Top Navigation -->
+    <nav class="glass-card sticky top-0 z-50 shadow-lg">
+        <div class="max-w-full mx-auto px-6 py-4">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center space-x-8">
+                    <div class="flex items-center space-x-3">
+                        <div class="w-10 h-10 bg-gradient-to-br from-green-400 to-green-600 rounded-xl flex items-center justify-center">
+                            <i class="fas fa-leaf text-white text-xl"></i>
+                        </div>
+                        <div>
+                            <h1 class="text-2xl font-bold gradient-text">RePlate</h1>
+                            <p class="text-xs text-gray-500">Add Surplus Item</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="flex items-center space-x-6">
+                    <div class="relative">
+                        <a href="notifications_seller.html" class="p-2 hover:bg-green-50 rounded-lg transition">
+                            <i class="fas fa-bell text-gray-600"></i>
+                            <span class="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full"></span>
+                        </a>
+                    </div>
+                    
+                    <div class="flex items-center space-x-3 pl-4 border-l border-gray-200">
+                        <img src="https://ui-avatars.com/api/?name=Green+Cafe&background=22c55e&color=fff" class="w-10 h-10 rounded-full" alt="Profile">
+                        <div class="text-left">
+                            <p class="text-sm font-semibold text-gray-800">Green Cafe</p>
+                            <p class="text-xs text-gray-500">Verified Seller</p>
+                        </div>
+                        <i class="fas fa-chevron-down text-gray-400 text-sm"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="flex">
+        <!-- Sidebar -->
+        <aside class="w-64 glass-card min-h-screen shadow-xl">
+            <div class="p-6 space-y-2">
+                <a href="seller-dashboard.html" class="sidebar-link flex items-center space-x-3 px-4 py-3 rounded-lg text-gray-600 hover:text-green-600">
+                    <i class="fas fa-home w-5"></i>
+                    <span>Dashboard</span>
+                </a>
+                <a href="add-surplus-item.html" class="sidebar-link active flex items-center space-x-3 px-4 py-3 rounded-lg">
+                    <i class="fas fa-plus-circle w-5"></i>
+                    <span>Add Surplus Item</span>
+                </a>
+                <a href="manage-listings_seller.html" class="sidebar-link flex items-center space-x-3 px-4 py-3 rounded-lg text-gray-600 hover:text-green-600">
+                    <i class="fas fa-list w-5"></i>
+                    <span>Manage Listings</span>
+                </a>
+                <a href="orders-management_seller.html" class="sidebar-link flex items-center space-x-3 px-4 py-3 rounded-lg text-gray-600 hover:text-green-600">
+                    <i class="fas fa-shopping-bag w-5"></i>
+                    <span>Orders</span>
+                </a>
+                <a href="impact-analytics_seller.html" class="sidebar-link flex items-center space-x-3 px-4 py-3 rounded-lg text-gray-600 hover:text-green-600">
+                    <i class="fas fa-chart-line w-5"></i>
+                    <span>Impact & Analytics</span>
+                </a>
+                
+                <div class="pt-4 border-t border-gray-200 mt-4">
+                    <a href="profile-settings_seller.html" class="sidebar-link flex items-center space-x-3 px-4 py-3 rounded-lg text-gray-600 hover:text-green-600">
+                        <i class="fas fa-user w-5"></i>
+                        <span>Profile</span>
+                    </a>
+                    <a href="profile-settings_seller.html" class="sidebar-link flex items-center space-x-3 px-4 py-3 rounded-lg text-gray-600 hover:text-green-600">
+                        <i class="fas fa-cog w-5"></i>
+                        <span>Settings</span>
+                    </a>
+                    <a href="selection.html" class="sidebar-link flex items-center space-x-3 px-4 py-3 rounded-lg text-gray-600 hover:text-red-600">
+                        <i class="fas fa-sign-out-alt w-5"></i>
+                        <span>Logout</span>
+                    </a>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="flex-1 p-8">
+            <!-- Page Header -->
+            <div class="mb-8 animate-slide-in">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <h2 class="text-3xl font-bold text-gray-800">Add Surplus Item</h2>
+                        <p class="text-gray-600 mt-2">List your surplus food and help reduce waste while earning revenue 🌱</p>
+                    </div>
+                    <div class="impact-badge px-6 py-3 rounded-xl">
+                        <div class="flex items-center space-x-2">
+                            <i class="fas fa-seedling text-green-600 text-xl"></i>
+                            <div>
+                                <p class="text-xs text-gray-600">Your Impact</p>
+                                <p class="text-lg font-bold text-green-600">86 kg CO₂ saved</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <form id="addItemForm" class="space-y-6">
+                <!-- Food Details Section -->
+                <div class="glass-card rounded-2xl p-8 shadow-lg animate-slide-in">
+                    <div class="flex items-center space-x-3 mb-6">
+                        <div class="w-10 h-10 bg-green-100 rounded-lg flex items-center justify-center">
+                            <i class="fas fa-utensils text-green-600"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-800">Food Details</h3>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <label class="block text-sm font-semibold text-gray-700 mb-2">
+                                Food Name <span class="text-red-500">*</span>
+                            </label>
+                            <input 
+                                type="text" 
+                                id="foodName"
+                                class="form-input w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none"
+                                placeholder="e.g., Paneer Butter Masala"
+                                required
+                            >
+                            <p class="text-xs text-gray-500 mt-1">Enter the exact name of the food item</p>
+                        </div>
+
+                        <div>
+                            <label class="block text-sm font-semibold text-gray-700 mb-2">
+                                Category <span class="text-red-500">*</span>
+                            </label>
+                            <select 
+                                id="category"
+                                class="form-input w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none"
+                                required
+                            >
+                                <option value="">Select Category</option>
+                                <option value="hotel">Hotel Food</option>
+                                <option value="cafe">Cafe Items</option>
+                                <option value="grocery">Grocery Products</option>
+                                <option value="bakery">Bakery Items</option>
+                                <option value="mess">Mess Food</option>
+                            </select>
+                        </div>
+
+                        <div class="md:col-span-2">
+                            <label class="block text-sm font-semibold text-gray-700 mb-2">
+                                Description
+                            </label>
+                            <textarea 
+                                id="description"
+                                class="form-input w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none"
+                                rows="4"
+                                placeholder="Describe the food item, ingredients, taste, etc."
+                            ></textarea>
+                        </div>
+
+                        <div class="md:col-span-2">
+                            <label class="block text-sm font-semibold text-gray-700 mb-2">
+                                Upload Food Image <span class="text-red-500">*</span>
+                            </label>
+                            <div class="upload-area rounded-lg p-8 text-center cursor-pointer" id="uploadArea">
+                                <input 
+                                    type="file" 
+                                    id="foodImage" 
+                                    class="hidden" 
+                                    accept="image/*"
+                                    required
+                                >
+                                <div id="uploadPlaceholder">
+                                    <i class="fas fa-cloud-upload-alt text-5xl text-gray-400 mb-3"></i>
+                                    <p class="text-gray-600 font-semibold">Click to upload or drag and drop</p>
+                                    <p class="text-sm text-gray-500 mt-1">PNG, JPG, WEBP up to 5MB</p>
+                                </div>
+                                <div id="imagePreviewContainer" class="hidden">
+                                    <img id="imagePreview" class="image-preview mx-auto rounded-lg max-h-64 object-cover">
+                                    <button type="button" id="removeImage" class="mt-4 px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 transition">
+                                        <i class="fas fa-trash mr-2"></i>Remove Image
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Inventory & Pricing Section -->
+                <div class="glass-card rounded-2xl p-8 shadow-lg animate-slide-in">
+                    <div class="flex items-center space-x-3 mb-6">
+                        <div class="w-10 h-10 bg-yellow-100 rounded-lg flex items-center justify-center">
+                            <i class="fas fa-tags text-yellow-600"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-800">Inventory & Pricing</h3>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <label class="block text-sm font-semibold text-gray-700 mb-2">
+                                Original Price (₹) <span class="text-red-500">*</span>
+                            </label>
+                            <input 
+                                type="number" 
+                                id="originalPrice"
+                                class="form-input w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none"
+                                placeholder="150"
+                                min="1"
+                                required
+                            >
+                        </div>
+
+                        <div>
+                            <label class="block text-sm font-semibold text-gray-700 mb-2">
+                                Quantity Available <span class="text-red-500">*</span>
+                            </label>
+                            <input 
+                                type="number" 
+                                id="quantity"
+                                class="form-input w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none"
+                                placeholder="5"
+                                min="1"
+                                required
+                            >
+                        </div>
+
+                        <div>
+                            <label class="block text-sm font-semibold text-gray-700 mb-2">
+                                Manufacturing Date <span class="text-red-500">*</span>
+                            </label>
+                            <input 
+                                type="date" 
+                                id="manufacturingDate"
+                                class="form-input w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none"
+                                required
+                            >
+                        </div>
+
+                        <div>
+                            <label class="block text-sm font-semibold text-gray-700 mb-2">
+                                Expiry Date <span class="text-red-500">*</span>
+                            </label>
+                            <input 
+                                type="date" 
+                                id="expiryDate"
+                                class="form-input w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none"
+                                required
+                            >
+                        </div>
+
+                        <div>
+                            <label class="block text-sm font-semibold text-gray-700 mb-2">
+                                Weight per Unit (kg) <span class="text-red-500">*</span>
+                            </label>
+                            <input 
+                                type="number" 
+                                id="weight"
+                                class="form-input w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none"
+                                placeholder="0.5"
+                                step="0.1"
+                                min="0.1"
+                                required
+                            >
+                        </div>
+
+                        <div>
+                            <label class="block text-sm font-semibold text-gray-700 mb-2">
+                                Expiry Time <span class="text-red-500">*</span>
+                            </label>
+                            <input 
+                                type="time" 
+                                id="expiryTime"
+                                class="form-input w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none"
+                                required
+                            >
+                        </div>
+                    </div>
+
+                    <!-- Dynamic Pricing Preview -->
+                    <div id="pricingPreview" class="mt-6 p-6 bg-gradient-to-r from-green-50 to-emerald-50 rounded-xl border-2 border-green-200 hidden">
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                            <div class="text-center">
+                                <p class="text-sm text-gray-600 mb-1">Discount</p>
+                                <p class="text-3xl font-bold text-green-600" id="discountPercent">--</p>
+                            </div>
+                            <div class="text-center">
+                                <p class="text-sm text-gray-600 mb-1">Discounted Price</p>
+                                <p class="text-3xl font-bold text-green-600" id="finalPrice">--</p>
+                            </div>
+                            <div class="text-center">
+                                <p class="text-sm text-gray-600 mb-1">You Save</p>
+                                <p class="text-3xl font-bold text-yellow-600" id="savings">--</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- CO2 Impact Preview -->
+                    <div id="impactPreview" class="mt-4 p-6 bg-gradient-to-r from-emerald-50 to-green-50 rounded-xl border-2 border-emerald-300 hidden">
+                        <div class="flex items-center justify-center space-x-3">
+                            <i class="fas fa-seedling text-3xl text-green-600"></i>
+                            <div>
+                                <p class="text-sm text-gray-600">Environmental Impact</p>
+                                <p class="text-lg font-bold text-gray-800">
+                                    This listing will help reduce approximately 
+                                    <span class="text-green-600" id="co2Reduction">--</span> kg CO₂
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Location Preview -->
+                <div class="glass-card rounded-2xl p-8 shadow-lg animate-slide-in">
+                    <div class="flex items-center space-x-3 mb-6">
+                        <div class="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center">
+                            <i class="fas fa-map-marker-alt text-blue-600"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-800">Pickup Location</h3>
+                    </div>
+
+                    <div class="bg-gray-50 rounded-lg p-6 border border-gray-200">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div>
+                                <label class="block text-sm font-semibold text-gray-700 mb-2">Store Address</label>
+                                <p class="text-gray-800">Green Cafe, MG Road</p>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-semibold text-gray-700 mb-2">City</label>
+                                <p class="text-gray-800">Pune</p>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-semibold text-gray-700 mb-2">Pincode</label>
+                                <p class="text-gray-800">411001</p>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-semibold text-gray-700 mb-2">Contact</label>
+                                <p class="text-gray-800">+91 98765 43210</p>
+                            </div>
+                        </div>
+                        <div class="mt-4 flex items-center space-x-2 text-sm text-gray-600">
+                            <i class="fas fa-info-circle text-blue-500"></i>
+                            <span>Customers will pick up from this location. Update your address in Settings if needed.</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Action Buttons -->
+                <div class="glass-card rounded-2xl p-8 shadow-lg animate-slide-in">
+                    <div class="flex flex-col md:flex-row items-center justify-between space-y-4 md:space-y-0 md:space-x-4">
+                        <div class="flex items-center space-x-2 text-sm text-gray-600">
+                            <i class="fas fa-lightbulb text-yellow-500"></i>
+                            <span>All fields marked with <span class="text-red-500">*</span> are required</span>
+                        </div>
+                        <div class="flex space-x-4">
+                            <button 
+                                type="button" 
+                                id="saveDraft"
+                                class="btn-secondary px-8 py-3 bg-white border-2 border-gray-300 text-gray-700 rounded-lg font-semibold hover:border-gray-400"
+                            >
+                                <i class="fas fa-save mr-2"></i>Save as Draft
+                            </button>
+                            <button 
+                                type="submit"
+                                class="btn-primary px-8 py-3 text-white rounded-lg font-semibold shadow-lg"
+                            >
+                                <i class="fas fa-rocket mr-2"></i>Publish Listing
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </main>
+    </div>
+
+    <!-- Success Modal (Hidden by default) -->
+    <div id="successModal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+        <div class="glass-card rounded-2xl p-8 max-w-md mx-4 shadow-2xl animate-slide-in">
+            <div class="text-center">
+                <div class="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <i class="fas fa-check-circle text-green-600 text-5xl"></i>
+                </div>
+                <h3 class="text-2xl font-bold text-gray-800 mb-2">Listing Published Successfully! 🎉</h3>
+                <p class="text-gray-600 mb-6">Your surplus item is now live and ready for customers to purchase.</p>
+                <div class="space-y-3">
+                    <button onclick="window.location.href='seller-dashboard.html'" class="w-full btn-primary px-6 py-3 text-white rounded-lg font-semibold">
+                        Go to Dashboard
+                    </button>
+                    <button onclick="location.reload()" class="w-full btn-secondary px-6 py-3 bg-white border-2 border-gray-300 text-gray-700 rounded-lg font-semibold">
+                        Add Another Item
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Image Upload Handling
+        const uploadArea = document.getElementById('uploadArea');
+        const foodImage = document.getElementById('foodImage');
+        const uploadPlaceholder = document.getElementById('uploadPlaceholder');
+        const imagePreviewContainer = document.getElementById('imagePreviewContainer');
+        const imagePreview = document.getElementById('imagePreview');
+        const removeImage = document.getElementById('removeImage');
+
+        uploadArea.addEventListener('click', () => foodImage.click());
+
+        foodImage.addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    imagePreview.src = e.target.result;
+                    uploadPlaceholder.classList.add('hidden');
+                    imagePreviewContainer.classList.remove('hidden');
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+
+        removeImage.addEventListener('click', (e) => {
+            e.stopPropagation();
+            foodImage.value = '';
+            uploadPlaceholder.classList.remove('hidden');
+            imagePreviewContainer.classList.add('hidden');
+        });
+
+        // Drag and Drop
+        uploadArea.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            uploadArea.classList.add('drag-over');
+        });
+
+        uploadArea.addEventListener('dragleave', () => {
+            uploadArea.classList.remove('drag-over');
+        });
+
+        uploadArea.addEventListener('drop', (e) => {
+            e.preventDefault();
+            uploadArea.classList.remove('drag-over');
+            const file = e.dataTransfer.files[0];
+            if (file && file.type.startsWith('image/')) {
+                foodImage.files = e.dataTransfer.files;
+                const event = new Event('change');
+                foodImage.dispatchEvent(event);
+            }
+        });
+
+        // Dynamic Pricing Calculation
+        function calculatePricing() {
+
+    const originalPrice = parseFloat(document.getElementById('originalPrice').value);
+    const quantity = parseFloat(document.getElementById('quantity').value);
+    const weight = parseFloat(document.getElementById('weight').value);
+    const expiryDate = document.getElementById('expiryDate').value;
+    const expiryTime = document.getElementById('expiryTime').value;
+
+    if (!originalPrice || !quantity || !weight || !expiryDate || !expiryTime) return;
+
+    const now = new Date();
+    const expiry = new Date(`${expiryDate}T${expiryTime}`);
+    let hoursUntilExpiry = (expiry - now) / (1000 * 60 * 60);
+
+    if (hoursUntilExpiry <= 0) hoursUntilExpiry = 0;
+
+    const minDiscount = 10;
+    const maxDiscount = 75;
+    const maxHours = 48;
+
+    // Urgency factor (0 to 1)
+    let urgencyFactor = (maxHours - hoursUntilExpiry) / maxHours;
+
+    if (urgencyFactor < 0) urgencyFactor = 0;
+    if (urgencyFactor > 1) urgencyFactor = 1;
+
+    let discountPercent = minDiscount + (urgencyFactor * (maxDiscount - minDiscount));
+    discountPercent = Math.round(discountPercent);
+
+    const discountedPrice = originalPrice - (originalPrice * discountPercent / 100);
+    const savings = originalPrice - discountedPrice;
+
+    // Update UI
+    document.getElementById('discountPercent').textContent = `${discountPercent}%`;
+    document.getElementById('finalPrice').textContent = `₹${discountedPrice.toFixed(0)}`;
+    document.getElementById('savings').textContent = `₹${savings.toFixed(0)}`;
+
+    document.getElementById('pricingPreview').classList.remove('hidden');
+
+    // CO2 Calculation
+    const totalWeight = weight * quantity;
+    const co2Reduction = (totalWeight * 2.5).toFixed(1);
+    document.getElementById('co2Reduction').textContent = co2Reduction;
+    document.getElementById('impactPreview').classList.remove('hidden');
+}
+
+
+        // Add event listeners for dynamic calculation
+        ['originalPrice', 'quantity', 'weight', 'expiryDate', 'expiryTime'].forEach(id => {
+            document.getElementById(id).addEventListener('input', calculatePricing);
+            document.getElementById(id).addEventListener('change', calculatePricing);
+        });
+
+        // Set minimum date to today
+        const today = new Date().toISOString().split('T')[0];
+        document.getElementById('expiryDate').setAttribute('min', today);
+
+        // Form Submission
+   document.getElementById('addItemForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+
+    if (!this.checkValidity()) {
+        const firstInvalid = this.querySelector(':invalid');
+        if (firstInvalid) {
+            firstInvalid.focus();
+            firstInvalid.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+        return;
+    }
+
+    const originalPrice = parseFloat(document.getElementById('originalPrice').value);
+    const quantity = parseFloat(document.getElementById('quantity').value);
+    const weight = parseFloat(document.getElementById('weight').value);
+    const expiryDate = document.getElementById('expiryDate').value;
+    const expiryTime = document.getElementById('expiryTime').value;
+
+    const now = new Date();
+    const expiry = new Date(`${expiryDate}T${expiryTime}`);
+    const hoursUntilExpiry = (expiry - now) / (1000 * 60 * 60);
+
+    let discountPercent = 20;
+    if (hoursUntilExpiry <= 2) discountPercent = 70;
+    else if (hoursUntilExpiry <= 4) discountPercent = 60;
+    else if (hoursUntilExpiry <= 6) discountPercent = 50;
+    else if (hoursUntilExpiry <= 12) discountPercent = 40;
+    else if (hoursUntilExpiry <= 24) discountPercent = 30;
+
+    const finalPrice = originalPrice * (1 - discountPercent / 100);
+    const totalWeight = weight * quantity;
+    const co2Reduction = (totalWeight * 2.5).toFixed(1);
+
+    const file = document.getElementById('foodImage').files[0];
+
+    if (!file) {
+        alert("Please upload a food image before publishing.");
+        return;
+    }
+
+    const reader = new FileReader();
+
+    reader.onload = function(event) {
+
+        const newItem = {
+            id: "ITEM_" + Date.now(),
+            name: document.getElementById('foodName').value,
+            category: document.getElementById('category').value,
+            quantity: quantity,
+            seller: "Green Cafe",
+            originalPrice: originalPrice,
+            discountedPrice: finalPrice.toFixed(0),
+            discount: discountPercent,
+            expiryDate: expiryDate,
+            expiryTime: expiryTime,
+            co2Saved: co2Reduction,
+            image: event.target.result
+        };
+
+        let items = JSON.parse(localStorage.getItem("marketplaceItems")) || [];
+        items.push(newItem);
+        localStorage.setItem("marketplaceItems", JSON.stringify(items));
+
+        document.getElementById('successModal').classList.remove('hidden');
+    };
+
+    reader.readAsDataURL(file);
+});
+
+
+
+        // Save as Draft
+        document.getElementById('saveDraft').addEventListener('click', function() {
+            // In a real application, this would save to backend
+            alert('Draft saved successfully! ✓');
+        });
+
+        // Set default expiry time to 6 hours from now
+        const now = new Date();
+        now.setHours(now.getHours() + 6);
+        const hours = String(now.getHours()).padStart(2, '0');
+        const minutes = String(now.getMinutes()).padStart(2, '0');
+        document.getElementById('expiryTime').value = `${hours}:${minutes}`;
+
+        // Set default expiry date to today
+        document.getElementById('expiryDate').value = today;
+    </script>
+    
+</body>
+</html>

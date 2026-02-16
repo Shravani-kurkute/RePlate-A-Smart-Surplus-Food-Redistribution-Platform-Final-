@@ -1,0 +1,1093 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Seller Registration - RePlate | Partner with Us</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'orange-primary': '#f97316',
+                        'orange-dark': '#ea580c',
+                        'orange-light': '#fed7aa',
+                        'orange-bg': '#fff7ed',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        
+        .error-message {
+            display: none;
+            color: #ef4444;
+            font-size: 0.875rem;
+            margin-top: 0.25rem;
+        }
+        
+        .error-message.show {
+            display: block;
+        }
+        
+        .input-error {
+            border-color: #ef4444 !important;
+        }
+        
+        .input-success {
+            border-color: #f97316 !important;
+        }
+        
+        .fade-in {
+            animation: fadeIn 0.5s ease-in;
+        }
+        
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .password-strength {
+            height: 4px;
+            border-radius: 2px;
+            margin-top: 8px;
+            background-color: #e5e7eb;
+            overflow: hidden;
+        }
+        
+        .password-strength-bar {
+            height: 100%;
+            transition: width 0.3s ease, background-color 0.3s ease;
+            width: 0%;
+        }
+        
+        .strength-weak { background-color: #ef4444; width: 33%; }
+        .strength-medium { background-color: #f59e0b; width: 66%; }
+        .strength-strong { background-color: #f97316; width: 100%; }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-orange-50 via-gray-50 to-orange-50 min-h-screen py-8 px-4">
+    
+    <!-- Main Container -->
+    <div class="max-w-3xl mx-auto fade-in">
+        
+        <!-- Logo & Header -->
+        <div class="text-center mb-8">
+            <div class="inline-flex items-center gap-2 mb-4">
+                <!-- RePlate Logo - Leaf Icon -->
+                <svg class="w-10 h-10 text-orange-primary" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M17 8C8 10 5.9 16.17 3.82 21.34l1.89.66.12-.34C6.89 20 8.28 14 15 12c7-2 9-5 10-7-1 3-4 5-8 6z"/>
+                    <path d="M3.82 21.34C5.9 16.17 8 10 17 8c4-1 7-3 8-6 0 0-.5 4-7 7-6.72 2-8.11 8-9.18 12.66l-.12.34-1.88-.66z" opacity="0.5"/>
+                </svg>
+                <h1 class="text-3xl font-bold text-gray-800">RePlate</h1>
+            </div>
+            <p class="text-gray-600 text-sm">Fighting food waste, one plate at a time</p>
+        </div>
+        
+        <!-- Registration Card -->
+        <div class="bg-white rounded-2xl shadow-xl p-8 md:p-10">
+            <div class="mb-6">
+                <h2 class="text-2xl font-bold text-gray-800 mb-2">Register Your Business</h2>
+                <p class="text-gray-600 text-sm">Join RePlate as a seller and start reducing food waste while increasing revenue</p>
+            </div>
+            
+            <!-- Registration Form -->
+            <form id="sellerRegistrationForm" novalidate>
+                
+                <!-- Business Information Section -->
+                <div class="mb-6">
+                    <h3 class="text-lg font-semibold text-gray-700 mb-4 flex items-center gap-2">
+                        <svg class="w-5 h-5 text-orange-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path>
+                        </svg>
+                        Business Information
+                    </h3>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                        <!-- Business Name -->
+                        <div>
+                            <label for="businessName" class="block text-sm font-medium text-gray-700 mb-2">
+                                Business Name <span class="text-red-500">*</span>
+                            </label>
+                            <input 
+                                type="text" 
+                                id="businessName" 
+                                name="businessName"
+                                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-primary focus:border-transparent transition duration-200"
+                                placeholder="Enter business name"
+                                required
+                            />
+                            <p class="error-message" id="businessNameError">Please enter business name</p>
+                        </div>
+                        
+                        <!-- Owner Name -->
+                        <div>
+                            <label for="ownerName" class="block text-sm font-medium text-gray-700 mb-2">
+                                Owner Name <span class="text-red-500">*</span>
+                            </label>
+                            <input 
+                                type="text" 
+                                id="ownerName" 
+                                name="ownerName"
+                                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-primary focus:border-transparent transition duration-200"
+                                placeholder="Enter owner's full name"
+                                required
+                            />
+                            <p class="error-message" id="ownerNameError">Please enter owner name</p>
+                        </div>
+                    </div>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                        <!-- Business Type -->
+                        <div>
+                            <label for="businessType" class="block text-sm font-medium text-gray-700 mb-2">
+                                Business Type <span class="text-red-500">*</span>
+                            </label>
+                            <select 
+                                id="businessType" 
+                                name="businessType"
+                                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-primary focus:border-transparent transition duration-200 bg-white"
+                                required
+                            >
+                                <option value="">Select business type...</option>
+                                <option value="hotel">🏨 Hotel</option>
+                                <option value="restaurant">🍽️ Restaurant</option>
+                                <option value="cafe">☕ Cafe</option>
+                                <option value="bakery">🥖 Bakery</option>
+                                <option value="grocery">🛒 Grocery Store</option>
+                                <option value="mess">🍱 Mess</option>
+                            </select>
+                            <p class="error-message" id="businessTypeError">Please select business type</p>
+                        </div>
+                        
+                        <!-- GST Number (Optional) -->
+                        <div>
+                            <label for="gstNumber" class="block text-sm font-medium text-gray-700 mb-2">
+                                GST Number <span class="text-gray-400 text-xs">(Optional)</span>
+                            </label>
+                            <input 
+                                type="text" 
+                                id="gstNumber" 
+                                name="gstNumber"
+                                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-primary focus:border-transparent transition duration-200"
+                                placeholder="22AAAAA0000A1Z5"
+                                maxlength="15"
+                            />
+                            <p class="error-message" id="gstNumberError">Invalid GST format</p>
+                        </div>
+                    </div>
+                    
+                    <!-- FSSAI License Number (Optional) -->
+                    <div class="mb-4">
+                        <label for="fssaiNumber" class="block text-sm font-medium text-gray-700 mb-2">
+                            FSSAI License Number <span class="text-gray-400 text-xs">(Optional)</span>
+                        </label>
+                        <input 
+                            type="text" 
+                            id="fssaiNumber" 
+                            name="fssaiNumber"
+                            class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-primary focus:border-transparent transition duration-200"
+                            placeholder="12345678901234"
+                            maxlength="14"
+                        />
+                        <p class="error-message" id="fssaiNumberError">FSSAI number must be 14 digits</p>
+                    </div>
+                </div>
+                
+                <!-- Contact Information Section -->
+                <div class="mb-6">
+                    <h3 class="text-lg font-semibold text-gray-700 mb-4 flex items-center gap-2">
+                        <svg class="w-5 h-5 text-orange-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+                        </svg>
+                        Contact Information
+                    </h3>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                        <!-- Email -->
+                        <div>
+                            <label for="email" class="block text-sm font-medium text-gray-700 mb-2">
+                                Business Email <span class="text-red-500">*</span>
+                            </label>
+                            <input 
+                                type="email" 
+                                id="email" 
+                                name="email"
+                                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-primary focus:border-transparent transition duration-200"
+                                placeholder="business@example.com"
+                                required
+                            />
+                            <p class="error-message" id="emailError">Please enter a valid email address</p>
+                        </div>
+                        
+                        <!-- Phone Number -->
+                        <div>
+                            <label for="phone" class="block text-sm font-medium text-gray-700 mb-2">
+                                Phone Number <span class="text-red-500">*</span>
+                            </label>
+                            <input 
+                                type="tel" 
+                                id="phone" 
+                                name="phone"
+                                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-primary focus:border-transparent transition duration-200"
+                                placeholder="10-digit mobile number"
+                                maxlength="10"
+                                required
+                            />
+                            <p class="error-message" id="phoneError">Please enter a valid 10-digit phone number</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Address -->
+                    <div class="mb-4">
+                        <label for="address" class="block text-sm font-medium text-gray-700 mb-2">
+                            Business Address <span class="text-red-500">*</span>
+                        </label>
+                        <textarea 
+                            id="address" 
+                            name="address"
+                            rows="2"
+                            class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-primary focus:border-transparent transition duration-200"
+                            placeholder="Enter complete business address"
+                            required
+                        ></textarea>
+                        <p class="error-message" id="addressError">Please enter business address</p>
+                    </div>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <!-- City -->
+                        <div>
+                            <label for="city" class="block text-sm font-medium text-gray-700 mb-2">
+                                City <span class="text-red-500">*</span>
+                            </label>
+                            <input 
+                                type="text" 
+                                id="city" 
+                                name="city"
+                                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-primary focus:border-transparent transition duration-200"
+                                placeholder="Enter city"
+                                required
+                            />
+                            <p class="error-message" id="cityError">Please enter city</p>
+                        </div>
+                        
+                        <!-- Pincode -->
+                        <div>
+                            <label for="pincode" class="block text-sm font-medium text-gray-700 mb-2">
+                                Pincode <span class="text-red-500">*</span>
+                            </label>
+                            <input 
+                                type="text" 
+                                id="pincode" 
+                                name="pincode"
+                                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-primary focus:border-transparent transition duration-200"
+                                placeholder="6-digit pincode"
+                                maxlength="6"
+                                required
+                            />
+                            <p class="error-message" id="pincodeError">Please enter a valid 6-digit pincode</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Security Section -->
+                <div class="mb-6">
+                    <h3 class="text-lg font-semibold text-gray-700 mb-4 flex items-center gap-2">
+                        <svg class="w-5 h-5 text-orange-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path>
+                        </svg>
+                        Security
+                    </h3>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <!-- Password -->
+                        <div>
+                            <label for="password" class="block text-sm font-medium text-gray-700 mb-2">
+                                Password <span class="text-red-500">*</span>
+                            </label>
+                            <div class="relative">
+                                <input 
+                                    type="password" 
+                                    id="password" 
+                                    name="password"
+                                    class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-primary focus:border-transparent transition duration-200"
+                                    placeholder="Create a strong password"
+                                    required
+                                />
+                                <button 
+                                    type="button" 
+                                    id="togglePassword"
+                                    class="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500 hover:text-gray-700"
+                                >
+                                    <svg id="eyeIcon" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
+                                    </svg>
+                                </button>
+                            </div>
+                            <div class="password-strength">
+                                <div id="passwordStrengthBar" class="password-strength-bar"></div>
+                            </div>
+                            <p class="text-xs text-gray-500 mt-2" id="passwordStrengthText">Password strength: None</p>
+                            <p class="error-message" id="passwordError">Password must be at least 8 characters with 1 uppercase letter and 1 number</p>
+                            
+                            <div class="mt-2 text-xs text-gray-600">
+                                <p class="font-medium mb-1">Password must contain:</p>
+                                <ul class="space-y-1">
+                                    <li id="req-length" class="flex items-center gap-2">
+                                        <span class="text-gray-400">○</span> At least 8 characters
+                                    </li>
+                                    <li id="req-uppercase" class="flex items-center gap-2">
+                                        <span class="text-gray-400">○</span> One uppercase letter
+                                    </li>
+                                    <li id="req-number" class="flex items-center gap-2">
+                                        <span class="text-gray-400">○</span> One number
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        
+                        <!-- Confirm Password -->
+                        <div>
+                            <label for="confirmPassword" class="block text-sm font-medium text-gray-700 mb-2">
+                                Confirm Password <span class="text-red-500">*</span>
+                            </label>
+                            <div class="relative">
+                                <input 
+                                    type="password" 
+                                    id="confirmPassword" 
+                                    name="confirmPassword"
+                                    class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-primary focus:border-transparent transition duration-200"
+                                    placeholder="Re-enter your password"
+                                    required
+                                />
+                                <button 
+                                    type="button" 
+                                    id="toggleConfirmPassword"
+                                    class="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500 hover:text-gray-700"
+                                >
+                                    <svg id="eyeIcon2" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
+                                    </svg>
+                                </button>
+                            </div>
+                            <p class="error-message" id="confirmPasswordError">Passwords do not match</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Terms & Compliance Section -->
+                <div class="mb-6">
+                    <div class="bg-orange-50 border border-orange-200 rounded-lg p-4 mb-4">
+                        <h4 class="font-semibold text-gray-800 mb-3 flex items-center gap-2">
+                            <svg class="w-5 h-5 text-orange-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                            </svg>
+                            Compliance & Agreements
+                        </h4>
+                        
+                        <div class="space-y-3">
+                            <!-- Terms & Conditions -->
+                            <div class="flex items-start gap-3">
+                                <input 
+                                    type="checkbox" 
+                                    id="terms" 
+                                    name="terms"
+                                    class="w-5 h-5 text-orange-primary border-gray-300 rounded focus:ring-orange-primary mt-0.5"
+                                    required
+                                />
+                                <label for="terms" class="text-sm text-gray-700">
+                                    I agree to the <a href="#" class="text-orange-primary hover:text-orange-dark font-medium">Terms & Conditions</a> and <a href="#" class="text-orange-primary hover:text-orange-dark font-medium">Privacy Policy</a> <span class="text-red-500">*</span>
+                                </label>
+                            </div>
+                            <p class="error-message ml-8" id="termsError">You must accept the terms and conditions</p>
+                            
+                            <!-- Food Safety Compliance -->
+                            <div class="flex items-start gap-3">
+                                <input 
+                                    type="checkbox" 
+                                    id="foodSafety" 
+                                    name="foodSafety"
+                                    class="w-5 h-5 text-orange-primary border-gray-300 rounded focus:ring-orange-primary mt-0.5"
+                                    required
+                                />
+                                <label for="foodSafety" class="text-sm text-gray-700">
+                                    I confirm that my business complies with all food safety regulations and standards <span class="text-red-500">*</span>
+                                </label>
+                            </div>
+                            <p class="error-message ml-8" id="foodSafetyError">You must confirm food safety compliance</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Submit Button -->
+                <button 
+                    type="submit"
+                    class="w-full bg-orange-primary hover:bg-orange-dark text-white font-semibold py-3 px-4 rounded-lg transition duration-200 shadow-md hover:shadow-lg transform hover:-translate-y-0.5"
+                >
+                    Register as Seller
+                </button>
+            </form>
+            
+            <!-- Login Link -->
+            <div class="mt-6 text-center">
+                <p class="text-sm text-gray-600">
+                    Already have an account? 
+                    <a href="/login" class="text-orange-primary hover:text-orange-dark font-semibold transition duration-200">
+                        Sign In
+                    </a>
+                </p>
+            </div>
+        </div>
+        
+        <!-- Info Box -->
+        <div class="mt-6 bg-orange-50 border border-orange-200 rounded-lg p-4">
+            <div class="flex items-start gap-3">
+                <svg class="w-5 h-5 text-orange-primary mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                </svg>
+                <div>
+                    <p class="text-sm text-gray-700 font-medium mb-1">Account Approval Process</p>
+                    <p class="text-xs text-gray-600">
+                        Your registration will be reviewed by our admin team within 24-48 hours. You'll receive an email notification once your account is approved.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Success Modal -->
+    <div id="successModal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
+        <div class="bg-white rounded-2xl p-8 max-w-md w-full text-center fade-in">
+            <div class="w-20 h-20 bg-orange-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                <svg class="w-10 h-10 text-orange-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                </svg>
+            </div>
+            <h3 class="text-2xl font-bold text-gray-800 mb-2">Registration Submitted! 🎉</h3>
+            <p class="text-gray-600 mb-2">Your seller account has been created successfully.</p>
+            <p class="text-sm text-orange-600 font-medium mb-4">Your account is pending admin approval.</p>
+            <p class="text-xs text-gray-500 mb-6">You will receive an email notification within 24-48 hours.</p>
+            <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-orange-primary mx-auto"></div>
+        </div>
+    </div>
+
+    <script>
+        // DOM Elements
+        const sellerRegistrationForm = document.getElementById('sellerRegistrationForm');
+        const businessNameInput = document.getElementById('businessName');
+        const ownerNameInput = document.getElementById('ownerName');
+        const businessTypeSelect = document.getElementById('businessType');
+        const gstNumberInput = document.getElementById('gstNumber');
+        const fssaiNumberInput = document.getElementById('fssaiNumber');
+        const emailInput = document.getElementById('email');
+        const phoneInput = document.getElementById('phone');
+        const addressInput = document.getElementById('address');
+        const cityInput = document.getElementById('city');
+        const pincodeInput = document.getElementById('pincode');
+        const passwordInput = document.getElementById('password');
+        const confirmPasswordInput = document.getElementById('confirmPassword');
+        const termsCheckbox = document.getElementById('terms');
+        const foodSafetyCheckbox = document.getElementById('foodSafety');
+        const togglePasswordBtn = document.getElementById('togglePassword');
+        const toggleConfirmPasswordBtn = document.getElementById('toggleConfirmPassword');
+        const successModal = document.getElementById('successModal');
+        const passwordStrengthBar = document.getElementById('passwordStrengthBar');
+        const passwordStrengthText = document.getElementById('passwordStrengthText');
+        
+        // Error message elements
+        const businessNameError = document.getElementById('businessNameError');
+        const ownerNameError = document.getElementById('ownerNameError');
+        const businessTypeError = document.getElementById('businessTypeError');
+        const gstNumberError = document.getElementById('gstNumberError');
+        const fssaiNumberError = document.getElementById('fssaiNumberError');
+        const emailError = document.getElementById('emailError');
+        const phoneError = document.getElementById('phoneError');
+        const addressError = document.getElementById('addressError');
+        const cityError = document.getElementById('cityError');
+        const pincodeError = document.getElementById('pincodeError');
+        const passwordError = document.getElementById('passwordError');
+        const confirmPasswordError = document.getElementById('confirmPasswordError');
+        const termsError = document.getElementById('termsError');
+        const foodSafetyError = document.getElementById('foodSafetyError');
+        
+        // Password requirement indicators
+        const reqLength = document.getElementById('req-length');
+        const reqUppercase = document.getElementById('req-uppercase');
+        const reqNumber = document.getElementById('req-number');
+        
+        // Validation Functions
+        function validateBusinessName(name) {
+            return name.trim().length >= 3;
+        }
+        
+        function validateOwnerName(name) {
+            return name.trim().length >= 3;
+        }
+        
+        function validateBusinessType(type) {
+            return type !== '';
+        }
+        
+        function validateGST(gst) {
+            if (gst.trim() === '') return true; // Optional field
+            const gstRegex = /^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[1-9A-Z]{1}Z[0-9A-Z]{1}$/;
+            return gstRegex.test(gst.toUpperCase());
+        }
+        
+        function validateFSSAI(fssai) {
+            if (fssai.trim() === '') return true; // Optional field
+            const fssaiRegex = /^[0-9]{14}$/;
+            return fssaiRegex.test(fssai);
+        }
+        
+        function validateEmail(email) {
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return emailRegex.test(email);
+        }
+        
+        function validatePhone(phone) {
+            const phoneRegex = /^[0-9]{10}$/;
+            return phoneRegex.test(phone);
+        }
+        
+        function validateAddress(address) {
+            return address.trim().length >= 10;
+        }
+        
+        function validateCity(city) {
+            return city.trim().length >= 2;
+        }
+        
+        function validatePincode(pincode) {
+            const pincodeRegex = /^[0-9]{6}$/;
+            return pincodeRegex.test(pincode);
+        }
+        
+        function validatePassword(password) {
+            const hasMinLength = password.length >= 8;
+            const hasUppercase = /[A-Z]/.test(password);
+            const hasNumber = /[0-9]/.test(password);
+            
+            return {
+                isValid: hasMinLength && hasUppercase && hasNumber,
+                hasMinLength,
+                hasUppercase,
+                hasNumber
+            };
+        }
+        
+        function checkPasswordStrength(password) {
+            let strength = 0;
+            
+            if (password.length >= 8) strength++;
+            if (password.length >= 12) strength++;
+            if (/[a-z]/.test(password) && /[A-Z]/.test(password)) strength++;
+            if (/[0-9]/.test(password)) strength++;
+            if (/[^a-zA-Z0-9]/.test(password)) strength++;
+            
+            return strength;
+        }
+        
+        // Show/Hide Error Functions
+        function showError(input, errorElement, message) {
+            input.classList.add('input-error');
+            input.classList.remove('input-success');
+            errorElement.textContent = message;
+            errorElement.classList.add('show');
+        }
+        
+        function clearError(input, errorElement) {
+            input.classList.remove('input-error');
+            errorElement.classList.remove('show');
+        }
+        
+        function showSuccess(input) {
+            input.classList.add('input-success');
+            input.classList.remove('input-error');
+        }
+        
+        // Toggle Password Visibility
+        togglePasswordBtn.addEventListener('click', function() {
+            const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+            passwordInput.setAttribute('type', type);
+            
+            document.getElementById('eyeIcon').innerHTML = type === 'text' 
+                ? '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29M3 3l3.59 3.59m0 0A9.953 9.953 0 0112 5c4.478 0 8.268 2.943 9.543 7a10.025 10.025 0 01-4.132 5.411m0 0L21 21"></path>'
+                : '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>';
+        });
+        
+        toggleConfirmPasswordBtn.addEventListener('click', function() {
+            const type = confirmPasswordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+            confirmPasswordInput.setAttribute('type', type);
+            
+            document.getElementById('eyeIcon2').innerHTML = type === 'text' 
+                ? '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29M3 3l3.59 3.59m0 0A9.953 9.953 0 0112 5c4.478 0 8.268 2.943 9.543 7a10.025 10.025 0 01-4.132 5.411m0 0L21 21"></path>'
+                : '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>';
+        });
+        
+        // Real-time Validation
+        businessNameInput.addEventListener('blur', function() {
+            if (!validateBusinessName(this.value)) {
+                showError(this, businessNameError, this.value.trim() === '' ? 'Business name is required' : 'Business name must be at least 3 characters');
+            } else {
+                clearError(this, businessNameError);
+                showSuccess(this);
+            }
+        });
+        
+        businessNameInput.addEventListener('input', function() {
+            if (validateBusinessName(this.value)) {
+                clearError(this, businessNameError);
+                showSuccess(this);
+            }
+        });
+        
+        ownerNameInput.addEventListener('blur', function() {
+            if (!validateOwnerName(this.value)) {
+                showError(this, ownerNameError, this.value.trim() === '' ? 'Owner name is required' : 'Owner name must be at least 3 characters');
+            } else {
+                clearError(this, ownerNameError);
+                showSuccess(this);
+            }
+        });
+        
+        ownerNameInput.addEventListener('input', function() {
+            if (validateOwnerName(this.value)) {
+                clearError(this, ownerNameError);
+                showSuccess(this);
+            }
+        });
+        
+        businessTypeSelect.addEventListener('change', function() {
+            if (validateBusinessType(this.value)) {
+                clearError(this, businessTypeError);
+                showSuccess(this);
+            }
+        });
+        
+        gstNumberInput.addEventListener('blur', function() {
+            if (this.value.trim() !== '' && !validateGST(this.value)) {
+                showError(this, gstNumberError, 'Invalid GST format (e.g., 22AAAAA0000A1Z5)');
+            } else {
+                clearError(this, gstNumberError);
+                if (this.value.trim() !== '') showSuccess(this);
+            }
+        });
+        
+        gstNumberInput.addEventListener('input', function() {
+            this.value = this.value.toUpperCase();
+            if (this.value.trim() === '' || validateGST(this.value)) {
+                clearError(this, gstNumberError);
+                if (this.value.trim() !== '') showSuccess(this);
+            }
+        });
+        
+        fssaiNumberInput.addEventListener('input', function() {
+            this.value = this.value.replace(/[^0-9]/g, '');
+            if (this.value.trim() === '' || validateFSSAI(this.value)) {
+                clearError(this, fssaiNumberError);
+                if (this.value.trim() !== '') showSuccess(this);
+            } else if (this.value.length > 0) {
+                showError(this, fssaiNumberError, 'FSSAI number must be exactly 14 digits');
+            }
+        });
+        
+        emailInput.addEventListener('blur', function() {
+            if (!validateEmail(this.value)) {
+                showError(this, emailError, this.value.trim() === '' ? 'Email is required' : 'Please enter a valid email address');
+            } else {
+                clearError(this, emailError);
+                showSuccess(this);
+            }
+        });
+        
+        emailInput.addEventListener('input', function() {
+            if (validateEmail(this.value)) {
+                clearError(this, emailError);
+                showSuccess(this);
+            }
+        });
+        
+        phoneInput.addEventListener('input', function() {
+            this.value = this.value.replace(/[^0-9]/g, '');
+            if (validatePhone(this.value)) {
+                clearError(this, phoneError);
+                showSuccess(this);
+            } else if (this.value.length > 0) {
+                showError(this, phoneError, 'Phone number must be exactly 10 digits');
+            }
+        });
+        
+        phoneInput.addEventListener('blur', function() {
+            if (!validatePhone(this.value)) {
+                showError(this, phoneError, this.value.trim() === '' ? 'Phone number is required' : 'Phone number must be exactly 10 digits');
+            } else {
+                clearError(this, phoneError);
+                showSuccess(this);
+            }
+        });
+        
+        addressInput.addEventListener('blur', function() {
+            if (!validateAddress(this.value)) {
+                showError(this, addressError, this.value.trim() === '' ? 'Address is required' : 'Address must be at least 10 characters');
+            } else {
+                clearError(this, addressError);
+                showSuccess(this);
+            }
+        });
+        
+        addressInput.addEventListener('input', function() {
+            if (validateAddress(this.value)) {
+                clearError(this, addressError);
+                showSuccess(this);
+            }
+        });
+        
+        cityInput.addEventListener('blur', function() {
+            if (!validateCity(this.value)) {
+                showError(this, cityError, this.value.trim() === '' ? 'City is required' : 'Please enter a valid city name');
+            } else {
+                clearError(this, cityError);
+                showSuccess(this);
+            }
+        });
+        
+        cityInput.addEventListener('input', function() {
+            if (validateCity(this.value)) {
+                clearError(this, cityError);
+                showSuccess(this);
+            }
+        });
+        
+        pincodeInput.addEventListener('input', function() {
+            this.value = this.value.replace(/[^0-9]/g, '');
+            if (validatePincode(this.value)) {
+                clearError(this, pincodeError);
+                showSuccess(this);
+            } else if (this.value.length > 0) {
+                showError(this, pincodeError, 'Pincode must be exactly 6 digits');
+            }
+        });
+        
+        pincodeInput.addEventListener('blur', function() {
+            if (!validatePincode(this.value)) {
+                showError(this, pincodeError, this.value.trim() === '' ? 'Pincode is required' : 'Pincode must be exactly 6 digits');
+            } else {
+                clearError(this, pincodeError);
+                showSuccess(this);
+            }
+        });
+        
+        // Password validation with strength indicator
+        passwordInput.addEventListener('input', function() {
+            const password = this.value;
+            const validation = validatePassword(password);
+            const strength = checkPasswordStrength(password);
+            
+            // Update requirement indicators
+            if (validation.hasMinLength) {
+                reqLength.innerHTML = '<span class="text-orange-primary">✓</span> At least 8 characters';
+                reqLength.classList.add('text-orange-primary');
+            } else {
+                reqLength.innerHTML = '<span class="text-gray-400">○</span> At least 8 characters';
+                reqLength.classList.remove('text-orange-primary');
+            }
+            
+            if (validation.hasUppercase) {
+                reqUppercase.innerHTML = '<span class="text-orange-primary">✓</span> One uppercase letter';
+                reqUppercase.classList.add('text-orange-primary');
+            } else {
+                reqUppercase.innerHTML = '<span class="text-gray-400">○</span> One uppercase letter';
+                reqUppercase.classList.remove('text-orange-primary');
+            }
+            
+            if (validation.hasNumber) {
+                reqNumber.innerHTML = '<span class="text-orange-primary">✓</span> One number';
+                reqNumber.classList.add('text-orange-primary');
+            } else {
+                reqNumber.innerHTML = '<span class="text-gray-400">○</span> One number';
+                reqNumber.classList.remove('text-orange-primary');
+            }
+            
+            // Update strength bar
+            passwordStrengthBar.className = 'password-strength-bar';
+            
+            if (password.length === 0) {
+                passwordStrengthText.textContent = 'Password strength: None';
+                passwordStrengthBar.style.width = '0%';
+            } else if (strength <= 2) {
+                passwordStrengthText.textContent = 'Password strength: Weak';
+                passwordStrengthBar.classList.add('strength-weak');
+            } else if (strength <= 3) {
+                passwordStrengthText.textContent = 'Password strength: Medium';
+                passwordStrengthBar.classList.add('strength-medium');
+            } else {
+                passwordStrengthText.textContent = 'Password strength: Strong';
+                passwordStrengthBar.classList.add('strength-strong');
+            }
+            
+            if (validation.isValid) {
+                clearError(this, passwordError);
+                showSuccess(this);
+            } else if (password.length > 0) {
+                showError(this, passwordError, 'Password must be at least 8 characters with 1 uppercase letter and 1 number');
+            }
+            
+            // Check confirm password match if already filled
+            if (confirmPasswordInput.value.length > 0) {
+                if (password === confirmPasswordInput.value) {
+                    clearError(confirmPasswordInput, confirmPasswordError);
+                    showSuccess(confirmPasswordInput);
+                } else {
+                    showError(confirmPasswordInput, confirmPasswordError, 'Passwords do not match');
+                }
+            }
+        });
+        
+        passwordInput.addEventListener('blur', function() {
+            const validation = validatePassword(this.value);
+            if (this.value.trim() === '') {
+                showError(this, passwordError, 'Password is required');
+            } else if (!validation.isValid) {
+                showError(this, passwordError, 'Password must be at least 8 characters with 1 uppercase letter and 1 number');
+            } else {
+                clearError(this, passwordError);
+                showSuccess(this);
+            }
+        });
+        
+        confirmPasswordInput.addEventListener('input', function() {
+            if (this.value === passwordInput.value && this.value.length > 0) {
+                clearError(this, confirmPasswordError);
+                showSuccess(this);
+            } else if (this.value.length > 0) {
+                showError(this, confirmPasswordError, 'Passwords do not match');
+            }
+        });
+        
+        confirmPasswordInput.addEventListener('blur', function() {
+            if (this.value.trim() === '') {
+                showError(this, confirmPasswordError, 'Please confirm your password');
+            } else if (this.value !== passwordInput.value) {
+                showError(this, confirmPasswordError, 'Passwords do not match');
+            } else {
+                clearError(this, confirmPasswordError);
+                showSuccess(this);
+            }
+        });
+        
+        termsCheckbox.addEventListener('change', function() {
+            if (this.checked) {
+                clearError(this, termsError);
+            }
+        });
+        
+        foodSafetyCheckbox.addEventListener('change', function() {
+            if (this.checked) {
+                clearError(this, foodSafetyError);
+            }
+        });
+        
+        // Form Submission
+        sellerRegistrationForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Get form values
+            const businessName = businessNameInput.value.trim();
+            const ownerName = ownerNameInput.value.trim();
+            const businessType = businessTypeSelect.value;
+            const gstNumber = gstNumberInput.value.trim();
+            const fssaiNumber = fssaiNumberInput.value.trim();
+            const email = emailInput.value.trim();
+            const phone = phoneInput.value.trim();
+            const address = addressInput.value.trim();
+            const city = cityInput.value.trim();
+            const pincode = pincodeInput.value.trim();
+            const password = passwordInput.value;
+            const confirmPassword = confirmPasswordInput.value;
+            const termsAccepted = termsCheckbox.checked;
+            const foodSafetyAccepted = foodSafetyCheckbox.checked;
+            
+            let isValid = true;
+            
+            // Validate all required fields
+            if (!validateBusinessName(businessName)) {
+                showError(businessNameInput, businessNameError, businessName === '' ? 'Business name is required' : 'Business name must be at least 3 characters');
+                isValid = false;
+            }
+            
+            if (!validateOwnerName(ownerName)) {
+                showError(ownerNameInput, ownerNameError, ownerName === '' ? 'Owner name is required' : 'Owner name must be at least 3 characters');
+                isValid = false;
+            }
+            
+            if (!validateBusinessType(businessType)) {
+                showError(businessTypeSelect, businessTypeError, 'Please select business type');
+                isValid = false;
+            }
+            
+            // Optional fields
+            if (gstNumber !== '' && !validateGST(gstNumber)) {
+                showError(gstNumberInput, gstNumberError, 'Invalid GST format');
+                isValid = false;
+            }
+            
+            if (fssaiNumber !== '' && !validateFSSAI(fssaiNumber)) {
+                showError(fssaiNumberInput, fssaiNumberError, 'FSSAI number must be exactly 14 digits');
+                isValid = false;
+            }
+            
+            if (!validateEmail(email)) {
+                showError(emailInput, emailError, email === '' ? 'Email is required' : 'Please enter a valid email address');
+                isValid = false;
+            }
+            
+            if (!validatePhone(phone)) {
+                showError(phoneInput, phoneError, phone === '' ? 'Phone number is required' : 'Phone number must be exactly 10 digits');
+                isValid = false;
+            }
+            
+            if (!validateAddress(address)) {
+                showError(addressInput, addressError, address === '' ? 'Address is required' : 'Address must be at least 10 characters');
+                isValid = false;
+            }
+            
+            if (!validateCity(city)) {
+                showError(cityInput, cityError, city === '' ? 'City is required' : 'Please enter a valid city name');
+                isValid = false;
+            }
+            
+            if (!validatePincode(pincode)) {
+                showError(pincodeInput, pincodeError, pincode === '' ? 'Pincode is required' : 'Pincode must be exactly 6 digits');
+                isValid = false;
+            }
+            
+            const passwordValidation = validatePassword(password);
+            if (!passwordValidation.isValid) {
+                showError(passwordInput, passwordError, password === '' ? 'Password is required' : 'Password must be at least 8 characters with 1 uppercase letter and 1 number');
+                isValid = false;
+            }
+            
+            if (confirmPassword !== password) {
+                showError(confirmPasswordInput, confirmPasswordError, confirmPassword === '' ? 'Please confirm your password' : 'Passwords do not match');
+                isValid = false;
+            }
+            
+            if (!termsAccepted) {
+                showError(termsCheckbox, termsError, 'You must accept the terms and conditions');
+                isValid = false;
+            }
+            
+            if (!foodSafetyAccepted) {
+                showError(foodSafetyCheckbox, foodSafetyError, 'You must confirm food safety compliance');
+                isValid = false;
+            }
+            
+            // If all validations pass
+            if (isValid) {
+                console.log('Seller Registration Data:', {
+                    businessName,
+                    ownerName,
+                    businessType,
+                    gstNumber,
+                    fssaiNumber,
+                    email,
+                    phone,
+                    address,
+                    city,
+                    pincode,
+                    password,
+                    termsAccepted,
+                    foodSafetyAccepted
+                });
+                
+                // Show success modal
+                successModal.classList.remove('hidden');
+                
+                // Redirect to login after 4 seconds
+                setTimeout(function() {
+                    console.log('Redirecting to login page...');
+                    // Uncomment when you have login page
+                    // window.location.href = '/login';
+                    
+                    // For demo purposes
+                    successModal.classList.add('hidden');
+                    alert('Registration submitted successfully! Your account is pending admin approval. Redirecting to login page...');
+                    sellerRegistrationForm.reset();
+                    
+                    // Reset password strength indicator
+                    passwordStrengthBar.className = 'password-strength-bar';
+                    passwordStrengthBar.style.width = '0%';
+                    passwordStrengthText.textContent = 'Password strength: None';
+                    
+                    // Reset requirement indicators
+                    reqLength.innerHTML = '<span class="text-gray-400">○</span> At least 8 characters';
+                    reqLength.classList.remove('text-orange-primary');
+                    reqUppercase.innerHTML = '<span class="text-gray-400">○</span> One uppercase letter';
+                    reqUppercase.classList.remove('text-orange-primary');
+                    reqNumber.innerHTML = '<span class="text-gray-400">○</span> One number';
+                    reqNumber.classList.remove('text-orange-primary');
+                }, 4000);
+            } else {
+                // Scroll to first error
+                const firstError = document.querySelector('.input-error');
+                if (firstError) {
+                    firstError.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }
+            }
+        });
+    </script>
+
+    <script>
+sellerRegistrationForm.addEventListener("submit", async function(e) {
+    e.preventDefault();
+
+    const res = await fetch("http://localhost:5000/seller-register", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+            businessName: document.getElementById("businessName").value,
+            ownerName: document.getElementById("ownerName").value,
+            businessType: document.getElementById("businessType").value,
+            gstNumber: document.getElementById("gstNumber").value,
+            fssaiNumber: document.getElementById("fssaiNumber").value,
+            email: document.getElementById("email").value,
+            phone: document.getElementById("phone").value,
+            address: document.getElementById("address").value,
+            city: document.getElementById("city").value,
+            pincode: document.getElementById("pincode").value,
+            password: document.getElementById("password").value
+        })
+    });
+
+    const data = await res.json();
+
+    if (data.msg === "Seller registered successfully") {
+        successModal.classList.remove("hidden");
+
+        setTimeout(() => {
+            window.location.href = "Login_Seller.html";
+        }, 2000);
+    } else {
+        alert(data.msg);
+    }
+});
+</script>
+
+</body>
+</html>

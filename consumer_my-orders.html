@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Orders - RePlate</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .sidebar-active {
+            background-color: #d1fae5;
+            color: #059669;
+            border-left: 4px solid #10b981;
+        }
+        .tab-active {
+            border-bottom: 3px solid #10b981;
+            color: #059669;
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-green-50 to-emerald-50 min-h-screen">
+    
+    <!-- Top Navbar -->
+    <nav class="bg-white shadow-sm fixed top-0 left-0 right-0 z-50">
+        <div class="flex items-center justify-between px-6 py-4">
+            <div class="flex items-center space-x-4">
+                <div class="flex items-center space-x-2">
+                    <div class="w-10 h-10 bg-green-500 rounded-xl flex items-center justify-center">
+                        <i class="fas fa-leaf text-white text-xl"></i>
+                    </div>
+                    <div>
+                        <h1 class="text-xl font-bold text-gray-800">RePlate</h1>
+                        <p class="text-xs text-gray-500">Consumer Dashboard</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="flex items-center space-x-6">
+                <a href="consumer_notifications.html" class="relative">
+                    <i class="fas fa-bell text-gray-600 text-xl"></i>
+                    <span class="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">3</span>
+                </a>
+                
+                <div class="flex items-center space-x-2 bg-green-50 px-4 py-2 rounded-full cursor-pointer">
+                    <i class="fas fa-leaf text-green-600"></i>
+                    <span class="text-sm font-medium text-green-700"><a href="consumer_my-impact.html">My Impact</a></span>
+                </div>
+
+                <div class="flex items-center space-x-3 cursor-pointer">
+                    <div class="w-10 h-10 bg-green-500 rounded-full flex items-center justify-center">
+                        <span class="text-white font-bold">JD</span>
+                    </div>
+                    <div>
+                        <p class="text-sm font-semibold text-gray-800">John Doe</p>
+                        <p class="text-xs text-gray-500">Consumer</p>
+                    </div>
+                    <i class="fas fa-chevron-down text-gray-400 text-sm"></i>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Container -->
+    <div class="flex pt-20">
+        <!-- Left Sidebar -->
+        <aside class="w-64 bg-white h-screen fixed left-0 shadow-lg">
+            <div class="p-6 space-y-2">
+                <a href="consumer-dashboard.html" class="flex items-center space-x-3 px-4 py-3 rounded-lg hover:bg-gray-100 text-gray-600">
+                    <i class="fas fa-home"></i>
+                    <span class="font-medium">Dashboard</span>
+                </a>
+                <a href="consumer_marketplace.html" class="flex items-center space-x-3 px-4 py-3 rounded-lg hover:bg-gray-100 text-gray-600">
+                    <i class="fas fa-shopping-bag"></i>
+                    <span class="font-medium">Marketplace</span>
+                </a>
+                <a href="consumer_my-orders.html" class="flex items-center space-x-3 px-4 py-3 rounded-lg sidebar-active">
+                    <i class="fas fa-receipt"></i>
+                    <span class="font-medium">My Orders</span>
+                </a>
+                <a href="consumer_my-impact.html" class="flex items-center space-x-3 px-4 py-3 rounded-lg hover:bg-gray-100 text-gray-600">
+                    <i class="fas fa-chart-line"></i>
+                    <span class="font-medium">My Impact</span>
+                </a>
+                <a href="consumer_profile.html" class="flex items-center space-x-3 px-4 py-3 rounded-lg hover:bg-gray-100 text-gray-600">
+                    <i class="fas fa-user"></i>
+                    <span class="font-medium">Profile</span>
+                </a>
+                <a href="consumer_notifications.html" class="flex items-center space-x-3 px-4 py-3 bg-green-50 text-primary rounded-lg font-medium">
+                    <i class="fas fa-bell"></i>
+                    <span>Notifications</span>
+                    <span class="ml-auto bg-red-500 text-white text-xs rounded-full px-2 py-0.5">5</span>
+                </a>
+                <hr class="my-4">
+                <a href="selection.html" class="flex items-center space-x-3 px-4 py-3 rounded-lg hover:bg-red-50 text-red-600">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <span class="font-medium">Logout</span>
+                </a>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="ml-64 flex-1 p-8">
+            <!-- Page Header -->
+            <div class="mb-8">
+                <h2 class="text-3xl font-bold text-gray-800 mb-2">My Orders</h2>
+                <p class="text-gray-600">Track and manage all your food bookings</p>
+            </div>
+
+            <!-- Summary Cards -->
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+                <div class="bg-white rounded-xl p-5 shadow-sm">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="text-sm text-gray-500 mb-1">Total Orders</p>
+                            <p class="text-2xl font-bold text-gray-800">47</p>
+                        </div>
+                        <div class="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center">
+                            <i class="fas fa-receipt text-green-600 text-xl"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-white rounded-xl p-5 shadow-sm">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="text-sm text-gray-500 mb-1">Completed</p>
+                            <p class="text-2xl font-bold text-green-600">42</p>
+                        </div>
+                        <div class="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center">
+                            <i class="fas fa-check-circle text-green-600 text-xl"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-white rounded-xl p-5 shadow-sm">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="text-sm text-gray-500 mb-1">Active</p>
+                            <p class="text-2xl font-bold text-blue-600">3</p>
+                        </div>
+                        <div class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">
+                            <i class="fas fa-clock text-blue-600 text-xl"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-white rounded-xl p-5 shadow-sm">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="text-sm text-gray-500 mb-1">Cancelled</p>
+                            <p class="text-2xl font-bold text-red-600">2</p>
+                        </div>
+                        <div class="w-12 h-12 bg-red-100 rounded-lg flex items-center justify-center">
+                            <i class="fas fa-times-circle text-red-600 text-xl"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Filter Tabs -->
+            <div class="bg-white rounded-2xl shadow-sm mb-6">
+                <div class="border-b border-gray-200">
+                    <div class="flex space-x-8 px-6">
+                        <button class="py-4 font-semibold tab-active">
+                            All Orders
+                        </button>
+                        <button class="py-4 font-semibold text-gray-600 hover:text-green-600">
+                            Booked
+                        </button>
+                        <button class="py-4 font-semibold text-gray-600 hover:text-green-600">
+                            Completed
+                        </button>
+                        <button class="py-4 font-semibold text-gray-600 hover:text-green-600">
+                            Cancelled
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Orders Table -->
+                <div class="p-6">
+                    <div class="overflow-x-auto">
+                        <table class="w-full">
+                            <thead>
+                                <tr class="border-b border-gray-200">
+                                    <th class="text-left py-3 px-4 text-sm font-semibold text-gray-600">Order ID</th>
+                                    <th class="text-left py-3 px-4 text-sm font-semibold text-gray-600">Food Items</th>
+                                    <th class="text-left py-3 px-4 text-sm font-semibold text-gray-600">Seller</th>
+                                    <th class="text-left py-3 px-4 text-sm font-semibold text-gray-600">Date</th>
+                                    <th class="text-left py-3 px-4 text-sm font-semibold text-gray-600">Amount</th>
+                                    <th class="text-left py-3 px-4 text-sm font-semibold text-gray-600">Status</th>
+                                    <th class="text-left py-3 px-4 text-sm font-semibold text-gray-600">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <!-- Order 1 -->
+                                <tr class="border-b border-gray-100 hover:bg-gray-50">
+                                    <td class="py-4 px-4">
+                                        <p class="text-sm font-bold text-gray-800">#ORD-12456</p>
+                                        <p class="text-xs text-gray-500">Just now</p>
+                                    </td>
+                                    <td class="py-4 px-4">
+                                        <div class="flex items-center space-x-2">
+                                            <img src="https://images.unsplash.com/photo-1585937421612-70a008356fbe?w=50&h=50&fit=crop" 
+                                                 alt="Food" class="w-10 h-10 rounded-lg object-cover">
+                                            <div>
+                                                <p class="text-sm font-semibold text-gray-800">Paneer Butter Masala +1</p>
+                                                <p class="text-xs text-gray-500">2 items</p>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="py-4 px-4">
+                                        <p class="text-sm text-gray-700">Green Cafe</p>
+                                        <p class="text-xs text-gray-500">1.2 km away</p>
+                                    </td>
+                                    <td class="py-4 px-4">
+                                        <p class="text-sm text-gray-700">12 Feb 2026</p>
+                                        <p class="text-xs text-gray-500">7:30 PM</p>
+                                    </td>
+                                    <td class="py-4 px-4">
+                                        <p class="text-sm font-bold text-gray-800">₹480</p>
+                                    </td>
+                                    <td class="py-4 px-4">
+                                        <span class="px-3 py-1 bg-blue-100 text-blue-700 rounded-full text-xs font-semibold">
+                                            Booked
+                                        </span>
+                                    </td>
+                                    <td class="py-4 px-4">
+                                        <a href="order-details.html" class="text-green-600 hover:text-green-700 font-semibold text-sm">
+                                            View Details
+                                        </a>
+                                    </td>
+                                </tr>
+
+                                <!-- Order 2 -->
+                                <tr class="border-b border-gray-100 hover:bg-gray-50">
+                                    <td class="py-4 px-4">
+                                        <p class="text-sm font-bold text-gray-800">#ORD-12455</p>
+                                        <p class="text-xs text-gray-500">2 hours ago</p>
+                                    </td>
+                                    <td class="py-4 px-4">
+                                        <div class="flex items-center space-x-2">
+                                            <img src="https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=50&h=50&fit=crop" 
+                                                 alt="Food" class="w-10 h-10 rounded-lg object-cover">
+                                            <div>
+                                                <p class="text-sm font-semibold text-gray-800">Assorted Pastries</p>
+                                                <p class="text-xs text-gray-500">1 item</p>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="py-4 px-4">
+                                        <p class="text-sm text-gray-700">Sweet Delights</p>
+                                        <p class="text-xs text-gray-500">0.8 km away</p>
+                                    </td>
+                                    <td class="py-4 px-4">
+                                        <p class="text-sm text-gray-700">12 Feb 2026</p>
+                                        <p class="text-xs text-gray-500">5:00 PM</p>
+                                    </td>
+                                    <td class="py-4 px-4">
+                                        <p class="text-sm font-bold text-gray-800">₹150</p>
+                                    </td>
+                                    <td class="py-4 px-4">
+                                        <span class="px-3 py-1 bg-green-100 text-green-700 rounded-full text-xs font-semibold">
+                                            Completed
+                                        </span>
+                                    </td>
+                                    <td class="py-4 px-4">
+                                        <a href="order-details.html" class="text-green-600 hover:text-green-700 font-semibold text-sm">
+                                            View Details
+                                        </a>
+                                    </td>
+                                </tr>
+
+                                <!-- Order 3 -->
+                                <tr class="border-b border-gray-100 hover:bg-gray-50">
+                                    <td class="py-4 px-4">
+                                        <p class="text-sm font-bold text-gray-800">#ORD-12454</p>
+                                        <p class="text-xs text-gray-500">Yesterday</p>
+                                    </td>
+                                    <td class="py-4 px-4">
+                                        <div class="flex items-center space-x-2">
+                                            <img src="https://images.unsplash.com/photo-1601050690597-df0568f70950?w=50&h=50&fit=crop" 
+                                                 alt="Food" class="w-10 h-10 rounded-lg object-cover">
+                                            <div>
+                                                <p class="text-sm font-semibold text-gray-800">Pizza Margherita</p>
+                                                <p class="text-xs text-gray-500">1 item</p>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="py-4 px-4">
+                                        <p class="text-sm text-gray-700">Pizza Hub</p>
+                                        <p class="text-xs text-gray-500">1.5 km away</p>
+                                    </td>
+                                    <td class="py-4 px-4">
+                                        <p class="text-sm text-gray-700">11 Feb 2026</p>
+                                        <p class="text-xs text-gray-500">8:00 PM</p>
+                                    </td>
+                                    <td class="py-4 px-4">
+                                        <p class="text-sm font-bold text-gray-800">₹200</p>
+                                    </td>
+                                    <td class="py-4 px-4">
+                                        <span class="px-3 py-1 bg-green-100 text-green-700 rounded-full text-xs font-semibold">
+                                            Completed
+                                        </span>
+                                    </td>
+                                    <td class="py-4 px-4">
+                                        <a href="order-details.html" class="text-green-600 hover:text-green-700 font-semibold text-sm">
+                                            View Details
+                                        </a>
+                                    </td>
+                                </tr>
+
+                                <!-- Order 4 -->
+                                <tr class="border-b border-gray-100 hover:bg-gray-50">
+                                    <td class="py-4 px-4">
+                                        <p class="text-sm font-bold text-gray-800">#ORD-12453</p>
+                                        <p class="text-xs text-gray-500">2 days ago</p>
+                                    </td>
+                                    <td class="py-4 px-4">
+                                        <div class="flex items-center space-x-2">
+                                            <img src="https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8?w=50&h=50&fit=crop" 
+                                                 alt="Food" class="w-10 h-10 rounded-lg object-cover">
+                                            <div>
+                                                <p class="text-sm font-semibold text-gray-800">Veg Biryani +2</p>
+                                                <p class="text-xs text-gray-500">3 items</p>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="py-4 px-4">
+                                        <p class="text-sm text-gray-700">Spice Garden</p>
+                                        <p class="text-xs text-gray-500">2.5 km away</p>
+                                    </td>
+                                    <td class="py-4 px-4">
+                                        <p class="text-sm text-gray-700">10 Feb 2026</p>
+                                        <p class="text-xs text-gray-500">7:15 PM</p>
+                                    </td>
+                                    <td class="py-4 px-4">
+                                        <p class="text-sm font-bold text-gray-800">₹620</p>
+                                    </td>
+                                    <td class="py-4 px-4">
+                                        <span class="px-3 py-1 bg-green-100 text-green-700 rounded-full text-xs font-semibold">
+                                            Completed
+                                        </span>
+                                    </td>
+                                    <td class="py-4 px-4">
+                                        <a href="order-details.html" class="text-green-600 hover:text-green-700 font-semibold text-sm">
+                                            View Details
+                                        </a>
+                                    </td>
+                                </tr>
+
+                                <!-- Order 5 -->
+                                <tr class="border-b border-gray-100 hover:bg-gray-50">
+                                    <td class="py-4 px-4">
+                                        <p class="text-sm font-bold text-gray-800">#ORD-12452</p>
+                                        <p class="text-xs text-gray-500">3 days ago</p>
+                                    </td>
+                                    <td class="py-4 px-4">
+                                        <div class="flex items-center space-x-2">
+                                            <img src="https://images.unsplash.com/photo-1567620905732-2d1ec7ab7445?w=50&h=50&fit=crop" 
+                                                 alt="Food" class="w-10 h-10 rounded-lg object-cover">
+                                            <div>
+                                                <p class="text-sm font-semibold text-gray-800">Pancakes Stack</p>
+                                                <p class="text-xs text-gray-500">1 item</p>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="py-4 px-4">
+                                        <p class="text-sm text-gray-700">Breakfast Corner</p>
+                                        <p class="text-xs text-gray-500">3.2 km away</p>
+                                    </td>
+                                    <td class="py-4 px-4">
+                                        <p class="text-sm text-gray-700">09 Feb 2026</p>
+                                        <p class="text-xs text-gray-500">9:00 AM</p>
+                                    </td>
+                                    <td class="py-4 px-4">
+                                        <p class="text-sm font-bold text-gray-800">₹110</p>
+                                    </td>
+                                    <td class="py-4 px-4">
+                                        <span class="px-3 py-1 bg-red-100 text-red-700 rounded-full text-xs font-semibold">
+                                            Cancelled
+                                        </span>
+                                    </td>
+                                    <td class="py-4 px-4">
+                                        <a href="order-details.html" class="text-green-600 hover:text-green-700 font-semibold text-sm">
+                                            View Details
+                                        </a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- Pagination -->
+                    <div class="flex items-center justify-between mt-6">
+                        <p class="text-sm text-gray-600">Showing 1-5 of 47 orders</p>
+                        <div class="flex space-x-2">
+                            <button class="px-4 py-2 border border-gray-300 rounded-lg text-gray-600 hover:bg-gray-50">
+                                Previous
+                            </button>
+                            <button class="px-4 py-2 bg-green-600 text-white rounded-lg">1</button>
+                            <button class="px-4 py-2 border border-gray-300 rounded-lg text-gray-600 hover:bg-gray-50">2</button>
+                            <button class="px-4 py-2 border border-gray-300 rounded-lg text-gray-600 hover:bg-gray-50">3</button>
+                            <button class="px-4 py-2 border border-gray-300 rounded-lg text-gray-600 hover:bg-gray-50">
+                                Next
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // Dummy data for backend integration
+        const ordersData = {
+            userId: "USER001",
+            summary: {
+                total: 47,
+                completed: 42,
+                active: 3,
+                cancelled: 2
+            },
+            orders: [
+                {
+                    orderId: "ORD-12456",
+                    items: ["Paneer Butter Masala", "Veg Biryani"],
+                    itemCount: 2,
+                    seller: "Green Cafe",
+                    distance: 1.2,
+                    date: "2026-02-12T19:30:00Z",
+                    amount: 480,
+                    status: "Booked"
+                }
+                // More orders...
+            ]
+        };
+
+        // API endpoints:
+        // GET /api/orders - Get all orders with filters
+        // GET /api/orders/:orderId - Get order details
+    </script>
+</body>
+</html>

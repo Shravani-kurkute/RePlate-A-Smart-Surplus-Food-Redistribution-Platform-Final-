@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RePlate Admin - Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#3B82F6',
+                        secondary: '#1E40AF',
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-gray-50">
+    <!-- Top Navbar -->
+    <nav class="bg-white shadow-md fixed w-full top-0 z-50">
+        <div class="flex items-center justify-between px-6 py-4">
+            <div class="flex items-center space-x-4">
+                <button id="sidebarToggle" class="lg:hidden text-gray-600">
+                    <i class="fas fa-bars text-xl"></i>
+                </button>
+                <div class="flex items-center space-x-2">
+                    <i class="fas fa-leaf text-primary text-2xl"></i>
+                    <span class="text-xl font-bold text-gray-800">RePlate <span class="text-primary">Admin</span></span>
+                </div>
+            </div>
+            
+            <div class="flex-1 max-w-xl mx-8 hidden md:block">
+                <div class="relative">
+                    <input type="text" placeholder="Search..." class="w-full px-4 py-2 pl-10 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
+                    <i class="fas fa-search absolute left-3 top-3 text-gray-400"></i>
+                </div>
+            </div>
+            
+            <div class="flex items-center space-x-6">
+                <div class="relative">
+                    <a href="admin_notifications.html" class="fas fa-bell text-gray-600 text-xl cursor-pointer"></i></a>
+                    <span class="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">3</span>
+                </div>
+                <div class="relative">
+                    <button id="profileBtn" class="flex items-center space-x-2 focus:outline-none">
+                        <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='40'%3E%3Ccircle cx='20' cy='20' r='20' fill='%233B82F6'/%3E%3Ctext x='20' y='26' font-size='16' fill='white' text-anchor='middle' font-family='Arial'%3EA%3C/text%3E%3C/svg%3E" class="w-10 h-10 rounded-full">
+                        <span class="hidden md:block text-sm font-medium">Admin User</span>
+                        <i class="fas fa-chevron-down text-xs"></i>
+                    </button>
+                    <div id="profileDropdown" class="hidden absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg py-2">
+                        <a href="admin_settings.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"><i class="fas fa-cog mr-2"></i>Settings</a>
+                        <a href="selection.html" onclick="logout()" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"><i class="fas fa-sign-out-alt mr-2"></i>Logout</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="flex pt-16">
+        <!-- Sidebar -->
+        <aside id="sidebar" class="bg-white w-64 min-h-screen shadow-lg fixed lg:sticky top-16 -left-64 lg:left-0 transition-all duration-300 z-40">
+            <nav class="p-4 space-y-2">
+                <a href="admin_dashboard.html" class="flex items-center space-x-3 px-4 py-3 bg-blue-50 text-primary rounded-lg font-medium">
+                    <i class="fas fa-chart-line"></i>
+                    <span>Dashboard</span>
+                </a>
+                <a href="admin_sellers.html" class="flex items-center space-x-3 px-4 py-3 text-gray-700 hover:bg-gray-100 rounded-lg">
+                    <i class="fas fa-user-check"></i>
+                    <span>Approve Sellers</span>
+                </a>
+                <a href="admin_listings.html" class="flex items-center space-x-3 px-4 py-3 text-gray-700 hover:bg-gray-100 rounded-lg">
+                    <i class="fas fa-list"></i>
+                    <span>Manage Listings</span>
+                </a>
+                <a href="admin_users.html" class="flex items-center space-x-3 px-4 py-3 text-gray-700 hover:bg-gray-100 rounded-lg">
+                    <i class="fas fa-users"></i>
+                    <span>Users Management</span>
+                </a>
+                <a href="admin_orders.html" class="flex items-center space-x-3 px-4 py-3 text-gray-700 hover:bg-gray-100 rounded-lg">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span>Orders Management</span>
+                </a>
+                <a href="admin_analytics.html" class="flex items-center space-x-3 px-4 py-3 text-gray-700 hover:bg-gray-100 rounded-lg">
+                    <i class="fas fa-leaf"></i>
+                    <span>Carbon Analytics</span>
+                </a>
+                <a href="admin_cities.html" class="flex items-center space-x-3 px-4 py-3 text-gray-700 hover:bg-gray-100 rounded-lg">
+                    <i class="fas fa-city"></i>
+                    <span>City Insights</span>
+                </a>
+                <a href="admin_reports.html" class="flex items-center space-x-3 px-4 py-3 text-gray-700 hover:bg-gray-100 rounded-lg">
+                    <i class="fas fa-file-alt"></i>
+                    <span>Reports</span>
+                </a>
+                <a href="admin_settings.html" class="flex items-center space-x-3 px-4 py-3 text-gray-700 hover:bg-gray-100 rounded-lg">
+                    <i class="fas fa-cog"></i>
+                    <span>Settings</span>
+                </a>
+                <a href="selection.html" onclick="logout()" class="flex items-center space-x-3 px-4 py-3 text-red-600 hover:bg-red-50 rounded-lg">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <span>Logout</span>
+                </a>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="flex-1 p-6 lg:ml-0">
+            <div class="mb-6">
+                <h1 class="text-3xl font-bold text-gray-800">Dashboard Overview</h1>
+                <p class="text-gray-600 mt-1">Welcome back, Admin! Here's your platform summary.</p>
+            </div>
+
+            <!-- Summary Cards -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+                <div class="bg-white rounded-lg shadow-md p-6 border-l-4 border-blue-500">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="text-gray-600 text-sm font-medium">Total Consumers</p>
+                            <h3 class="text-3xl font-bold text-gray-800 mt-2">2,847</h3>
+                            <p class="text-green-500 text-sm mt-2"><i class="fas fa-arrow-up"></i> 12% from last month</p>
+                        </div>
+                        <div class="bg-blue-100 rounded-full p-4">
+                            <i class="fas fa-users text-primary text-2xl"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-lg shadow-md p-6 border-l-4 border-green-500">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="text-gray-600 text-sm font-medium">Total Sellers</p>
+                            <h3 class="text-3xl font-bold text-gray-800 mt-2">156</h3>
+                            <p class="text-green-500 text-sm mt-2"><i class="fas fa-arrow-up"></i> 8% from last month</p>
+                        </div>
+                        <div class="bg-green-100 rounded-full p-4">
+                            <i class="fas fa-store text-green-600 text-2xl"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-lg shadow-md p-6 border-l-4 border-purple-500">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="text-gray-600 text-sm font-medium">Active Listings</p>
+                            <h3 class="text-3xl font-bold text-gray-800 mt-2">523</h3>
+                            <p class="text-green-500 text-sm mt-2"><i class="fas fa-arrow-up"></i> 15% from last week</p>
+                        </div>
+                        <div class="bg-purple-100 rounded-full p-4">
+                            <i class="fas fa-list text-purple-600 text-2xl"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-lg shadow-md p-6 border-l-4 border-orange-500">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="text-gray-600 text-sm font-medium">Total Orders</p>
+                            <h3 class="text-3xl font-bold text-gray-800 mt-2">4,291</h3>
+                            <p class="text-green-500 text-sm mt-2"><i class="fas fa-arrow-up"></i> 23% from last month</p>
+                        </div>
+                        <div class="bg-orange-100 rounded-full p-4">
+                            <i class="fas fa-shopping-cart text-orange-600 text-2xl"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-lg shadow-md p-6 border-l-4 border-teal-500">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="text-gray-600 text-sm font-medium">Food Saved</p>
+                            <h3 class="text-3xl font-bold text-gray-800 mt-2">8,645 kg</h3>
+                            <p class="text-green-500 text-sm mt-2"><i class="fas fa-arrow-up"></i> 18% from last month</p>
+                        </div>
+                        <div class="bg-teal-100 rounded-full p-4">
+                            <i class="fas fa-utensils text-teal-600 text-2xl"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-lg shadow-md p-6 border-l-4 border-emerald-500">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="text-gray-600 text-sm font-medium">CO₂ Reduced</p>
+                            <h3 class="text-3xl font-bold text-gray-800 mt-2">21,612 kg</h3>
+                            <p class="text-green-500 text-sm mt-2"><i class="fas fa-arrow-up"></i> 18% from last month</p>
+                        </div>
+                        <div class="bg-emerald-100 rounded-full p-4">
+                            <i class="fas fa-leaf text-emerald-600 text-2xl"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Charts Section -->
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+                <div class="bg-white rounded-lg shadow-md p-6">
+                    <h3 class="text-xl font-bold text-gray-800 mb-4">Orders per Day</h3>
+                    <canvas id="ordersChart"></canvas>
+                </div>
+
+                <div class="bg-white rounded-lg shadow-md p-6">
+                    <h3 class="text-xl font-bold text-gray-800 mb-4">CO₂ Reduction Trend</h3>
+                    <canvas id="co2Chart"></canvas>
+                </div>
+            </div>
+
+            <!-- Recent Activity -->
+            <div class="bg-white rounded-lg shadow-md p-6">
+                <h3 class="text-xl font-bold text-gray-800 mb-4">Recent Activity</h3>
+                <div class="overflow-x-auto">
+                    <table class="w-full">
+                        <thead class="bg-gray-100 border-b">
+                            <tr>
+                                <th class="px-6 py-3 text-left text-sm font-semibold text-gray-700">Type</th>
+                                <th class="px-6 py-3 text-left text-sm font-semibold text-gray-700">Details</th>
+                                <th class="px-6 py-3 text-left text-sm font-semibold text-gray-700">Time</th>
+                                <th class="px-6 py-3 text-left text-sm font-semibold text-gray-700">Status</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-gray-200">
+                            <tr class="hover:bg-gray-50">
+                                <td class="px-6 py-4">
+                                    <span class="bg-green-100 text-green-700 px-3 py-1 rounded-full text-xs font-medium">
+                                        <i class="fas fa-store mr-1"></i>New Seller
+                                    </span>
+                                </td>
+                                <td class="px-6 py-4 text-sm text-gray-800">Green Bistro - Mumbai</td>
+                                <td class="px-6 py-4 text-sm text-gray-600">2 hours ago</td>
+                                <td class="px-6 py-4">
+                                    <span class="bg-yellow-100 text-yellow-700 px-3 py-1 rounded-full text-xs">Pending</span>
+                                </td>
+                            </tr>
+                            <tr class="hover:bg-gray-50">
+                                <td class="px-6 py-4">
+                                    <span class="bg-blue-100 text-blue-700 px-3 py-1 rounded-full text-xs font-medium">
+                                        <i class="fas fa-shopping-cart mr-1"></i>Order
+                                    </span>
+                                </td>
+                                <td class="px-6 py-4 text-sm text-gray-800">Order #RP-4289 - Fresh Pastries</td>
+                                <td class="px-6 py-4 text-sm text-gray-600">3 hours ago</td>
+                                <td class="px-6 py-4">
+                                    <span class="bg-green-100 text-green-700 px-3 py-1 rounded-full text-xs">Completed</span>
+                                </td>
+                            </tr>
+                            <tr class="hover:bg-gray-50">
+                                <td class="px-6 py-4">
+                                    <span class="bg-red-100 text-red-700 px-3 py-1 rounded-full text-xs font-medium">
+                                        <i class="fas fa-clock mr-1"></i>Expired
+                                    </span>
+                                </td>
+                                <td class="px-6 py-4 text-sm text-gray-800">Listing #L-892 - Veggie Sandwiches</td>
+                                <td class="px-6 py-4 text-sm text-gray-600">5 hours ago</td>
+                                <td class="px-6 py-4">
+                                    <span class="bg-gray-100 text-gray-700 px-3 py-1 rounded-full text-xs">Archived</span>
+                                </td>
+                            </tr>
+                            <tr class="hover:bg-gray-50">
+                                <td class="px-6 py-4">
+                                    <span class="bg-green-100 text-green-700 px-3 py-1 rounded-full text-xs font-medium">
+                                        <i class="fas fa-store mr-1"></i>New Seller
+                                    </span>
+                                </td>
+                                <td class="px-6 py-4 text-sm text-gray-800">Healthy Bites - Delhi</td>
+                                <td class="px-6 py-4 text-sm text-gray-600">1 day ago</td>
+                                <td class="px-6 py-4">
+                                    <span class="bg-yellow-100 text-yellow-700 px-3 py-1 rounded-full text-xs">Pending</span>
+                                </td>
+                            </tr>
+                            <tr class="hover:bg-gray-50">
+                                <td class="px-6 py-4">
+                                    <span class="bg-blue-100 text-blue-700 px-3 py-1 rounded-full text-xs font-medium">
+                                        <i class="fas fa-shopping-cart mr-1"></i>Order
+                                    </span>
+                                </td>
+                                <td class="px-6 py-4 text-sm text-gray-800">Order #RP-4288 - Bakery Items</td>
+                                <td class="px-6 py-4 text-sm text-gray-600">1 day ago</td>
+                                <td class="px-6 py-4">
+                                    <span class="bg-green-100 text-green-700 px-3 py-1 rounded-full text-xs">Completed</span>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="hidden fixed bottom-6 right-6 bg-gray-800 text-white px-6 py-3 rounded-lg shadow-lg z-50">
+        <p id="toastMessage"></p>
+    </div>
+
+    <script>
+        // Profile dropdown toggle
+        document.getElementById('profileBtn').addEventListener('click', function(e) {
+            e.stopPropagation();
+            document.getElementById('profileDropdown').classList.toggle('hidden');
+        });
+
+        document.addEventListener('click', function() {
+            document.getElementById('profileDropdown').classList.add('hidden');
+        });
+
+        // Sidebar toggle
+        document.getElementById('sidebarToggle').addEventListener('click', function() {
+            const sidebar = document.getElementById('sidebar');
+            sidebar.classList.toggle('-left-64');
+            sidebar.classList.toggle('left-0');
+        });
+
+        // Orders Chart
+        const ordersCtx = document.getElementById('ordersChart').getContext('2d');
+        new Chart(ordersCtx, {
+            type: 'bar',
+            data: {
+                labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+                datasets: [{
+                    label: 'Orders',
+                    data: [45, 62, 58, 71, 89, 95, 68],
+                    backgroundColor: '#3B82F6',
+                    borderRadius: 8
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: true,
+                plugins: {
+                    legend: { display: false }
+                },
+                scales: {
+                    y: { beginAtZero: true }
+                }
+            }
+        });
+
+        // CO2 Chart
+        const co2Ctx = document.getElementById('co2Chart').getContext('2d');
+        new Chart(co2Ctx, {
+            type: 'line',
+            data: {
+                labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+                datasets: [{
+                    label: 'CO₂ Reduced (kg)',
+                    data: [1200, 1800, 2400, 2900, 3500, 4100],
+                    borderColor: '#10B981',
+                    backgroundColor: 'rgba(16, 185, 129, 0.1)',
+                    tension: 0.4,
+                    fill: true
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: true,
+                plugins: {
+                    legend: { display: false }
+                },
+                scales: {
+                    y: { beginAtZero: true }
+                }
+            }
+        });
+
+        // Logout function
+        function logout() {
+            localStorage.removeItem('adminToken');
+            sessionStorage.clear();
+            showToast('Admin logged out successfully');
+            setTimeout(() => {
+                window.location.href = 'login.html';
+            }, 1500);
+        }
+
+        // Toast notification
+        function showToast(message) {
+            const toast = document.getElementById('toast');
+            const toastMessage = document.getElementById('toastMessage');
+            toastMessage.textContent = message;
+            toast.classList.remove('hidden');
+            setTimeout(() => {
+                toast.classList.add('hidden');
+            }, 3000);
+        }
+    </script>
+</body>
+</html>

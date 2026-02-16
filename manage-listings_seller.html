@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Listings - RePlate</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+        
+        * {
+            font-family: 'Inter', sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 50%, #bbf7d0 100%);
+            min-height: 100vh;
+        }
+        
+        .glass-card {
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+        
+        .sidebar-link {
+            transition: all 0.2s ease;
+        }
+        
+        .sidebar-link:hover {
+            background: rgba(34, 197, 94, 0.1);
+            padding-left: 1.5rem;
+        }
+        
+        .sidebar-link.active {
+            background: linear-gradient(90deg, rgba(34, 197, 94, 0.2) 0%, transparent 100%);
+            border-left: 3px solid #22c55e;
+            color: #16a34a;
+            font-weight: 600;
+        }
+        
+        .gradient-text {
+            background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .filter-tab {
+            transition: all 0.3s ease;
+        }
+        
+        .filter-tab:hover {
+            background: rgba(34, 197, 94, 0.1);
+        }
+        
+        .filter-tab.active {
+            background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%);
+            color: white;
+            box-shadow: 0 4px 12px rgba(34, 197, 94, 0.3);
+        }
+        
+        .badge {
+            padding: 0.375rem 0.875rem;
+            border-radius: 9999px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+        }
+        
+        .badge-active {
+            background: #dcfce7;
+            color: #166534;
+        }
+        
+        .badge-expiring {
+            background: #fef3c7;
+            color: #92400e;
+        }
+        
+        .badge-expired {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+        
+        .badge-sold {
+            background: #f3f4f6;
+            color: #4b5563;
+        }
+        
+        .countdown-timer {
+            font-family: 'Courier New', monospace;
+            font-weight: bold;
+        }
+        
+        .countdown-urgent {
+            animation: pulse 1.5s ease-in-out infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.6; }
+        }
+        
+        .table-row {
+            transition: all 0.2s ease;
+        }
+        
+        .table-row:hover {
+            background: rgba(34, 197, 94, 0.05);
+            transform: scale(1.01);
+        }
+        
+        .action-btn {
+            transition: all 0.2s ease;
+        }
+        
+        .action-btn:hover {
+            transform: translateY(-2px);
+        }
+        
+        .stat-card {
+            transition: all 0.3s ease;
+        }
+        
+        .stat-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 30px -5px rgba(34, 197, 94, 0.2);
+        }
+        
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .animate-fade-in {
+            animation: fadeIn 0.5s ease-out;
+        }
+        
+        .modal {
+            backdrop-filter: blur(5px);
+        }
+        
+        .food-image {
+            transition: transform 0.3s ease;
+        }
+        
+        .food-image:hover {
+            transform: scale(1.1);
+        }
+    </style>
+</head>
+<body>
+    <!-- Top Navigation -->
+    <nav class="glass-card sticky top-0 z-50 shadow-lg">
+        <div class="max-w-full mx-auto px-6 py-4">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center space-x-8">
+                    <div class="flex items-center space-x-3">
+                        <div class="w-10 h-10 bg-gradient-to-br from-green-400 to-green-600 rounded-xl flex items-center justify-center">
+                            <i class="fas fa-leaf text-white text-xl"></i>
+                        </div>
+                        <div>
+                            <h1 class="text-2xl font-bold gradient-text">RePlate</h1>
+                            <p class="text-xs text-gray-500">Manage Listings</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="flex items-center space-x-6">
+                    <div class="relative">
+                        <a href="notifications_seller.html"class="p-2 hover:bg-green-50 rounded-lg transition">
+                            <i class="fas fa-bell text-gray-600"></i>
+                            <span class="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full"></span>
+                        </a>
+                    </div>
+                    
+                    <div class="flex items-center space-x-3 pl-4 border-l border-gray-200">
+                        <img src="https://ui-avatars.com/api/?name=Green+Cafe&background=22c55e&color=fff" class="w-10 h-10 rounded-full" alt="Profile">
+                        <div class="text-left">
+                            <p class="text-sm font-semibold text-gray-800">Green Cafe</p>
+                            <p class="text-xs text-gray-500">Verified Seller</p>
+                        </div>
+                        <i class="fas fa-chevron-down text-gray-400 text-sm"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="flex">
+        <!-- Sidebar -->
+        <aside class="w-64 glass-card min-h-screen shadow-xl">
+            <div class="p-6 space-y-2">
+                <a href="seller-dashboard.html" class="sidebar-link flex items-center space-x-3 px-4 py-3 rounded-lg text-gray-600 hover:text-green-600">
+                    <i class="fas fa-home w-5"></i>
+                    <span>Dashboard</span>
+                </a>
+                <a href="add-surplus-item.html" class="sidebar-link flex items-center space-x-3 px-4 py-3 rounded-lg text-gray-600 hover:text-green-600">
+                    <i class="fas fa-plus-circle w-5"></i>
+                    <span>Add Surplus Item</span>
+                </a>
+                <a href="manage-listings_seller.html" class="sidebar-link active flex items-center space-x-3 px-4 py-3 rounded-lg">
+                    <i class="fas fa-list w-5"></i>
+                    <span>Manage Listings</span>
+                </a>
+                <a href="orders-management_seller.html" class="sidebar-link flex items-center space-x-3 px-4 py-3 rounded-lg text-gray-600 hover:text-green-600">
+                    <i class="fas fa-shopping-bag w-5"></i>
+                    <span>Orders</span>
+                </a>
+                <a href="impact-analytics_seller.html" class="sidebar-link flex items-center space-x-3 px-4 py-3 rounded-lg text-gray-600 hover:text-green-600">
+                    <i class="fas fa-chart-line w-5"></i>
+                    <span>Impact & Analytics</span>
+                </a>
+                
+                <div class="pt-4 border-t border-gray-200 mt-4">
+                    <a href="profile-settings_seller.html" class="sidebar-link flex items-center space-x-3 px-4 py-3 rounded-lg text-gray-600 hover:text-green-600">
+                        <i class="fas fa-user w-5"></i>
+                        <span>Profile</span>
+                    </a>
+                    <a href="profile-settings_seller.html" class="sidebar-link flex items-center space-x-3 px-4 py-3 rounded-lg text-gray-600 hover:text-green-600">
+                        <i class="fas fa-cog w-5"></i>
+                        <span>Settings</span>
+                    </a>
+                    <a href="selection.html" class="sidebar-link flex items-center space-x-3 px-4 py-3 rounded-lg text-gray-600 hover:text-red-600">
+                        <i class="fas fa-sign-out-alt w-5"></i>
+                        <span>Logout</span>
+                    </a>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="flex-1 p-8">
+            <!-- Page Header -->
+            <div class="mb-8 animate-fade-in">
+                <h2 class="text-3xl font-bold text-gray-800">Manage Surplus Listings</h2>
+                <p class="text-gray-600 mt-2">Track and manage all your surplus food items efficiently 📋</p>
+            </div>
+
+            <!-- Summary Cards -->
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+                <div class="stat-card glass-card rounded-xl p-6 shadow-lg">
+                    <div class="flex items-center justify-between mb-3">
+                        <div class="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center">
+                            <i class="fas fa-clipboard-list text-green-600 text-xl"></i>
+                        </div>
+                    </div>
+                    <h3 class="text-gray-600 text-sm font-medium">Total Active Listings</h3>
+                    <p class="text-3xl font-bold text-gray-800 mt-2" id="totalActive">12</p>
+                </div>
+
+                <div class="stat-card glass-card rounded-xl p-6 shadow-lg">
+                    <div class="flex items-center justify-between mb-3">
+                        <div class="w-12 h-12 bg-yellow-100 rounded-lg flex items-center justify-center">
+                            <i class="fas fa-exclamation-triangle text-yellow-600 text-xl"></i>
+                        </div>
+                    </div>
+                    <h3 class="text-gray-600 text-sm font-medium">Expiring Today</h3>
+                    <p class="text-3xl font-bold text-gray-800 mt-2" id="expiringToday">5</p>
+                </div>
+
+                <div class="stat-card glass-card rounded-xl p-6 shadow-lg">
+                    <div class="flex items-center justify-between mb-3">
+                        <div class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">
+                            <i class="fas fa-rupee-sign text-blue-600 text-xl"></i>
+                        </div>
+                    </div>
+                    <h3 class="text-gray-600 text-sm font-medium">Total Revenue</h3>
+                    <p class="text-3xl font-bold text-gray-800 mt-2">₹8,450</p>
+                </div>
+
+                <div class="stat-card glass-card rounded-xl p-6 shadow-lg">
+                    <div class="flex items-center justify-between mb-3">
+                        <div class="w-12 h-12 bg-red-100 rounded-lg flex items-center justify-center">
+                            <i class="fas fa-archive text-red-600 text-xl"></i>
+                        </div>
+                    </div>
+                    <h3 class="text-gray-600 text-sm font-medium">Sold Out Items</h3>
+                    <p class="text-3xl font-bold text-gray-800 mt-2" id="soldOut">8</p>
+                </div>
+            </div>
+
+            <!-- Filter Tabs -->
+            <div class="glass-card rounded-2xl p-6 shadow-lg mb-8 animate-fade-in">
+                <div class="flex flex-wrap gap-3">
+                    <button class="filter-tab active px-6 py-3 rounded-lg font-semibold" data-filter="all">
+                        <i class="fas fa-list mr-2"></i>All Listings
+                    </button>
+                    <button class="filter-tab px-6 py-3 rounded-lg font-semibold bg-white" data-filter="active">
+                        <i class="fas fa-check-circle mr-2"></i>Active
+                    </button>
+                    <button class="filter-tab px-6 py-3 rounded-lg font-semibold bg-white" data-filter="expiring">
+                        <i class="fas fa-clock mr-2"></i>Expiring Soon
+                    </button>
+                    <button class="filter-tab px-6 py-3 rounded-lg font-semibold bg-white" data-filter="expired">
+                        <i class="fas fa-times-circle mr-2"></i>Expired
+                    </button>
+                    <button class="filter-tab px-6 py-3 rounded-lg font-semibold bg-white" data-filter="sold">
+                        <i class="fas fa-box mr-2"></i>Sold Out
+                    </button>
+                </div>
+            </div>
+
+            <!-- Listings Table -->
+            <div class="glass-card rounded-2xl shadow-lg overflow-hidden animate-fade-in">
+                <div class="overflow-x-auto">
+                    <table class="w-full">
+                        <thead class="bg-gradient-to-r from-green-50 to-emerald-50">
+                            <tr>
+                                <th class="text-left py-4 px-6 text-sm font-bold text-gray-700">Image</th>
+                                <th class="text-left py-4 px-6 text-sm font-bold text-gray-700">Food Name</th>
+                                <th class="text-left py-4 px-6 text-sm font-bold text-gray-700">Category</th>
+                                <th class="text-left py-4 px-6 text-sm font-bold text-gray-700">Qty Left</th>
+                                <th class="text-left py-4 px-6 text-sm font-bold text-gray-700">Original Price</th>
+                                <th class="text-left py-4 px-6 text-sm font-bold text-gray-700">Discount</th>
+                                <th class="text-left py-4 px-6 text-sm font-bold text-gray-700">Final Price</th>
+                                <th class="text-left py-4 px-6 text-sm font-bold text-gray-700">Expires In</th>
+                                <th class="text-left py-4 px-6 text-sm font-bold text-gray-700">Status</th>
+                                <th class="text-left py-4 px-6 text-sm font-bold text-gray-700">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="listingsTableBody">
+                            <!-- Listings will be dynamically inserted here -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Delete Confirmation Modal -->
+    <div id="deleteModal" class="hidden fixed inset-0 bg-black bg-opacity-50 modal flex items-center justify-center z-50">
+        <div class="glass-card rounded-2xl p-8 max-w-md mx-4 shadow-2xl">
+            <div class="text-center">
+                <div class="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <i class="fas fa-trash-alt text-red-600 text-3xl"></i>
+                </div>
+                <h3 class="text-2xl font-bold text-gray-800 mb-2">Delete Listing?</h3>
+                <p class="text-gray-600 mb-6">Are you sure you want to delete "<span id="deleteItemName" class="font-semibold"></span>"? This action cannot be undone.</p>
+                <div class="flex space-x-4">
+                    <button onclick="closeDeleteModal()" class="flex-1 px-6 py-3 bg-gray-200 text-gray-700 rounded-lg font-semibold hover:bg-gray-300 transition">
+                        Cancel
+                    </button>
+                    <button onclick="confirmDelete()" class="flex-1 px-6 py-3 bg-red-600 text-white rounded-lg font-semibold hover:bg-red-700 transition">
+                        Delete
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- View Details Modal -->
+    <div id="detailsModal" class="hidden fixed inset-0 bg-black bg-opacity-50 modal flex items-center justify-center z-50">
+        <div class="glass-card rounded-2xl p-8 max-w-2xl mx-4 shadow-2xl max-h-[90vh] overflow-y-auto">
+            <div class="flex items-center justify-between mb-6">
+                <h3 class="text-2xl font-bold text-gray-800">Listing Details</h3>
+                <button onclick="closeDetailsModal()" class="w-10 h-10 bg-gray-100 rounded-lg hover:bg-gray-200 transition">
+                    <i class="fas fa-times text-gray-600"></i>
+                </button>
+            </div>
+            <div id="detailsContent">
+                <!-- Details will be populated dynamically -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+
+let currentFilter = "all";
+
+// Always read fresh data
+function getListings() {
+    return JSON.parse(localStorage.getItem("marketplaceItems")) || [];
+}
+
+// Convert expiry to Date safely
+function getExpiryDate(item) {
+    return new Date(`${item.expiryDate}T${item.expiryTime}`);
+}
+
+// Auto status calculation
+function calculateStatus(item) {
+    const expiry = getExpiryDate(item);
+    const now = new Date();
+
+    if (item.quantity <= 0) return "sold";
+    if (expiry <= now) return "expired";
+
+    const hoursLeft = (expiry - now) / (1000 * 60 * 60);
+
+    if (hoursLeft <= 4) return "expiring";
+    return "active";
+}
+
+// Badge UI
+function getStatusBadge(status) {
+    if (status === "sold")
+        return '<span class="badge badge-sold">Sold Out</span>';
+
+    if (status === "expired")
+        return '<span class="badge badge-expired">Expired</span>';
+
+    if (status === "expiring")
+        return '<span class="badge badge-expiring">Expiring Soon</span>';
+
+    return '<span class="badge badge-active">Active</span>';
+}
+
+// Countdown
+function formatCountdown(expiry) {
+    const now = new Date();
+    const diff = expiry - now;
+
+    if (diff <= 0) return "Expired";
+
+    const hours = Math.floor(diff / (1000 * 60 * 60));
+    const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+
+    return `${hours}h ${minutes}m`;
+}
+
+// MAIN RENDER
+function renderListings() {
+
+    const listings = getListings();
+    const tbody = document.getElementById("listingsTableBody");
+
+    let filtered = listings.filter(item => {
+        const status = calculateStatus(item);
+        if (currentFilter === "all") return true;
+        return status === currentFilter;
+    });
+
+    if (filtered.length === 0) {
+        tbody.innerHTML = `
+            <tr>
+                <td colspan="10" class="text-center py-10 text-gray-500">
+                    No listings found.
+                </td>
+            </tr>
+        `;
+        updateStats(listings);
+        return;
+    }
+
+    tbody.innerHTML = filtered.map(item => {
+
+        const expiry = getExpiryDate(item);
+        const status = calculateStatus(item);
+
+        return `
+        <tr class="border-b">
+            <td class="py-4 px-6">
+                <img src="${item.image}" class="w-16 h-16 rounded-lg object-cover">
+            </td>
+            <td class="py-4 px-6 font-semibold">${item.name}</td>
+            <td class="py-4 px-6">${item.category}</td>
+            <td class="py-4 px-6">${item.quantity}</td>
+            <td class="py-4 px-6">₹${item.originalPrice}</td>
+            <td class="py-4 px-6">${item.discount}%</td>
+            <td class="py-4 px-6 font-bold text-green-600">₹${item.discountedPrice}</td>
+            <td class="py-4 px-6">${formatCountdown(expiry)}</td>
+            <td class="py-4 px-6">${getStatusBadge(status)}</td>
+            <td class="py-4 px-6">
+                <button onclick="deleteListing('${item.id}')" 
+                        class="bg-red-500 text-white px-3 py-1 rounded">
+                    Delete
+                </button>
+            </td>
+        </tr>
+        `;
+
+    }).join("");
+
+    updateStats(listings);
+}
+
+// DELETE
+function deleteListing(id) {
+    let listings = getListings();
+    listings = listings.filter(item => item.id !== id);
+    localStorage.setItem("marketplaceItems", JSON.stringify(listings));
+    renderListings();
+}
+
+// STATS
+function updateStats(listings) {
+
+    const now = new Date();
+
+    let active = 0;
+    let expiring = 0;
+    let sold = 0;
+
+    listings.forEach(item => {
+        const status = calculateStatus(item);
+        if (status === "active") active++;
+        if (status === "expiring") expiring++;
+        if (status === "sold") sold++;
+    });
+
+    document.getElementById("totalActive").textContent = active;
+    document.getElementById("expiringToday").textContent = expiring;
+    document.getElementById("soldOut").textContent = sold;
+}
+
+// FILTER BUTTONS
+document.querySelectorAll(".filter-tab").forEach(tab => {
+    tab.addEventListener("click", function () {
+
+        document.querySelectorAll(".filter-tab").forEach(t => {
+            t.classList.remove("active");
+        });
+
+        this.classList.add("active");
+        currentFilter = this.dataset.filter;
+        renderListings();
+    });
+});
+
+// AUTO REFRESH
+setInterval(renderListings, 60000);
+
+// INITIAL LOAD
+renderListings();
+
+</script>
+
+    
+</body>
+</html>

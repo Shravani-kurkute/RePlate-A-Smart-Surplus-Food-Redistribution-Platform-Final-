@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NGO Donation Registration | RePlate</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css"/>
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Roboto',sans-serif;}
+
+body{
+    background:#000;
+    min-height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    padding:20px;
+    overflow-x:hidden;
+}
+
+video{
+    position:fixed;
+    top:0;left:0;
+    width:100%;height:100%;
+    object-fit:cover;
+    opacity:0.5;
+    z-index:-2;
+}
+
+.overlay{
+    position:fixed;
+    width:100%;height:100%;
+    background:rgba(0,0,0,0.6);
+    z-index:-1;
+}
+
+.container{
+    width:100%;
+    max-width:850px;
+    padding:40px;
+    border-radius:25px;
+    backdrop-filter:blur(15px);
+    background:linear-gradient(135deg, rgba(255,255,255,0.15), rgba(255,255,255,0.05));
+    border:2px solid rgba(255,255,255,0.3);
+    box-shadow:0 15px 50px rgba(0,0,0,0.5);
+    color:white;
+}
+
+h1{
+    text-align:center;
+    margin-bottom:30px;
+}
+
+h1 span{color:#22c55e;}
+
+.form-group{
+    margin-bottom:20px;
+    display:flex;
+    flex-direction:column;
+}
+
+label{
+    margin-bottom:8px;
+    font-weight:600;
+}
+
+input{
+    padding:14px;
+    border-radius:12px;
+    border:2px solid rgba(255,255,255,0.3);
+    background:rgba(255,255,255,0.1);
+    color:white;
+}
+
+input:focus{
+    border-color:#22c55e;
+    outline:none;
+}
+
+.btn{
+    margin-top:20px;
+    padding:16px;
+    border:none;
+    border-radius:50px;
+    background:#22c55e;
+    color:white;
+    font-weight:700;
+    cursor:pointer;
+    width:100%;
+}
+
+.btn:hover{
+    background:#16a34a;
+}
+
+/* Map Section */
+#mapContainer{
+    margin-top:30px;
+    display:none;
+    position:relative;
+}
+
+#map{
+    height:450px;
+    border-radius:20px;
+    border:2px solid rgba(255,255,255,0.3);
+}
+
+/* Center Pin */
+.center-pin{
+    position:absolute;
+    top:50%;
+    left:50%;
+    transform:translate(-50%, -100%);
+    font-size:40px;
+    color:#22c55e;
+    pointer-events:none;
+}
+
+/* Address Box */
+.address-box{
+    margin-top:15px;
+    padding:15px;
+    background:rgba(34,197,94,0.2);
+    border-radius:12px;
+    display:none;
+}
+
+.confirm-btn{
+    margin-top:15px;
+    padding:14px;
+    background:white;
+    color:black;
+    border:none;
+    border-radius:50px;
+    font-weight:700;
+    cursor:pointer;
+    width:100%;
+}
+</style>
+</head>
+
+<body>
+
+<video autoplay muted loop>
+<source src="1.mov" type="video/mp4">
+</video>
+
+<div class="overlay"></div>
+
+<div class="container">
+
+<h1>Re<span>Plate</span> NGO Donation</h1>
+
+<form id="donationForm">
+
+<div class="form-group">
+<label>Full Name</label>
+<input type="text" id="name" required>
+</div>
+
+<div class="form-group">
+<label>Mobile Number</label>
+<input type="tel" id="phone" required>
+</div>
+
+<button type="button" class="btn" onclick="startLocationFlow()">
+Continue to Location Selection
+</button>
+
+<!-- Map Section -->
+<div id="mapContainer">
+
+<div id="map"></div>
+<div class="center-pin">📍</div>
+
+<div class="address-box" id="addressBox">
+<strong>Selected Address:</strong>
+<p id="selectedAddress"></p>
+<button type="button" class="confirm-btn" onclick="confirmLocation()">
+Confirm This Location
+</button>
+</div>
+
+</div>
+
+<input type="hidden" id="latitude">
+<input type="hidden" id="longitude">
+
+</form>
+
+</div>
+
+<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+
+<script>
+
+let map;
+
+function startLocationFlow(){
+
+    const name = document.getElementById("name").value;
+    const phone = document.getElementById("phone").value;
+
+    if(!name || !phone){
+        alert("Please enter Name and Phone Number first.");
+        return;
+    }
+
+    document.getElementById("mapContainer").style.display="block";
+
+    if(!map){
+        initMap();
+    }
+
+    if(navigator.geolocation){
+        navigator.geolocation.getCurrentPosition(
+            function(position){
+                map.setView([position.coords.latitude, position.coords.longitude], 17);
+            },
+            function(){
+                alert("GPS permission denied. Please slide map manually.");
+            }
+        );
+    }
+}
+
+function initMap(){
+
+    map = L.map('map').setView([20.5937, 78.9629], 5);
+
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{
+        attribution:'© OpenStreetMap contributors'
+    }).addTo(map);
+
+    map.on("moveend", function(){
+        const center = map.getCenter();
+        reverseGeocode(center);
+    });
+}
+
+function reverseGeocode(latlng){
+
+    fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${latlng.lat}&lon=${latlng.lng}`)
+    .then(res=>res.json())
+    .then(data=>{
+
+        document.getElementById("selectedAddress").innerText = data.display_name;
+        document.getElementById("addressBox").style.display="block";
+
+        document.getElementById("latitude").value = latlng.lat;
+        document.getElementById("longitude").value = latlng.lng;
+    });
+}
+
+function confirmLocation(){
+    alert("Location Confirmed Successfully!");
+}
+
+</script>
+
+</body>
+</html>

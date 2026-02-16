@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Booking Confirmed - RePlate</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.1/build/qrcode.min.js"></script>
+    <style>
+        .sidebar-active {
+            background-color: #d1fae5;
+            color: #059669;
+            border-left: 4px solid #10b981;
+        }
+        .celebration-animation {
+            animation: celebrate 1s ease-out;
+        }
+        @keyframes celebrate {
+            0% { transform: scale(0.8); opacity: 0; }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); opacity: 1; }
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-green-50 to-emerald-50 min-h-screen">
+    
+    <!-- Top Navbar -->
+    <nav class="bg-white shadow-sm fixed top-0 left-0 right-0 z-50">
+        <div class="flex items-center justify-between px-6 py-4">
+            <div class="flex items-center space-x-4">
+                <div class="flex items-center space-x-2">
+                    <div class="w-10 h-10 bg-green-500 rounded-xl flex items-center justify-center">
+                        <i class="fas fa-leaf text-white text-xl"></i>
+                    </div>
+                    <div>
+                        <h1 class="text-xl font-bold text-gray-800">RePlate</h1>
+                        <p class="text-xs text-gray-500">Consumer Dashboard</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="flex items-center space-x-6">
+                <button class="relative">
+                    <i class="fas fa-bell text-gray-600 text-xl"></i>
+                    <span class="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">3</span>
+                </button>
+                
+                <div class="flex items-center space-x-2 bg-green-50 px-4 py-2 rounded-full cursor-pointer">
+                    <i class="fas fa-leaf text-green-600"></i>
+                    <span class="text-sm font-medium text-green-700">My Impact</span>
+                </div>
+
+                <div class="flex items-center space-x-3 cursor-pointer">
+                    <div class="w-10 h-10 bg-green-500 rounded-full flex items-center justify-center">
+                        <span class="text-white font-bold">JD</span>
+                    </div>
+                    <div>
+                        <p class="text-sm font-semibold text-gray-800">John Doe</p>
+                        <p class="text-xs text-gray-500">Consumer</p>
+                    </div>
+                    <i class="fas fa-chevron-down text-gray-400 text-sm"></i>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Container -->
+    <div class="flex pt-20">
+        <!-- Left Sidebar -->
+        <aside class="w-64 bg-white h-screen fixed left-0 shadow-lg">
+            <div class="p-6 space-y-2">
+                <a href="consumer-dashboard.html" class="flex items-center space-x-3 px-4 py-3 rounded-lg hover:bg-gray-100 text-gray-600">
+                    <i class="fas fa-home"></i>
+                    <span class="font-medium">Dashboard</span>
+                </a>
+                <a href="marketplace.html" class="flex items-center space-x-3 px-4 py-3 rounded-lg hover:bg-gray-100 text-gray-600">
+                    <i class="fas fa-shopping-bag"></i>
+                    <span class="font-medium">Marketplace</span>
+                </a>
+                <a href="my-orders.html" class="flex items-center space-x-3 px-4 py-3 rounded-lg sidebar-active">
+                    <i class="fas fa-receipt"></i>
+                    <span class="font-medium">My Orders</span>
+                </a>
+                <a href="my-impact.html" class="flex items-center space-x-3 px-4 py-3 rounded-lg hover:bg-gray-100 text-gray-600">
+                    <i class="fas fa-chart-line"></i>
+                    <span class="font-medium">My Impact</span>
+                </a>
+                <a href="profile.html" class="flex items-center space-x-3 px-4 py-3 rounded-lg hover:bg-gray-100 text-gray-600">
+                    <i class="fas fa-user"></i>
+                    <span class="font-medium">Profile</span>
+                </a>
+                <hr class="my-4">
+                <a href="#logout" class="flex items-center space-x-3 px-4 py-3 rounded-lg hover:bg-red-50 text-red-600">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <span class="font-medium">Logout</span>
+                </a>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="ml-64 flex-1 p-8">
+            <!-- Success Animation -->
+            <div class="text-center mb-8 celebration-animation">
+                <div class="inline-block w-24 h-24 bg-green-500 rounded-full flex items-center justify-center mb-4">
+                    <i class="fas fa-check text-white text-5xl"></i>
+                </div>
+                <h1 class="text-4xl font-bold text-gray-800 mb-2">Booking Confirmed! 🎉</h1>
+                <p class="text-gray-600 text-lg">Your order has been successfully placed</p>
+            </div>
+
+            <div class="max-w-4xl mx-auto">
+                <!-- Order Details Card -->
+                <div class="bg-white rounded-2xl p-8 shadow-sm mb-6">
+                    <div class="border-b border-gray-200 pb-6 mb-6">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="text-sm text-gray-500 mb-1">Order ID</p>
+                                <h2 class="text-2xl font-bold text-gray-800">#ORD-12456</h2>
+                            </div>
+                            <div class="text-right">
+                                <p class="text-sm text-gray-500 mb-1">Booking Date</p>
+                                <p class="font-semibold text-gray-800">12 Feb 2026, 7:30 PM</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- QR Code Section -->
+                    <div class="text-center mb-8">
+                        <h3 class="text-lg font-bold text-gray-800 mb-4">Show this QR Code at Pickup</h3>
+                        <div class="inline-block bg-white p-6 rounded-xl shadow-lg border-2 border-green-500">
+                            <canvas id="qrcode" class="mx-auto"></canvas>
+                        </div>
+                        <p class="text-sm text-gray-500 mt-4">Order ID: #ORD-12456</p>
+                    </div>
+
+                    <!-- Food Items -->
+                    <div class="mb-8">
+                        <h3 class="text-lg font-bold text-gray-800 mb-4">Order Items</h3>
+                        <div class="space-y-4">
+                            <div class="flex items-center space-x-4 border-b border-gray-100 pb-4">
+                                <img src="https://images.unsplash.com/photo-1585937421612-70a008356fbe?w=100&h=100&fit=crop" 
+                                     alt="Food" class="w-16 h-16 rounded-lg object-cover">
+                                <div class="flex-1">
+                                    <h4 class="font-semibold text-gray-800">Paneer Butter Masala</h4>
+                                    <p class="text-sm text-gray-500">Quantity: 1</p>
+                                </div>
+                                <p class="font-bold text-green-600">₹160</p>
+                            </div>
+                            <div class="flex items-center space-x-4 border-b border-gray-100 pb-4">
+                                <img src="https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8?w=100&h=100&fit=crop" 
+                                     alt="Food" class="w-16 h-16 rounded-lg object-cover">
+                                <div class="flex-1">
+                                    <h4 class="font-semibold text-gray-800">Veg Biryani</h4>
+                                    <p class="text-sm text-gray-500">Quantity: 2</p>
+                                </div>
+                                <p class="font-bold text-green-600">₹300</p>
+                            </div>
+                        </div>
+
+                        <!-- Payment Summary -->
+                        <div class="mt-6 bg-gray-50 rounded-lg p-4">
+                            <div class="space-y-2">
+                                <div class="flex justify-between text-gray-600">
+                                    <span>Subtotal</span>
+                                    <span>₹460</span>
+                                </div>
+                                <div class="flex justify-between text-gray-600">
+                                    <span>Packaging Fee</span>
+                                    <span>₹20</span>
+                                </div>
+                                <hr class="my-2">
+                                <div class="flex justify-between text-lg font-bold text-gray-800">
+                                    <span>Total Paid</span>
+                                    <span>₹480</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Pickup Details -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                        <div class="border border-gray-200 rounded-xl p-6">
+                            <h4 class="font-bold text-gray-800 mb-4 flex items-center">
+                                <i class="fas fa-store text-green-600 mr-2"></i> Pickup Location
+                            </h4>
+                            <p class="font-semibold text-gray-800 mb-2">Green Cafe</p>
+                            <p class="text-sm text-gray-600 mb-1">Koregaon Park, Lane 5</p>
+                            <p class="text-sm text-gray-600 mb-3">Pune, Maharashtra - 411001</p>
+                            <p class="text-sm text-gray-600 flex items-center">
+                                <i class="fas fa-phone text-green-600 mr-2"></i> +91 9876543210
+                            </p>
+                            <a href="#" class="text-green-600 hover:text-green-700 text-sm font-semibold mt-2 inline-block">
+                                <i class="fas fa-map-marker-alt mr-1"></i> View on Map
+                            </a>
+                        </div>
+
+                        <div class="border border-gray-200 rounded-xl p-6">
+                            <h4 class="font-bold text-gray-800 mb-4 flex items-center">
+                                <i class="fas fa-clock text-green-600 mr-2"></i> Pickup Time
+                            </h4>
+                            <p class="text-2xl font-bold text-green-600 mb-2">8:00 PM - 9:00 PM</p>
+                            <p class="text-sm text-gray-600 mb-3">Today, 12 Feb 2026</p>
+                            <div class="bg-yellow-50 border-l-4 border-yellow-400 p-3 rounded">
+                                <p class="text-xs text-yellow-800">
+                                    <i class="fas fa-exclamation-triangle mr-1"></i>
+                                    Please collect before 9:00 PM
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Environmental Impact -->
+                    <div class="bg-gradient-to-r from-green-500 to-emerald-600 rounded-xl p-6">
+                        <h4 class="text-white font-bold mb-4 text-lg flex items-center">
+                            <i class="fas fa-leaf mr-2"></i> Your Environmental Impact
+                        </h4>
+                        <div class="grid grid-cols-3 gap-4">
+                            <div class="bg-white/20 rounded-lg p-4 text-center">
+                                <p class="text-green-100 text-xs mb-1">Food Saved</p>
+                                <p class="text-white text-2xl font-bold">1.5 kg</p>
+                            </div>
+                            <div class="bg-white/20 rounded-lg p-4 text-center">
+                                <p class="text-green-100 text-xs mb-1">CO₂ Reduced</p>
+                                <p class="text-white text-2xl font-bold">8.9 kg</p>
+                            </div>
+                            <div class="bg-white/20 rounded-lg p-4 text-center">
+                                <p class="text-green-100 text-xs mb-1">Trees Equivalent</p>
+                                <p class="text-white text-2xl font-bold">0.4</p>
+                            </div>
+                        </div>
+                        <p class="text-green-100 text-sm mt-4 text-center">
+                            🌱 Thank you for making a positive impact on the environment!
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Action Buttons -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+                    <a href="my-orders.html" class="bg-green-600 hover:bg-green-700 text-white font-bold py-4 rounded-xl text-center transition-colors">
+                        <i class="fas fa-receipt mr-2"></i> Go to My Orders
+                    </a>
+                    <a href="consumer-dashboard.html" class="bg-white border-2 border-green-600 text-green-600 hover:bg-green-50 font-bold py-4 rounded-xl text-center transition-colors">
+                        <i class="fas fa-home mr-2"></i> Back to Dashboard
+                    </a>
+                </div>
+
+                <!-- Important Instructions -->
+                <div class="bg-blue-50 border border-blue-200 rounded-xl p-6">
+                    <h4 class="font-bold text-blue-900 mb-3 flex items-center">
+                        <i class="fas fa-info-circle mr-2"></i> Important Instructions
+                    </h4>
+                    <ul class="space-y-2 text-sm text-blue-800">
+                        <li class="flex items-start">
+                            <i class="fas fa-check text-blue-600 mr-2 mt-1"></i>
+                            <span>Show the QR code at the restaurant during pickup</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check text-blue-600 mr-2 mt-1"></i>
+                            <span>Please collect your order within the specified time slot</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check text-blue-600 mr-2 mt-1"></i>
+                            <span>Bring your own container to reduce packaging waste (optional)</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check text-blue-600 mr-2 mt-1"></i>
+                            <span>Contact the restaurant if you need any assistance</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // Generate QR Code
+        const canvas = document.getElementById('qrcode');
+        QRCode.toCanvas(canvas, 'ORD-12456', {
+            width: 200,
+            height: 200,
+            colorDark: '#059669',
+            colorLight: '#ffffff',
+            correctLevel: QRCode.CorrectLevel.H
+        });
+
+        // Dummy data for backend integration
+        const bookingDetails = {
+            orderId: "ORD-12456",
+            userId: "USER001",
+            bookingDate: "2026-02-12T19:30:00Z",
+            items: [
+                {
+                    itemId: "ITEM001",
+                    name: "Paneer Butter Masala",
+                    quantity: 1,
+                    price: 160
+                },
+                {
+                    itemId: "ITEM002",
+                    name: "Veg Biryani",
+                    quantity: 2,
+                    price: 300
+                }
+            ],
+            pickup: {
+                seller: "Green Cafe",
+                address: "Koregaon Park, Lane 5, Pune - 411001",
+                phone: "+91 9876543210",
+                timeSlot: "8:00 PM - 9:00 PM",
+                date: "2026-02-12"
+            },
+            payment: {
+                subtotal: 460,
+                packagingFee: 20,
+                total: 480,
+                method: "Pay on Pickup",
+                status: "Pending"
+            },
+            impact: {
+                foodSaved: 1.5,
+                co2Reduced: 8.9,
+                treesEquivalent: 0.4
+            }
+        };
+
+        // API endpoint:
+        // GET /api/booking/:orderId - Get booking details
+    </script>
+</body>
+</html>

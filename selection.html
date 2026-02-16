@@ -1,0 +1,652 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RePlate - Choose Your Path</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700;900&display=swap" rel="stylesheet">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Roboto', sans-serif;
+        }
+        
+        body {
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: #000;
+            overflow-x: hidden;
+            padding: 20px;
+        }
+        
+        /* Background Video */
+        video {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: -2;
+            opacity: 0.55;
+        }
+        
+        /* Dark Overlay */
+        .overlay {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: -1;
+        }
+        
+        /* Main Container */
+        .container {
+            width: 100%;
+            max-width: 1100px;
+            padding: 50px 40px;
+            border-radius: 25px;
+            backdrop-filter: blur(15px);
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0.05));
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            box-shadow: 0 15px 50px rgba(0, 0, 0, 0.5);
+            color: white;
+            animation: fadeIn 0.6s ease-in;
+        }
+        
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        /* Header */
+        .header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+        
+        .header h1 {
+            font-size: 3rem;
+            font-weight: 900;
+            letter-spacing: 2px;
+            margin-bottom: 10px;
+        }
+        
+        .header h1 span {
+            color: #22c55e;
+        }
+        
+        .header p {
+            font-size: 1.15rem;
+            opacity: 0.95;
+            margin-bottom: 15px;
+            line-height: 1.6;
+        }
+        
+        .step-indicator {
+            font-size: 0.9rem;
+            color: #22c55e;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 15px;
+        }
+        
+        .subtitle {
+            font-size: 0.95rem;
+            opacity: 0.8;
+            max-width: 700px;
+            margin: 0 auto;
+            line-height: 1.5;
+        }
+        
+        /* Section */
+        .selection-section {
+            margin-bottom: 40px;
+        }
+        
+        .section-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 25px;
+            text-align: center;
+            opacity: 0.95;
+        }
+        
+        /* Role Cards */
+        .role-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+        
+        .role-card {
+            background: rgba(255, 255, 255, 0.1);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 20px;
+            padding: 35px 25px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            min-height: 280px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        
+        .role-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(34, 197, 94, 0.2), rgba(34, 197, 94, 0));
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        
+        .role-card:hover {
+            transform: translateY(-8px);
+            border-color: #22c55e;
+            box-shadow: 0 15px 35px rgba(34, 197, 94, 0.3);
+        }
+        
+        .role-card:hover::before {
+            opacity: 1;
+        }
+        
+        .role-card.selected {
+            border-color: #22c55e;
+            background: rgba(34, 197, 94, 0.2);
+            box-shadow: 0 0 25px rgba(34, 197, 94, 0.5);
+            transform: translateY(-8px);
+        }
+        
+        .role-card.selected::after {
+            content: '✓';
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: #22c55e;
+            color: white;
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 20px;
+            box-shadow: 0 4px 10px rgba(34, 197, 94, 0.4);
+        }
+        
+        .role-icon {
+            font-size: 4rem;
+            margin-bottom: 20px;
+            position: relative;
+            z-index: 1;
+            filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3));
+        }
+        
+        .role-name {
+            font-size: 1.4rem;
+            font-weight: 700;
+            margin-bottom: 12px;
+            position: relative;
+            z-index: 1;
+            color: #fff;
+        }
+        
+        .role-description {
+            font-size: 0.95rem;
+            opacity: 0.9;
+            line-height: 1.5;
+            position: relative;
+            z-index: 1;
+        }
+        
+        /* Features List */
+        .role-features {
+            margin-top: 15px;
+            font-size: 0.85rem;
+            opacity: 0.75;
+            position: relative;
+            z-index: 1;
+            line-height: 1.6;
+        }
+        
+        /* Action Buttons */
+        .action-buttons {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            max-width: 550px;
+            margin: 0 auto;
+        }
+        
+        .action-button {
+            padding: 20px 35px;
+            border-radius: 50px;
+            font-size: 1.15rem;
+            font-weight: 700;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid white;
+            background: transparent;
+            color: white;
+            text-decoration: none;
+            display: inline-block;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .action-button::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.2);
+            transform: translate(-50%, -50%);
+            transition: width 0.5s, height 0.5s;
+        }
+        
+        .action-button:hover::before {
+            width: 300px;
+            height: 300px;
+        }
+        
+        .action-button span {
+            position: relative;
+            z-index: 1;
+        }
+        
+        .action-button.disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+            pointer-events: none;
+        }
+        
+        .action-button.login {
+            background: white;
+            color: black;
+        }
+        
+        .action-button.login:not(.disabled):hover {
+            background: #f0f0f0;
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(255, 255, 255, 0.3);
+        }
+        
+        .action-button.register {
+            background: #22c55e;
+            border-color: #22c55e;
+            color: white;
+        }
+        
+        .action-button.register:not(.disabled):hover {
+            background: #16a34a;
+            border-color: #16a34a;
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(34, 197, 94, 0.5);
+        }
+        
+        /* Impact Stats */
+        .impact-stats {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            margin: 30px 0;
+            flex-wrap: wrap;
+        }
+        
+        .stat {
+            text-align: center;
+        }
+        
+        .stat-value {
+            font-size: 2rem;
+            font-weight: 900;
+            color: #22c55e;
+            display: block;
+        }
+        
+        .stat-label {
+            font-size: 0.85rem;
+            opacity: 0.8;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        /* Back Link */
+        .back-link {
+            text-align: center;
+            margin-top: 35px;
+        }
+        
+        .back-link a {
+            color: white;
+            text-decoration: none;
+            font-size: 0.95rem;
+            opacity: 0.8;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .back-link a:hover {
+            opacity: 1;
+            transform: translateX(-5px);
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .container {
+                padding: 40px 25px;
+            }
+            
+            .header h1 {
+                font-size: 2.2rem;
+            }
+            
+            .header p {
+                font-size: 1rem;
+            }
+            
+            .role-cards {
+                grid-template-columns: 1fr;
+            }
+            
+            .action-buttons {
+                grid-template-columns: 1fr;
+            }
+            
+            .impact-stats {
+                gap: 25px;
+            }
+            
+            .stat-value {
+                font-size: 1.5rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .header h1 {
+                font-size: 1.8rem;
+            }
+            
+            .role-icon {
+                font-size: 3rem;
+            }
+            
+            .role-card {
+                min-height: auto;
+                padding: 30px 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    
+    <video autoplay muted loop playsinline>
+        <source src="1.mov" type="video/mp4">
+    </video>
+    
+    <div class="overlay"></div>
+    
+    <div class="container">
+        <div class="header">
+            <div class="step-indicator">Step 1 of 2</div>
+            <h1>Re<span>Plate</span></h1>
+            <p>Real-Time Surplus Food Redistribution Platform</p>
+            <p class="subtitle">Join our mission to reduce food waste, fight hunger, and create a sustainable future through technology-driven surplus food redistribution</p>
+        </div>
+        
+        <!-- Impact Stats -->
+        <div class="impact-stats">
+            <div class="stat">
+                <span class="stat-value">40%</span>
+                <span class="stat-label">Food Wasted</span>
+            </div>
+            <div class="stat">
+                <span class="stat-value">8%</span>
+                <span class="stat-label">Global Emissions</span>
+            </div>
+            <div class="stat">
+                <span class="stat-value">1B+</span>
+                <span class="stat-label">People Hungry</span>
+            </div>
+        </div>
+        
+        <!-- Role Selection -->
+        <div class="selection-section">
+            <h2 class="section-title">Choose Your Role</h2>
+            <div class="role-cards">
+                <div class="role-card" data-role="consumer">
+                    <div class="role-icon">🛒</div>
+                    <div class="role-name">Consumer</div>
+                    <div class="role-description">Access affordable surplus food from nearby restaurants, bakeries, and grocery stores</div>
+                    <div class="role-features">• Real-time availability<br>• Discounted prices<br>• Reduce food waste</div>
+                </div>
+                
+                <div class="role-card" data-role="seller">
+                    <div class="role-icon">🍽️</div>
+                    <div class="role-name">Seller</div>
+                    <div class="role-description">List your surplus inventory and connect with conscious customers in real-time</div>
+                    <div class="role-features">• Reduce waste & costs<br>• Analytics dashboard<br>• Environmental impact tracking</div>
+                </div>
+                
+                <div class="role-card" data-role="admin">
+                    <div class="role-icon">⚙️</div>
+                    <div class="role-name">Admin</div>
+                    <div class="role-description">Manage platform operations, monitor traceability, and measure environmental impact</div>
+                    <div class="role-features">• System oversight<br>• Impact metrics<br>• User management</div>
+                </div>
+
+                <div class="role-card" data-role="ngo-donation" style="width: 1012px; height: 300px;">
+    <div class="role-icon">💍</div>
+    <div class="role-name">Free Donation (Marriage / Events → NGO)</div>
+    <div class="role-description">
+        Donate excess wedding or event food directly to verified NGOs for free redistribution.
+    </div>
+    <div class="role-features">
+        • Free pickup support<br>
+        • NGO verification<br>
+        • Real-time tracking<br>
+        • Social impact reporting
+    </div>
+</div>
+
+
+            </div>
+        </div>
+        
+        <!-- Action Buttons -->
+        <div class="selection-section">
+            <h2 class="section-title">How would you like to proceed?</h2>
+            <div class="action-buttons">
+                <a href="#" class="action-button login disabled" id="loginBtn">
+                    <span>Log In</span>
+                </a>
+                <a href="#" class="action-button register disabled" id="registerBtn">
+                    <span>Register</span>
+                </a>
+            </div>
+        </div>
+        
+        <!-- Back Link -->
+        <div class="back-link">
+            <a href="landing.html">
+                <span>←</span>
+                <span>Back to Home</span>
+            </a>
+        </div>
+    </div>
+    
+    <script>
+        let selectedRole = null;
+        
+        // Role card selection
+        const roleCards = document.querySelectorAll('.role-card');
+        const loginBtn = document.getElementById('loginBtn');
+        const registerBtn = document.getElementById('registerBtn');
+        
+        roleCards.forEach(card => {
+            card.addEventListener('click', function() {
+                // Remove selected class from all cards
+                roleCards.forEach(c => c.classList.remove('selected'));
+                
+                // Add selected class to clicked card
+                this.classList.add('selected');
+                
+                // Store selected role
+                selectedRole = this.getAttribute('data-role');
+                
+                // Enable action buttons with animation
+                loginBtn.classList.remove('disabled');
+                registerBtn.classList.remove('disabled');
+                
+                // Add pulse animation to buttons
+                loginBtn.style.animation = 'pulse 0.5s ease';
+                registerBtn.style.animation = 'pulse 0.5s ease';
+                
+                setTimeout(() => {
+                    loginBtn.style.animation = '';
+                    registerBtn.style.animation = '';
+                }, 500);
+            });
+        });
+        
+        // Add pulse animation
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes pulse {
+                0%, 100% { transform: scale(1); }
+                50% { transform: scale(1.05); }
+            }
+        `;
+        document.head.appendChild(style);
+        
+        // Login button click
+        loginBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            
+            if (selectedRole) {
+                // Redirect to login page with role parameter
+                window.location.href = `login.html?role=${selectedRole}`;
+            }
+        });
+        
+        // Login button click
+        loginBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            
+            if (selectedRole) {
+                // Redirect to appropriate registration page based on role
+                let registrationPage;
+                
+                switch(selectedRole) {
+                    case 'consumer':
+                        registrationPage = 'login_consumer.html';
+                        break;
+                    case 'seller':
+                        registrationPage = 'login_seller.html';
+                        break;
+                    case 'admin':
+                        registrationPage = 'admin-login.html';
+                        break;
+                    case 'ngo-donation':
+                        registrationPage = 'register-ngo-donation.html';
+                        break;
+                    default:
+                        registrationPage = 'login.html';
+                }
+                
+                window.location.href = registrationPage;
+            }
+        });
+
+        // Register button click
+        registerBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            
+            if (selectedRole) {
+                // Redirect to appropriate registration page based on role
+                let registrationPage;
+                
+                switch(selectedRole) {
+                    case 'consumer':
+                        registrationPage = 'register-consumer.html';
+                        break;
+                    case 'seller':
+                        registrationPage = 'register-seller.html';
+                        break;
+                    case 'admin':
+                        registrationPage = 'admin-register.html';
+                        break;
+                    default:
+                        registrationPage = 'register.html';
+                }
+                
+                window.location.href = registrationPage;
+            }
+        });
+        
+        // Keyboard navigation
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter' && selectedRole) {
+                // Default to register on Enter key (encourage new sign-ups)
+                registerBtn.click();
+            }
+            
+            // Arrow key navigation for role cards
+            const currentIndex = Array.from(roleCards).findIndex(card => card.classList.contains('selected'));
+            
+            if (e.key === 'ArrowLeft' && currentIndex > 0) {
+                roleCards[currentIndex - 1].click();
+            } else if (e.key === 'ArrowRight' && currentIndex < roleCards.length - 1) {
+                roleCards[currentIndex + 1].click();
+            } else if ((e.key === 'ArrowLeft' || e.key === 'ArrowRight') && currentIndex === -1) {
+                // If no card selected, select the first one
+                roleCards[0].click();
+            }
+        });
+        
+        // Add hover sound effect (optional)
+        roleCards.forEach(card => {
+            card.addEventListener('mouseenter', function() {
+                if (!this.classList.contains('selected')) {
+                    this.style.transform = 'translateY(-8px) scale(1.02)';
+                }
+            });
+            
+            card.addEventListener('mouseleave', function() {
+                if (!this.classList.contains('selected')) {
+                    this.style.transform = '';
+                }
+            });
+        });
+    </script>
+    
+</body>
+</html>

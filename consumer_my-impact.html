@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Impact - RePlate</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        .sidebar-active {
+            background-color: #d1fae5;
+            color: #059669;
+            border-left: 4px solid #10b981;
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-green-50 to-emerald-50 min-h-screen">
+    
+    <!-- Top Navbar -->
+    <nav class="bg-white shadow-sm fixed top-0 left-0 right-0 z-50">
+        <div class="flex items-center justify-between px-6 py-4">
+            <div class="flex items-center space-x-4">
+                <div class="flex items-center space-x-2">
+                    <div class="w-10 h-10 bg-green-500 rounded-xl flex items-center justify-center">
+                        <i class="fas fa-leaf text-white text-xl"></i>
+                    </div>
+                    <div>
+                        <h1 class="text-xl font-bold text-gray-800">RePlate</h1>
+                        <p class="text-xs text-gray-500">Consumer Dashboard</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="flex items-center space-x-6">
+                <a href="consumer_notifications.html" class="relative">
+                    <i class="fas fa-bell text-gray-600 text-xl"></i>
+                    <span class="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">3</span>
+                </a>
+                
+                <div class="flex items-center space-x-2 bg-green-50 px-4 py-2 rounded-full cursor-pointer">
+                    <i class="fas fa-leaf text-green-600"></i>
+                    <span class="text-sm font-medium text-green-700"><a href="consumer_my-impact.html">My Impact</a></span>
+                </div>
+
+                <div class="flex items-center space-x-3 cursor-pointer">
+                    <div class="w-10 h-10 bg-green-500 rounded-full flex items-center justify-center">
+                        <span class="text-white font-bold">JD</span>
+                    </div>
+                    <div>
+                        <p class="text-sm font-semibold text-gray-800">John Doe</p>
+                        <p class="text-xs text-gray-500">Consumer</p>
+                    </div>
+                    <i class="fas fa-chevron-down text-gray-400 text-sm"></i>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Container -->
+    <div class="flex pt-20">
+        <!-- Left Sidebar -->
+        <aside class="w-64 bg-white h-screen fixed left-0 shadow-lg">
+            <div class="p-6 space-y-2">
+                <a href="consumer-dashboard.html" class="flex items-center space-x-3 px-4 py-3 rounded-lg hover:bg-gray-100 text-gray-600">
+                    <i class="fas fa-home"></i>
+                    <span class="font-medium">Dashboard</span>
+                </a>
+                <a href="consumer_marketplace.html" class="flex items-center space-x-3 px-4 py-3 rounded-lg hover:bg-gray-100 text-gray-600">
+                    <i class="fas fa-shopping-bag"></i>
+                    <span class="font-medium">Marketplace</span>
+                </a>
+                <a href="consumer_my-orders.html" class="flex items-center space-x-3 px-4 py-3 rounded-lg hover:bg-gray-100 text-gray-600">
+                    <i class="fas fa-receipt"></i>
+                    <span class="font-medium">My Orders</span>
+                </a>
+                <a href="consumer_my-impact.html" class="flex items-center space-x-3 px-4 py-3 rounded-lg sidebar-active">
+                    <i class="fas fa-chart-line"></i>
+                    <span class="font-medium">My Impact</span>
+                </a>
+                <a href="consumer_profile.html" class="flex items-center space-x-3 px-4 py-3 rounded-lg hover:bg-gray-100 text-gray-600">
+                    <i class="fas fa-user"></i>
+                    <span class="font-medium">Profile</span>
+                </a>
+                <a href="consumer_notifications.html" class="flex items-center space-x-3 px-4 py-3 bg-green-50 text-primary rounded-lg font-medium">
+                    <i class="fas fa-bell"></i>
+                    <span>Notifications</span>
+                    <span class="ml-auto bg-red-500 text-white text-xs rounded-full px-2 py-0.5">5</span>
+                </a>
+                <hr class="my-4">
+                <a href="selection.html" class="flex items-center space-x-3 px-4 py-3 rounded-lg hover:bg-red-50 text-red-600">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <span class="font-medium">Logout</span>
+                </a>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="ml-64 flex-1 p-8">
+            <!-- Page Header -->
+            <div class="mb-8">
+                <h2 class="text-3xl font-bold text-gray-800 mb-2">My Environmental Impact</h2>
+                <p class="text-gray-600">Track your contribution to sustainability</p>
+            </div>
+
+            <!-- Hero Impact Card -->
+            <div class="bg-gradient-to-r from-green-500 to-emerald-600 rounded-2xl p-8 mb-8 shadow-lg">
+                <div class="text-center mb-6">
+                    <h3 class="text-white text-2xl font-bold mb-2">🌱 Sustainability Contributor</h3>
+                    <p class="text-green-100">Your actions are making a real difference!</p>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+                    <div class="bg-white/20 backdrop-blur rounded-xl p-6 text-center">
+                        <i class="fas fa-utensils text-white text-4xl mb-3"></i>
+                        <p class="text-green-100 text-sm mb-2">Total Food Saved</p>
+                        <p class="text-white text-4xl font-bold">62 kg</p>
+                    </div>
+                    <div class="bg-white/20 backdrop-blur rounded-xl p-6 text-center">
+                        <i class="fas fa-cloud text-white text-4xl mb-3"></i>
+                        <p class="text-green-100 text-sm mb-2">CO₂ Reduced</p>
+                        <p class="text-white text-4xl font-bold">148 kg</p>
+                    </div>
+                    <div class="bg-white/20 backdrop-blur rounded-xl p-6 text-center">
+                        <i class="fas fa-tree text-white text-4xl mb-3"></i>
+                        <p class="text-green-100 text-sm mb-2">Trees Equivalent</p>
+                        <p class="text-white text-4xl font-bold">7</p>
+                    </div>
+                    <div class="bg-white/20 backdrop-blur rounded-xl p-6 text-center">
+                        <i class="fas fa-piggy-bank text-white text-4xl mb-3"></i>
+                        <p class="text-green-100 text-sm mb-2">Money Saved</p>
+                        <p class="text-white text-4xl font-bold">₹8,450</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Charts Section -->
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+                <!-- CO2 Reduction Chart -->
+                <div class="bg-white rounded-2xl p-6 shadow-sm">
+                    <h3 class="text-lg font-bold text-gray-800 mb-4">CO₂ Reduction Over Time</h3>
+                    <canvas id="co2Chart" height="250"></canvas>
+                </div>
+
+                <!-- Orders Per Month Chart -->
+                <div class="bg-white rounded-2xl p-6 shadow-sm">
+                    <h3 class="text-lg font-bold text-gray-800 mb-4">Orders Per Month</h3>
+                    <canvas id="ordersChart" height="250"></canvas>
+                </div>
+            </div>
+
+            <!-- Impact Breakdown -->
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
+                <div class="bg-white rounded-2xl p-6 shadow-sm">
+                    <div class="flex items-center justify-between mb-4">
+                        <h3 class="text-lg font-bold text-gray-800">Water Saved</h3>
+                        <i class="fas fa-tint text-blue-500 text-2xl"></i>
+                    </div>
+                    <p class="text-3xl font-bold text-blue-600 mb-2">5,200 L</p>
+                    <p class="text-sm text-gray-600">Equivalent to 26 days of drinking water</p>
+                    <div class="mt-4 bg-blue-50 rounded-lg p-3">
+                        <p class="text-xs text-blue-800">
+                            <i class="fas fa-info-circle mr-1"></i>
+                            Food production requires significant water resources
+                        </p>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-2xl p-6 shadow-sm">
+                    <div class="flex items-center justify-between mb-4">
+                        <h3 class="text-lg font-bold text-gray-800">Landfill Waste Avoided</h3>
+                        <i class="fas fa-recycle text-green-500 text-2xl"></i>
+                    </div>
+                    <p class="text-3xl font-bold text-green-600 mb-2">62 kg</p>
+                    <p class="text-sm text-gray-600">Food diverted from landfills</p>
+                    <div class="mt-4 bg-green-50 rounded-lg p-3">
+                        <p class="text-xs text-green-800">
+                            <i class="fas fa-info-circle mr-1"></i>
+                            Preventing methane emissions from decomposition
+                        </p>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-2xl p-6 shadow-sm">
+                    <div class="flex items-center justify-between mb-4">
+                        <h3 class="text-lg font-bold text-gray-800">Energy Conserved</h3>
+                        <i class="fas fa-bolt text-yellow-500 text-2xl"></i>
+                    </div>
+                    <p class="text-3xl font-bold text-yellow-600 mb-2">420 kWh</p>
+                    <p class="text-sm text-gray-600">Energy saved in food production</p>
+                    <div class="mt-4 bg-yellow-50 rounded-lg p-3">
+                        <p class="text-xs text-yellow-800">
+                            <i class="fas fa-info-circle mr-1"></i>
+                            Enough to power a home for 14 days
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Achievement Badge -->
+            <div class="bg-white rounded-2xl p-8 shadow-sm mb-8">
+                <div class="text-center">
+                    <div class="inline-block bg-gradient-to-r from-green-400 to-emerald-500 rounded-full p-6 mb-4">
+                        <i class="fas fa-award text-white text-6xl"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold text-gray-800 mb-2">🏆 Sustainability Champion</h3>
+                    <p class="text-gray-600 mb-6">You've completed 47 orders and saved 62 kg of food!</p>
+                    <div class="max-w-2xl mx-auto">
+                        <div class="bg-gray-200 rounded-full h-4 mb-2">
+                            <div class="bg-green-500 h-4 rounded-full" style="width: 94%"></div>
+                        </div>
+                        <p class="text-sm text-gray-600">3 more orders to unlock "Green Guardian" badge!</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Impact Comparison -->
+            <div class="bg-white rounded-2xl p-6 shadow-sm mb-8">
+                <h3 class="text-xl font-bold text-gray-800 mb-6">Your Impact Compared To</h3>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div class="border-2 border-green-200 rounded-xl p-6 text-center">
+                        <i class="fas fa-car text-green-600 text-3xl mb-3"></i>
+                        <p class="text-sm text-gray-600 mb-2">CO₂ Reduction Equals</p>
+                        <p class="text-2xl font-bold text-gray-800">620 km</p>
+                        <p class="text-xs text-gray-500">Not driven by car</p>
+                    </div>
+                    <div class="border-2 border-green-200 rounded-xl p-6 text-center">
+                        <i class="fas fa-lightbulb text-green-600 text-3xl mb-3"></i>
+                        <p class="text-sm text-gray-600 mb-2">Energy Saved Equals</p>
+                        <p class="text-2xl font-bold text-gray-800">8,400</p>
+                        <p class="text-xs text-gray-500">LED bulbs for 1 hour</p>
+                    </div>
+                    <div class="border-2 border-green-200 rounded-xl p-6 text-center">
+                        <i class="fas fa-seedling text-green-600 text-3xl mb-3"></i>
+                        <p class="text-sm text-gray-600 mb-2">Impact Equals</p>
+                        <p class="text-2xl font-bold text-gray-800">7</p>
+                        <p class="text-xs text-gray-500">Trees planted</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Monthly Breakdown -->
+            <div class="bg-white rounded-2xl p-6 shadow-sm">
+                <h3 class="text-xl font-bold text-gray-800 mb-6">Monthly Impact Breakdown</h3>
+                <div class="overflow-x-auto">
+                    <table class="w-full">
+                        <thead>
+                            <tr class="border-b border-gray-200">
+                                <th class="text-left py-3 px-4 text-sm font-semibold text-gray-600">Month</th>
+                                <th class="text-left py-3 px-4 text-sm font-semibold text-gray-600">Orders</th>
+                                <th class="text-left py-3 px-4 text-sm font-semibold text-gray-600">Food Saved</th>
+                                <th class="text-left py-3 px-4 text-sm font-semibold text-gray-600">CO₂ Reduced</th>
+                                <th class="text-left py-3 px-4 text-sm font-semibold text-gray-600">Money Saved</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="border-b border-gray-100 hover:bg-gray-50">
+                                <td class="py-4 px-4 text-sm font-medium text-gray-800">February 2026</td>
+                                <td class="py-4 px-4 text-sm text-gray-700">8</td>
+                                <td class="py-4 px-4 text-sm text-gray-700">12 kg</td>
+                                <td class="py-4 px-4 text-sm text-green-600 font-semibold">28 kg</td>
+                                <td class="py-4 px-4 text-sm text-gray-700">₹1,420</td>
+                            </tr>
+                            <tr class="border-b border-gray-100 hover:bg-gray-50">
+                                <td class="py-4 px-4 text-sm font-medium text-gray-800">January 2026</td>
+                                <td class="py-4 px-4 text-sm text-gray-700">15</td>
+                                <td class="py-4 px-4 text-sm text-gray-700">24 kg</td>
+                                <td class="py-4 px-4 text-sm text-green-600 font-semibold">56 kg</td>
+                                <td class="py-4 px-4 text-sm text-gray-700">₹3,200</td>
+                            </tr>
+                            <tr class="border-b border-gray-100 hover:bg-gray-50">
+                                <td class="py-4 px-4 text-sm font-medium text-gray-800">December 2025</td>
+                                <td class="py-4 px-4 text-sm text-gray-700">12</td>
+                                <td class="py-4 px-4 text-sm text-gray-700">18 kg</td>
+                                <td class="py-4 px-4 text-sm text-green-600 font-semibold">42 kg</td>
+                                <td class="py-4 px-4 text-sm text-gray-700">₹2,540</td>
+                            </tr>
+                            <tr class="hover:bg-gray-50">
+                                <td class="py-4 px-4 text-sm font-medium text-gray-800">November 2025</td>
+                                <td class="py-4 px-4 text-sm text-gray-700">12</td>
+                                <td class="py-4 px-4 text-sm text-gray-700">8 kg</td>
+                                <td class="py-4 px-4 text-sm text-green-600 font-semibold">22 kg</td>
+                                <td class="py-4 px-4 text-sm text-gray-700">₹1,290</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+
+let chartsInitialized = false;
+
+document.addEventListener("DOMContentLoaded", function() {
+
+    if (chartsInitialized) return;
+    chartsInitialized = true;
+
+    const co2Ctx = document.getElementById('co2Chart').getContext('2d');
+    const ordersCtx = document.getElementById('ordersChart').getContext('2d');
+
+    const co2Chart = new Chart(co2Ctx, {
+        type: 'line',
+        data: {
+            labels: ['Nov', 'Dec', 'Jan', 'Feb'],
+            datasets: [{
+                label: 'CO₂ Reduced (kg)',
+                data: [22, 42, 56, 28],
+                borderColor: '#10b981',
+                backgroundColor: 'rgba(16, 185, 129, 0.1)',
+                tension: 0.4,
+                fill: true
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            animation: {
+                duration: 0
+            },
+            plugins: {
+                legend: { display: false }
+            },
+            scales: {
+                y: { beginAtZero: true }
+            }
+        }
+    });
+
+    const ordersChart = new Chart(ordersCtx, {
+        type: 'bar',
+        data: {
+            labels: ['Nov', 'Dec', 'Jan', 'Feb'],
+            datasets: [{
+                label: 'Orders',
+                data: [12, 12, 15, 8],
+                backgroundColor: '#10b981'
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            animation: {
+                duration: 0
+            },
+            plugins: {
+                legend: { display: false }
+            },
+            scales: {
+                y: { beginAtZero: true }
+            }
+        }
+    });
+
+});
+
+</script>
+
+</body>
+</html>

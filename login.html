@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - RePlate | Smart Surplus Food Redistribution</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'green-primary': '#22c55e',
+                        'green-dark': '#16a34a',
+                        'green-light': '#d1fae5',
+                        'green-bg': '#e8f5e9',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        
+        .input-focus:focus {
+            border-color: #10b981;
+            ring-color: #10b981;
+        }
+        
+        .error-message {
+            display: none;
+            color: #ef4444;
+            font-size: 0.875rem;
+            margin-top: 0.25rem;
+        }
+        
+        .error-message.show {
+            display: block;
+        }
+        
+        .input-error {
+            border-color: #ef4444 !important;
+        }
+        
+        .fade-in {
+            animation: fadeIn 0.5s ease-in;
+        }
+        
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-green-50 via-gray-50 to-green-50 min-h-screen flex items-center justify-center p-4">
+    
+    <!-- Login Container -->
+    <div class="w-full max-w-md fade-in">
+        
+        <!-- Logo & Header -->
+        <div class="text-center mb-8">
+            <div class="inline-flex items-center gap-2 mb-4">
+                <!-- RePlate Logo - Leaf Icon -->
+                <svg class="w-10 h-10 text-green-primary" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M17 8C8 10 5.9 16.17 3.82 21.34l1.89.66.12-.34C6.89 20 8.28 14 15 12c7-2 9-5 10-7-1 3-4 5-8 6z"/>
+                    <path d="M3.82 21.34C5.9 16.17 8 10 17 8c4-1 7-3 8-6 0 0-.5 4-7 7-6.72 2-8.11 8-9.18 12.66l-.12.34-1.88-.66z" opacity="0.5"/>
+                </svg>
+                <h1 class="text-3xl font-bold text-gray-800">RePlate</h1>
+            </div>
+            <p class="text-gray-600 text-sm">Fighting food waste, one plate at a time</p>
+        </div>
+        
+        <!-- Login Card -->
+        <div class="bg-white rounded-2xl shadow-xl p-8">
+            <h2 class="text-2xl font-bold text-gray-800 mb-2">Welcome to RePlate</h2>
+            <p class="text-gray-600 mb-6 text-sm">Join our community of conscious consumers and sustainable businesses</p>
+            
+            <!-- Login Form -->
+            <form id="loginForm" novalidate>
+                
+                <!-- Email Field -->
+                <div class="mb-5">
+                    <label for="email" class="block text-sm font-medium text-gray-700 mb-2">
+                        Email Address
+                    </label>
+                    <input 
+                        type="email" 
+                        id="email" 
+                        name="email"
+                        class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-primary focus:border-transparent transition duration-200"
+                        placeholder="you@example.com"
+                        required
+                    />
+                    <p class="error-message" id="emailError">Please enter a valid email address</p>
+                </div>
+                
+                <!-- Password Field -->
+                <div class="mb-5">
+                    <label for="password" class="block text-sm font-medium text-gray-700 mb-2">
+                        Password
+                    </label>
+                    <div class="relative">
+                        <input 
+                            type="password" 
+                            id="password" 
+                            name="password"
+                            class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-primary focus:border-transparent transition duration-200"
+                            placeholder="Enter your password"
+                            required
+                        />
+                        <button 
+                            type="button" 
+                            id="togglePassword"
+                            class="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500 hover:text-gray-700"
+                        >
+                            <svg id="eyeIcon" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
+                            </svg>
+                        </button>
+                    </div>
+                    <p class="error-message" id="passwordError">Password must be at least 8 characters long</p>
+                </div>
+                
+                <!-- Role Selection -->
+                <div class="mb-5">
+                    <label for="role" class="block text-sm font-medium text-gray-700 mb-2">
+                        Select Your Role
+                    </label>
+                    <select 
+                        id="role" 
+                        name="role"
+                        class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-primary focus:border-transparent transition duration-200 bg-white"
+                        required
+                    >
+                        <option value="">Choose your role...</option>
+                        <option value="consumer">🛒 Consumer</option>
+                        <option value="seller">🍽️ Seller (Restaurant)</option>
+                        <option value="admin">⚙️ Admin</option>
+                    </select>
+                    <p class="error-message" id="roleError">Please select your role</p>
+                </div>
+                
+                <!-- Remember Me & Forgot Password -->
+                <div class="flex items-center justify-between mb-6">
+                    <div class="flex items-center">
+                        <input 
+                            type="checkbox" 
+                            id="rememberMe" 
+                            name="rememberMe"
+                            class="w-4 h-4 text-green-primary border-gray-300 rounded focus:ring-green-primary"
+                        />
+                        <label for="rememberMe" class="ml-2 text-sm text-gray-700">
+                            Remember me
+                        </label>
+                    </div>
+                    <a href="#" class="text-sm text-green-primary hover:text-green-dark font-medium transition duration-200">
+                        Forgot password?
+                    </a>
+                </div>
+                
+                <!-- Login Button -->
+                <button 
+                    type="submit"
+                    class="w-full bg-green-primary hover:bg-green-dark text-white font-semibold py-3 px-4 rounded-lg transition duration-200 shadow-md hover:shadow-lg transform hover:-translate-y-0.5"
+                >
+                    Sign In
+                </button>
+            </form>
+            
+            <!-- Divider -->
+            <div class="relative my-6">
+                <div class="absolute inset-0 flex items-center">
+                    <div class="w-full border-t border-gray-300"></div>
+                </div>
+                <div class="relative flex justify-center text-sm">
+                    <span class="px-4 bg-white text-gray-500">Don't have an account?</span>
+                </div>
+            </div>
+            
+            <!-- Registration Links -->
+            <div class="space-y-3">
+                <a 
+                    href="register-consumer.html" 
+                    class="block w-full text-center bg-white border-2 border-green-primary text-green-primary font-semibold py-3 px-4 rounded-lg hover:bg-green-light transition duration-200"
+                >
+                    Register as Consumer
+                </a>
+                <a 
+                    href="register-consumer.html" 
+                    class="block w-full text-center bg-white border-2 border-emerald-600 text-emerald-600 font-semibold py-3 px-4 rounded-lg hover:bg-emerald-50 transition duration-200"
+                >
+                    Register as Seller
+                </a>
+            </div>
+        </div>
+        
+        <!-- Footer -->
+        <div class="text-center mt-6 text-sm text-gray-600">
+            <p>© 2024 RePlate. Fighting food waste, one plate at a time. 🌍</p>
+        </div>
+    </div>
+    
+    <!-- Success Modal (Hidden by default) -->
+    <div id="successModal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
+        <div class="bg-white rounded-2xl p-8 max-w-sm w-full text-center fade-in">
+            <div class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                <svg class="w-8 h-8 text-green-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                </svg>
+            </div>
+            <h3 class="text-xl font-semibold text-gray-800 mb-2">Login Successful!</h3>
+            <p class="text-gray-600 mb-4">Redirecting to your dashboard...</p>
+            <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-green-primary mx-auto"></div>
+        </div>
+    </div>
+
+    <script>
+        // DOM Elements
+        const loginForm = document.getElementById('loginForm');
+        const emailInput = document.getElementById('email');
+        const passwordInput = document.getElementById('password');
+        const roleSelect = document.getElementById('role');
+        const rememberMeCheckbox = document.getElementById('rememberMe');
+        const togglePasswordBtn = document.getElementById('togglePassword');
+        const successModal = document.getElementById('successModal');
+        
+        // Error message elements
+        const emailError = document.getElementById('emailError');
+        const passwordError = document.getElementById('passwordError');
+        const roleError = document.getElementById('roleError');
+        
+        // Toggle password visibility
+        togglePasswordBtn.addEventListener('click', function() {
+            const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+            passwordInput.setAttribute('type', type);
+            
+            // Toggle eye icon
+            if (type === 'text') {
+                document.getElementById('eyeIcon').innerHTML = `
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29M3 3l3.59 3.59m0 0A9.953 9.953 0 0112 5c4.478 0 8.268 2.943 9.543 7a10.025 10.025 0 01-4.132 5.411m0 0L21 21"></path>
+                `;
+            } else {
+                document.getElementById('eyeIcon').innerHTML = `
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
+                `;
+            }
+        });
+        
+        // Email validation function
+        function validateEmail(email) {
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return emailRegex.test(email);
+        }
+        
+        // Password validation function
+        function validatePassword(password) {
+            return password.length >= 8;
+        }
+        
+        // Role validation function
+        function validateRole(role) {
+            return role !== '';
+        }
+        
+        // Show error function
+        function showError(input, errorElement, message) {
+            input.classList.add('input-error');
+            errorElement.textContent = message;
+            errorElement.classList.add('show');
+        }
+        
+        // Clear error function
+        function clearError(input, errorElement) {
+            input.classList.remove('input-error');
+            errorElement.classList.remove('show');
+        }
+        
+        // Real-time validation
+        emailInput.addEventListener('blur', function() {
+            if (this.value.trim() === '') {
+                showError(this, emailError, 'Email is required');
+            } else if (!validateEmail(this.value)) {
+                showError(this, emailError, 'Please enter a valid email address');
+            } else {
+                clearError(this, emailError);
+            }
+        });
+        
+        emailInput.addEventListener('input', function() {
+            if (this.value.trim() !== '' && validateEmail(this.value)) {
+                clearError(this, emailError);
+            }
+        });
+        
+        passwordInput.addEventListener('blur', function() {
+            if (this.value.trim() === '') {
+                showError(this, passwordError, 'Password is required');
+            } else if (!validatePassword(this.value)) {
+                showError(this, passwordError, 'Password must be at least 8 characters long');
+            } else {
+                clearError(this, passwordError);
+            }
+        });
+        
+        passwordInput.addEventListener('input', function() {
+            if (this.value.length >= 8) {
+                clearError(this, passwordError);
+            }
+        });
+        
+        roleSelect.addEventListener('change', function() {
+            if (validateRole(this.value)) {
+                clearError(this, roleError);
+            }
+        });
+        
+        // Form submission
+        loginForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Get form values
+            const email = emailInput.value.trim();
+            const password = passwordInput.value;
+            const role = roleSelect.value;
+            const rememberMe = rememberMeCheckbox.checked;
+            
+            // Clear all previous errors
+            clearError(emailInput, emailError);
+            clearError(passwordInput, passwordError);
+            clearError(roleSelect, roleError);
+            
+            // Validation flags
+            let isValid = true;
+            
+            // Validate email
+            if (email === '') {
+                showError(emailInput, emailError, 'Email is required');
+                isValid = false;
+            } else if (!validateEmail(email)) {
+                showError(emailInput, emailError, 'Please enter a valid email address');
+                isValid = false;
+            }
+            
+            // Validate password
+            if (password === '') {
+                showError(passwordInput, passwordError, 'Password is required');
+                isValid = false;
+            } else if (!validatePassword(password)) {
+                showError(passwordInput, passwordError, 'Password must be at least 8 characters long');
+                isValid = false;
+            }
+            
+            // Validate role
+            if (!validateRole(role)) {
+                showError(roleSelect, roleError, 'Please select your role');
+                isValid = false;
+            }
+            
+            // If all validations pass
+            if (isValid) {
+                console.log('Form submitted successfully!');
+                console.log('Email:', email);
+                console.log('Password:', password);
+                console.log('Role:', role);
+                console.log('Remember Me:', rememberMe);
+                
+                // Show success modal
+                successModal.classList.remove('hidden');
+                
+                // Store remember me preference (if needed)
+                if (rememberMe) {
+                    localStorage.setItem('rememberMe', 'true');
+                    localStorage.setItem('userEmail', email);
+                }
+                
+                // Redirect based on role after 2 seconds
+                setTimeout(function() {
+                    let redirectUrl;
+                    
+                    switch(role) {
+                        case 'consumer':
+                            redirectUrl = 'consumer-dashboard.html';
+                            break;
+                        case 'seller':
+                            redirectUrl = 'seller-dashboard.html';
+                            break;
+                        case 'admin':
+                            redirectUrl = '/admin/dashboard';
+                            break;
+                        default:
+                            redirectUrl = '/';
+                    }
+                    
+                    console.log('Redirecting to:', redirectUrl);
+                    // Uncomment the line below when you have actual dashboard pages
+                    window.location.href = redirectUrl;
+                    
+                    // For demo purposes, just hide the modal and show alert
+                    successModal.classList.add('hidden');
+                    alert(`Login successful! Redirecting to: ${redirectUrl}`);
+                    loginForm.reset();
+                }, 2000);
+            }
+        });
+        
+        // Check for remembered email on page load
+        window.addEventListener('load', function() {
+            if (localStorage.getItem('rememberMe') === 'true') {
+                const savedEmail = localStorage.getItem('userEmail');
+                if (savedEmail) {
+                    emailInput.value = savedEmail;
+                    rememberMeCheckbox.checked = true;
+                }
+            }
+        });
+        
+        // Prevent modal close on click outside (optional)
+        successModal.addEventListener('click', function(e) {
+            if (e.target === successModal) {
+                // Allow or prevent closing by clicking outside
+                // successModal.classList.add('hidden');
+            }
+        });
+    </script>
+</body>
+</html>

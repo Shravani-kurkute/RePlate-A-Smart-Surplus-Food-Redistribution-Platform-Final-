@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Item Details - RePlate</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .sidebar-active {
+            background-color: #d1fae5;
+            color: #059669;
+            border-left: 4px solid #10b981;
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-green-50 to-emerald-50 min-h-screen">
+    
+    <!-- Top Navbar -->
+    <nav class="bg-white shadow-sm fixed top-0 left-0 right-0 z-50">
+        <div class="flex items-center justify-between px-6 py-4">
+            <div class="flex items-center space-x-4">
+                <div class="flex items-center space-x-2">
+                    <div class="w-10 h-10 bg-green-500 rounded-xl flex items-center justify-center">
+                        <i class="fas fa-leaf text-white text-xl"></i>
+                    </div>
+                    <div>
+                        <h1 class="text-xl font-bold text-gray-800">RePlate</h1>
+                        <p class="text-xs text-gray-500">Consumer Dashboard</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="flex items-center space-x-6">
+                <button class="relative">
+                    <i class="fas fa-bell text-gray-600 text-xl"></i>
+                    <span class="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">3</span>
+                </button>
+                
+                <div class="flex items-center space-x-2 bg-green-50 px-4 py-2 rounded-full cursor-pointer">
+                    <i class="fas fa-leaf text-green-600"></i>
+                    <span class="text-sm font-medium text-green-700">My Impact</span>
+                </div>
+
+                <div class="flex items-center space-x-3 cursor-pointer">
+                    <div class="w-10 h-10 bg-green-500 rounded-full flex items-center justify-center">
+                        <span class="text-white font-bold">JD</span>
+                    </div>
+                    <div>
+                        <p class="text-sm font-semibold text-gray-800">John Doe</p>
+                        <p class="text-xs text-gray-500">Consumer</p>
+                    </div>
+                    <i class="fas fa-chevron-down text-gray-400 text-sm"></i>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Container -->
+    <div class="flex pt-20">
+        <!-- Left Sidebar -->
+        <aside class="w-64 bg-white h-screen fixed left-0 shadow-lg">
+            <div class="p-6 space-y-2">
+                <a href="consumer-dashboard.html" class="flex items-center space-x-3 px-4 py-3 rounded-lg hover:bg-gray-100 text-gray-600">
+                    <i class="fas fa-home"></i>
+                    <span class="font-medium">Dashboard</span>
+                </a>
+                <a href="marketplace.html" class="flex items-center space-x-3 px-4 py-3 rounded-lg sidebar-active">
+                    <i class="fas fa-shopping-bag"></i>
+                    <span class="font-medium">Marketplace</span>
+                </a>
+                <a href="my-orders.html" class="flex items-center space-x-3 px-4 py-3 rounded-lg hover:bg-gray-100 text-gray-600">
+                    <i class="fas fa-receipt"></i>
+                    <span class="font-medium">My Orders</span>
+                </a>
+                <a href="my-impact.html" class="flex items-center space-x-3 px-4 py-3 rounded-lg hover:bg-gray-100 text-gray-600">
+                    <i class="fas fa-chart-line"></i>
+                    <span class="font-medium">My Impact</span>
+                </a>
+                <a href="profile.html" class="flex items-center space-x-3 px-4 py-3 rounded-lg hover:bg-gray-100 text-gray-600">
+                    <i class="fas fa-user"></i>
+                    <span class="font-medium">Profile</span>
+                </a>
+                <hr class="my-4">
+                <a href="#logout" class="flex items-center space-x-3 px-4 py-3 rounded-lg hover:bg-red-50 text-red-600">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <span class="font-medium">Logout</span>
+                </a>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="ml-64 flex-1 p-8">
+            <!-- Back Button -->
+            <a href="marketplace.html" class="flex items-center text-gray-600 hover:text-green-600 mb-6">
+                <i class="fas fa-arrow-left mr-2"></i>
+                <span class="font-medium">Back to Marketplace</span>
+            </a>
+
+            <!-- Item Details -->
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <!-- Left Column - Image -->
+                <div>
+                    <div class="bg-white rounded-2xl overflow-hidden shadow-lg">
+                        <div class="relative">
+                            <img src="https://images.unsplash.com/photo-1585937421612-70a008356fbe?w=600&h=400&fit=crop" 
+                                 alt="Paneer Butter Masala" class="w-full h-96 object-cover">
+                            <div class="absolute top-4 right-4 bg-red-500 text-white px-4 py-2 rounded-full text-sm font-bold">
+                                <i class="fas fa-clock mr-1"></i> Expires in 2 hrs
+                            </div>
+                            <div class="absolute top-4 left-4 bg-green-600 text-white px-4 py-2 rounded-full text-sm font-bold">
+                                60% OFF
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Seller Information -->
+                    <div class="bg-white rounded-2xl p-6 shadow-sm mt-6">
+                        <h3 class="text-lg font-bold text-gray-800 mb-4">Seller Information</h3>
+                        <div class="flex items-center space-x-4 mb-4">
+                            <div class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center">
+                                <i class="fas fa-store text-green-600 text-2xl"></i>
+                            </div>
+                            <div class="flex-1">
+                                <h4 class="font-bold text-gray-800">Green Cafe</h4>
+                                <p class="text-sm text-gray-500">Verified Seller</p>
+                                <div class="flex items-center mt-1">
+                                    <i class="fas fa-star text-yellow-400 text-xs"></i>
+                                    <i class="fas fa-star text-yellow-400 text-xs"></i>
+                                    <i class="fas fa-star text-yellow-400 text-xs"></i>
+                                    <i class="fas fa-star text-yellow-400 text-xs"></i>
+                                    <i class="fas fa-star text-yellow-400 text-xs"></i>
+                                    <span class="text-xs text-gray-600 ml-2">4.8 (120 reviews)</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="space-y-2">
+                            <div class="flex items-center text-sm text-gray-600">
+                                <i class="fas fa-map-marker-alt w-5 text-green-600"></i>
+                                <span>Koregaon Park, Pune - 1.2 km away</span>
+                            </div>
+                            <div class="flex items-center text-sm text-gray-600">
+                                <i class="fas fa-phone w-5 text-green-600"></i>
+                                <span>+91 9876543210</span>
+                            </div>
+                            <div class="flex items-center text-sm text-gray-600">
+                                <i class="fas fa-clock w-5 text-green-600"></i>
+                                <span>Open until 11:00 PM</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Column - Details -->
+                <div>
+                    <div class="bg-white rounded-2xl p-8 shadow-sm">
+                        <h1 class="text-3xl font-bold text-gray-800 mb-2">Paneer Butter Masala</h1>
+                        <p class="text-gray-600 mb-6">Authentic North Indian curry with rich tomato gravy and soft paneer cubes</p>
+
+                        <!-- Price Section -->
+                        <div class="bg-green-50 rounded-xl p-6 mb-6">
+                            <div class="flex items-center justify-between mb-2">
+                                <div>
+                                    <p class="text-sm text-gray-500 mb-1">Original Price</p>
+                                    <p class="text-2xl text-gray-400 line-through">₹400</p>
+                                </div>
+                                <div class="text-right">
+                                    <p class="text-sm text-gray-500 mb-1">You Save</p>
+                                    <p class="text-2xl font-bold text-green-600">₹240 (60%)</p>
+                                </div>
+                            </div>
+                            <hr class="my-4 border-green-200">
+                            <div class="flex items-center justify-between">
+                                <p class="text-lg font-semibold text-gray-700">Final Price</p>
+                                <p class="text-4xl font-bold text-green-600">₹160</p>
+                            </div>
+                        </div>
+
+                        <!-- Quantity Selector -->
+                        <div class="mb-6">
+                            <label class="block text-sm font-semibold text-gray-700 mb-3">Quantity</label>
+                            <div class="flex items-center space-x-4">
+                                <button class="w-12 h-12 bg-gray-100 hover:bg-gray-200 rounded-lg font-bold text-xl">-</button>
+                                <input type="number" value="1" min="1" max="5" 
+                                       class="w-20 h-12 text-center border-2 border-gray-300 rounded-lg font-bold text-lg">
+                                <button class="w-12 h-12 bg-gray-100 hover:bg-gray-200 rounded-lg font-bold text-xl">+</button>
+                                <span class="text-sm text-gray-600">Available: <span class="font-semibold">5 plates</span></span>
+                            </div>
+                        </div>
+
+                        <!-- Environmental Impact -->
+                        <div class="bg-gradient-to-r from-green-500 to-emerald-600 rounded-xl p-6 mb-6">
+                            <h4 class="text-white font-bold mb-3 flex items-center">
+                                <i class="fas fa-leaf mr-2"></i> Environmental Impact
+                            </h4>
+                            <div class="grid grid-cols-2 gap-4">
+                                <div class="bg-white/20 rounded-lg p-3">
+                                    <p class="text-green-100 text-xs mb-1">Food Saved</p>
+                                    <p class="text-white text-xl font-bold">0.5 kg</p>
+                                </div>
+                                <div class="bg-white/20 rounded-lg p-3">
+                                    <p class="text-green-100 text-xs mb-1">CO₂ Reduced</p>
+                                    <p class="text-white text-xl font-bold">2.5 kg</p>
+                                </div>
+                            </div>
+                            <p class="text-green-100 text-xs mt-3">
+                                <i class="fas fa-info-circle mr-1"></i> Equivalent to saving water for 1 day
+                            </p>
+                        </div>
+
+                        <!-- Description -->
+                        <div class="mb-6">
+                            <h4 class="font-bold text-gray-800 mb-3">Description</h4>
+                            <p class="text-gray-600 text-sm leading-relaxed">
+                                Delicious Paneer Butter Masala made with fresh paneer cubes simmered in a rich, creamy tomato-based gravy. 
+                                Infused with aromatic spices and finished with butter and cream. Served with complimentary naan bread. 
+                                Perfect for a satisfying meal!
+                            </p>
+                        </div>
+
+                        <!-- Additional Info -->
+                        <div class="grid grid-cols-2 gap-4 mb-6">
+                            <div class="border border-gray-200 rounded-lg p-3">
+                                <p class="text-xs text-gray-500 mb-1">Category</p>
+                                <p class="font-semibold text-gray-800">Main Course</p>
+                            </div>
+                            <div class="border border-gray-200 rounded-lg p-3">
+                                <p class="text-xs text-gray-500 mb-1">Cuisine</p>
+                                <p class="font-semibold text-gray-800">North Indian</p>
+                            </div>
+                            <div class="border border-gray-200 rounded-lg p-3">
+                                <p class="text-xs text-gray-500 mb-1">Dietary</p>
+                                <p class="font-semibold text-gray-800">Vegetarian</p>
+                            </div>
+                            <div class="border border-gray-200 rounded-lg p-3">
+                                <p class="text-xs text-gray-500 mb-1">Spice Level</p>
+                                <p class="font-semibold text-gray-800">Medium</p>
+                            </div>
+                        </div>
+
+                        <!-- Action Buttons -->
+                        <div class="grid grid-cols-2 gap-4">
+                            <button class="bg-white border-2 border-green-600 text-green-600 hover:bg-green-50 font-bold py-4 rounded-xl transition-colors flex items-center justify-center">
+                                <i class="fas fa-shopping-cart mr-2"></i> Add to Cart
+                            </button>
+                            <button class="bg-green-600 hover:bg-green-700 text-white font-bold py-4 rounded-xl transition-colors flex items-center justify-center">
+                                <i class="fas fa-bolt mr-2"></i> Book Now
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Similar Items -->
+            <div class="mt-12">
+                <h3 class="text-2xl font-bold text-gray-800 mb-6">Similar Items</h3>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <!-- Similar Item Cards (simplified) -->
+                    <div class="bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-lg transition-shadow">
+                        <img src="https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8?w=400&h=200&fit=crop" 
+                             alt="Similar Item" class="w-full h-40 object-cover">
+                        <div class="p-4">
+                            <h4 class="font-bold text-gray-800 mb-1">Veg Biryani</h4>
+                            <p class="text-sm text-gray-500 mb-2">Spice Garden</p>
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <span class="text-xs text-gray-400 line-through">₹300</span>
+                                    <span class="text-xl font-bold text-green-600 ml-2">₹150</span>
+                                </div>
+                                <button class="text-green-600 hover:text-green-700 font-semibold text-sm">View</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // Dummy data for backend integration
+        const itemDetails = {
+            id: "ITEM001",
+            name: "Paneer Butter Masala",
+            description: "Delicious Paneer Butter Masala...",
+            seller: {
+                id: "SELLER001",
+                name: "Green Cafe",
+                rating: 4.8,
+                reviews: 120,
+                phone: "+91 9876543210",
+                address: "Koregaon Park, Pune",
+                distance: 1.2
+            },
+            pricing: {
+                original: 400,
+                discounted: 160,
+                discount: 60
+            },
+            availability: {
+                stock: 5,
+                expiryHours: 2
+            },
+            impact: {
+                foodSaved: 0.5,
+                co2Reduced: 2.5
+            },
+            category: "Main Course",
+            cuisine: "North Indian",
+            dietary: "Vegetarian",
+            spiceLevel: "Medium"
+        };
+
+        // API endpoints:
+        // GET /api/item/:id - Get item details
+        // POST /api/cart/add - Add to cart
+        // POST /api/booking/create - Create booking
+    </script>
+</body>
+</html>

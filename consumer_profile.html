@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile - RePlate</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .sidebar-active {
+            background-color: #d1fae5;
+            color: #059669;
+            border-left: 4px solid #10b981;
+        }
+        .tab-active {
+            background-color: #10b981;
+            color: white;
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-green-50 to-emerald-50 min-h-screen">
+    
+    <!-- Top Navbar -->
+    <nav class="bg-white shadow-sm fixed top-0 left-0 right-0 z-50">
+        <div class="flex items-center justify-between px-6 py-4">
+            <div class="flex items-center space-x-4">
+                <div class="flex items-center space-x-2">
+                    <div class="w-10 h-10 bg-green-500 rounded-xl flex items-center justify-center">
+                        <i class="fas fa-leaf text-white text-xl"></i>
+                    </div>
+                    <div>
+                        <h1 class="text-xl font-bold text-gray-800">RePlate</h1>
+                        <p class="text-xs text-gray-500">Consumer Dashboard</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="flex items-center space-x-6">
+                <a href="consumer_notifications.html" class="relative">
+                    <i class="fas fa-bell text-gray-600 text-xl"></i>
+                    <span class="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">3</span>
+                </a>
+                
+                <div class="flex items-center space-x-2 bg-green-50 px-4 py-2 rounded-full cursor-pointer">
+                    <i class="fas fa-leaf text-green-600"></i>
+                    <span class="text-sm font-medium text-green-700">My Impact</span>
+                </div>
+
+                <div class="flex items-center space-x-3 cursor-pointer">
+                    <div class="w-10 h-10 bg-green-500 rounded-full flex items-center justify-center">
+                        <span class="text-white font-bold">JD</span>
+                    </div>
+                    <div>
+                        <p class="text-sm font-semibold text-gray-800">John Doe</p>
+                        <p class="text-xs text-gray-500">Consumer</p>
+                    </div>
+                    <i class="fas fa-chevron-down text-gray-400 text-sm"></i>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Container -->
+    <div class="flex pt-20">
+        <!-- Left Sidebar -->
+        <aside class="w-64 bg-white h-screen fixed left-0 shadow-lg">
+            <div class="p-6 space-y-2">
+                <a href="consumer-dashboard.html" class="flex items-center space-x-3 px-4 py-3 rounded-lg hover:bg-gray-100 text-gray-600">
+                    <i class="fas fa-home"></i>
+                    <span class="font-medium">Dashboard</span>
+                </a>
+                <a href="consumer_marketplace.html" class="flex items-center space-x-3 px-4 py-3 rounded-lg hover:bg-gray-100 text-gray-600">
+                    <i class="fas fa-shopping-bag"></i>
+                    <span class="font-medium">Marketplace</span>
+                </a>
+                <a href="consumer_my-orders.html" class="flex items-center space-x-3 px-4 py-3 rounded-lg hover:bg-gray-100 text-gray-600">
+                    <i class="fas fa-receipt"></i>
+                    <span class="font-medium">My Orders</span>
+                </a>
+                <a href="consumer_my-impact.html" class="flex items-center space-x-3 px-4 py-3 rounded-lg hover:bg-gray-100 text-gray-600">
+                    <i class="fas fa-chart-line"></i>
+                    <span class="font-medium">My Impact</span>
+                </a>
+                <a href="consumer_profile.html" class="flex items-center space-x-3 px-4 py-3 rounded-lg sidebar-active">
+                    <i class="fas fa-user"></i>
+                    <span class="font-medium">Profile</span>
+                </a>
+                <a href="consumer_notifications.html" class="flex items-center space-x-3 px-4 py-3 bg-green-50 text-primary rounded-lg font-medium">
+                    <i class="fas fa-bell"></i>
+                    <span>Notifications</span>
+                    <span class="ml-auto bg-red-500 text-white text-xs rounded-full px-2 py-0.5">5</span>
+                </a>
+                <hr class="my-4">
+                <a href="selection.html" class="flex items-center space-x-3 px-4 py-3 rounded-lg hover:bg-red-50 text-red-600">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <span class="font-medium">Logout</span>
+                </a>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="ml-64 flex-1 p-8">
+            <!-- Page Header -->
+            <div class="mb-8">
+                <h2 class="text-3xl font-bold text-gray-800 mb-2">My Profile</h2>
+                <p class="text-gray-600">Manage your account settings and preferences</p>
+            </div>
+
+            <!-- Profile Header Card -->
+            <div class="bg-white rounded-2xl p-8 shadow-sm mb-6">
+                <div class="flex items-center space-x-6">
+                    <div class="relative">
+                        <div class="w-24 h-24 bg-green-500 rounded-full flex items-center justify-center">
+                            <span class="text-white text-4xl font-bold">JD</span>
+                        </div>
+                        <button class="absolute bottom-0 right-0 w-8 h-8 bg-green-600 rounded-full flex items-center justify-center hover:bg-green-700">
+                            <i class="fas fa-camera text-white text-xs"></i>
+                        </button>
+                    </div>
+                    <div class="flex-1">
+                        <h3 class="text-2xl font-bold text-gray-800 mb-1">John Doe</h3>
+                        <p class="text-gray-600 mb-2">john.doe@example.com</p>
+                        <div class="flex items-center space-x-4">
+                            <span class="px-3 py-1 bg-green-100 text-green-700 rounded-full text-sm font-semibold">
+                                <i class="fas fa-check-circle mr-1"></i> Active Member
+                            </span>
+                            <span class="text-sm text-gray-500">Member since Jan 2024</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tabs -->
+            <div class="bg-white rounded-2xl shadow-sm mb-6">
+                <div class="border-b border-gray-200">
+                    <div class="flex space-x-2 px-6 py-2">
+                        <button onclick="switchTab('personal')" id="tab-personal" class="px-6 py-3 rounded-t-lg font-semibold tab-active">
+                            <i class="fas fa-user mr-2"></i> Personal Info
+                        </button>
+                        <button onclick="switchTab('security')" id="tab-security" class="px-6 py-3 rounded-t-lg font-semibold text-gray-600 hover:bg-gray-100">
+                            <i class="fas fa-lock mr-2"></i> Security
+                        </button>
+                        <button onclick="switchTab('notifications')" id="tab-notifications" class="px-6 py-3 rounded-t-lg font-semibold text-gray-600 hover:bg-gray-100">
+                            <i class="fas fa-bell mr-2"></i> Notifications
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Tab Content -->
+                <div class="p-8">
+                    <!-- Personal Info Tab -->
+                    <div id="content-personal">
+                        <h3 class="text-xl font-bold text-gray-800 mb-6">Personal Information</h3>
+                        <form class="space-y-6">
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <div>
+                                    <label class="block text-sm font-semibold text-gray-700 mb-2">First Name</label>
+                                    <input type="text" value="John" 
+                                           class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500">
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-semibold text-gray-700 mb-2">Last Name</label>
+                                    <input type="text" value="Doe" 
+                                           class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500">
+                                </div>
+                            </div>
+
+                            <div>
+                                <label class="block text-sm font-semibold text-gray-700 mb-2">Email Address</label>
+                                <input type="email" value="john.doe@example.com" 
+                                       class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500">
+                            </div>
+
+                            <div>
+                                <label class="block text-sm font-semibold text-gray-700 mb-2">Phone Number</label>
+                                <input type="tel" value="+91 9876543210" 
+                                       class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500">
+                            </div>
+
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <div>
+                                    <label class="block text-sm font-semibold text-gray-700 mb-2">City</label>
+                                    <input type="text" value="Pune" 
+                                           class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500">
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-semibold text-gray-700 mb-2">State</label>
+                                    <input type="text" value="Maharashtra" 
+                                           class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500">
+                                </div>
+                            </div>
+
+                            <div>
+                                <label class="block text-sm font-semibold text-gray-700 mb-2">Address</label>
+                                <textarea rows="3" 
+                                          class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500">Koregaon Park, Pune - 411001</textarea>
+                            </div>
+
+                            <div class="flex space-x-4">
+                                <button type="submit" class="px-8 py-3 bg-green-600 hover:bg-green-700 text-white font-semibold rounded-lg transition-colors">
+                                    <i class="fas fa-save mr-2"></i> Save Changes
+                                </button>
+                                <button type="button" class="px-8 py-3 border-2 border-gray-300 text-gray-700 hover:bg-gray-50 font-semibold rounded-lg transition-colors">
+                                    Cancel
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+
+                    <!-- Security Tab -->
+                    <div id="content-security" class="hidden">
+                        <h3 class="text-xl font-bold text-gray-800 mb-6">Security Settings</h3>
+                        
+                        <!-- Change Password -->
+                        <div class="mb-8">
+                            <h4 class="text-lg font-semibold text-gray-800 mb-4">Change Password</h4>
+                            <form class="space-y-4">
+                                <div>
+                                    <label class="block text-sm font-semibold text-gray-700 mb-2">Current Password</label>
+                                    <input type="password" placeholder="Enter current password"
+                                           class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500">
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-semibold text-gray-700 mb-2">New Password</label>
+                                    <input type="password" placeholder="Enter new password"
+                                           class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500">
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-semibold text-gray-700 mb-2">Confirm New Password</label>
+                                    <input type="password" placeholder="Confirm new password"
+                                           class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500">
+                                </div>
+                                <button type="submit" class="px-8 py-3 bg-green-600 hover:bg-green-700 text-white font-semibold rounded-lg transition-colors">
+                                    <i class="fas fa-key mr-2"></i> Update Password
+                                </button>
+                            </form>
+                        </div>
+
+                        <!-- Two-Factor Authentication -->
+                        <div class="mb-8 border-t border-gray-200 pt-8">
+                            <h4 class="text-lg font-semibold text-gray-800 mb-4">Two-Factor Authentication</h4>
+                            <div class="bg-gray-50 rounded-lg p-6">
+                                <div class="flex items-center justify-between">
+                                    <div>
+                                        <p class="font-semibold text-gray-800 mb-1">Enable 2FA</p>
+                                        <p class="text-sm text-gray-600">Add an extra layer of security to your account</p>
+                                    </div>
+                                    <label class="relative inline-flex items-center cursor-pointer">
+                                        <input type="checkbox" class="sr-only peer">
+                                        <div class="w-14 h-7 bg-gray-300 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-green-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-[4px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-6 after:w-6 after:transition-all peer-checked:bg-green-600"></div>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Delete Account -->
+                        <div class="border-t border-gray-200 pt-8">
+                            <h4 class="text-lg font-semibold text-red-600 mb-4">Danger Zone</h4>
+                            <div class="bg-red-50 border-l-4 border-red-500 rounded-lg p-6">
+                                <p class="font-semibold text-red-800 mb-2">Delete Account</p>
+                                <p class="text-sm text-red-700 mb-4">Once you delete your account, there is no going back. Please be certain.</p>
+                                <button class="px-6 py-2 bg-red-600 hover:bg-red-700 text-white font-semibold rounded-lg transition-colors">
+                                    <i class="fas fa-trash mr-2"></i> Delete My Account
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Notifications Tab -->
+                    <div id="content-notifications" class="hidden">
+                        <h3 class="text-xl font-bold text-gray-800 mb-6">Notification Preferences</h3>
+                        
+                        <div class="space-y-6">
+                            <!-- Order Updates -->
+                            <div class="border-b border-gray-200 pb-6">
+                                <h4 class="font-semibold text-gray-800 mb-4">Order Updates</h4>
+                                <div class="space-y-4">
+                                    <div class="flex items-center justify-between">
+                                        <div>
+                                            <p class="font-medium text-gray-800">Order Confirmation</p>
+                                            <p class="text-sm text-gray-600">Get notified when your order is confirmed</p>
+                                        </div>
+                                        <label class="relative inline-flex items-center cursor-pointer">
+                                            <input type="checkbox" checked class="sr-only peer">
+                                            <div class="w-14 h-7 bg-gray-300 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-green-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-[4px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-6 after:w-6 after:transition-all peer-checked:bg-green-600"></div>
+                                        </label>
+                                    </div>
+
+                                    <div class="flex items-center justify-between">
+                                        <div>
+                                            <p class="font-medium text-gray-800">Ready for Pickup</p>
+                                            <p class="text-sm text-gray-600">Notification when your order is ready</p>
+                                        </div>
+                                        <label class="relative inline-flex items-center cursor-pointer">
+                                            <input type="checkbox" checked class="sr-only peer">
+                                            <div class="w-14 h-7 bg-gray-300 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-green-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-[4px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-6 after:w-6 after:transition-all peer-checked:bg-green-600"></div>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Expiry Alerts -->
+                            <div class="border-b border-gray-200 pb-6">
+                                <h4 class="font-semibold text-gray-800 mb-4">Expiry Alerts</h4>
+                                <div class="space-y-4">
+                                    <div class="flex items-center justify-between">
+                                        <div>
+                                            <p class="font-medium text-gray-800">New Listings Alert</p>
+                                            <p class="text-sm text-gray-600">Get notified about new surplus food near you</p>
+                                        </div>
+                                        <label class="relative inline-flex items-center cursor-pointer">
+                                            <input type="checkbox" checked class="sr-only peer">
+                                            <div class="w-14 h-7 bg-gray-300 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-green-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-[4px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-6 after:w-6 after:transition-all peer-checked:bg-green-600"></div>
+                                        </label>
+                                    </div>
+
+                                    <div class="flex items-center justify-between">
+                                        <div>
+                                            <p class="font-medium text-gray-800">Expiring Soon</p>
+                                            <p class="text-sm text-gray-600">Alert for items expiring within 2 hours</p>
+                                        </div>
+                                        <label class="relative inline-flex items-center cursor-pointer">
+                                            <input type="checkbox" checked class="sr-only peer">
+                                            <div class="w-14 h-7 bg-gray-300 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-green-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-[4px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-6 after:w-6 after:transition-all peer-checked:bg-green-600"></div>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Marketing -->
+                            <div class="pb-6">
+                                <h4 class="font-semibold text-gray-800 mb-4">Marketing</h4>
+                                <div class="space-y-4">
+                                    <div class="flex items-center justify-between">
+                                        <div>
+                                            <p class="font-medium text-gray-800">Promotional Emails</p>
+                                            <p class="text-sm text-gray-600">Receive special offers and promotions</p>
+                                        </div>
+                                        <label class="relative inline-flex items-center cursor-pointer">
+                                            <input type="checkbox" class="sr-only peer">
+                                            <div class="w-14 h-7 bg-gray-300 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-green-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-[4px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-6 after:w-6 after:transition-all peer-checked:bg-green-600"></div>
+                                        </label>
+                                    </div>
+
+                                    <div class="flex items-center justify-between">
+                                        <div>
+                                            <p class="font-medium text-gray-800">Weekly Newsletter</p>
+                                            <p class="text-sm text-gray-600">Sustainability tips and platform updates</p>
+                                        </div>
+                                        <label class="relative inline-flex items-center cursor-pointer">
+                                            <input type="checkbox" checked class="sr-only peer">
+                                            <div class="w-14 h-7 bg-gray-300 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-green-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-[4px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-6 after:w-6 after:transition-all peer-checked:bg-green-600"></div>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <button class="px-8 py-3 bg-green-600 hover:bg-green-700 text-white font-semibold rounded-lg transition-colors">
+                                <i class="fas fa-save mr-2"></i> Save Preferences
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        function switchTab(tabName) {
+            // Hide all content
+            document.getElementById('content-personal').classList.add('hidden');
+            document.getElementById('content-security').classList.add('hidden');
+            document.getElementById('content-notifications').classList.add('hidden');
+
+            // Remove active class from all tabs
+            document.getElementById('tab-personal').classList.remove('tab-active');
+            document.getElementById('tab-personal').classList.add('text-gray-600', 'hover:bg-gray-100');
+            document.getElementById('tab-security').classList.remove('tab-active');
+            document.getElementById('tab-security').classList.add('text-gray-600', 'hover:bg-gray-100');
+            document.getElementById('tab-notifications').classList.remove('tab-active');
+            document.getElementById('tab-notifications').classList.add('text-gray-600', 'hover:bg-gray-100');
+
+            // Show selected content and activate tab
+            document.getElementById('content-' + tabName).classList.remove('hidden');
+            document.getElementById('tab-' + tabName).classList.add('tab-active');
+            document.getElementById('tab-' + tabName).classList.remove('text-gray-600', 'hover:bg-gray-100');
+        }
+
+        // Dummy data for backend integration
+        const profileData = {
+            userId: "USER001",
+            personalInfo: {
+                firstName: "John",
+                lastName: "Doe",
+                email: "john.doe@example.com",
+                phone: "+91 9876543210",
+                city: "Pune",
+                state: "Maharashtra",
+                address: "Koregaon Park, Pune - 411001"
+            },
+            security: {
+                twoFactorEnabled: false,
+                lastPasswordChange: "2025-12-15"
+            },
+            notifications: {
+                orderConfirmation: true,
+                readyForPickup: true,
+                newListings: true,
+                expiringAlerts: true,
+                promotional: false,
+                newsletter: true
+            }
+        };
+
+        // API endpoints:
+        // GET /api/user/profile - Get profile data
+        // PUT /api/user/profile - Update profile
+        // PUT /api/user/password - Change password
+        // PUT /api/user/notifications - Update notification preferences
+        // DELETE /api/user/account - Delete account
+    </script>
+</body>
+</html>

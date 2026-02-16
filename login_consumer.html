@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - RePlate | Connect to Save Food</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'green-primary': '#22c55e',
+                        'green-dark': '#16a34a',
+                        'green-light': '#d1fae5',
+                        'green-bg': '#e8f5e9',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        
+        .error-message {
+            display: none;
+            color: #ef4444;
+            font-size: 0.875rem;
+            margin-top: 0.25rem;
+        }
+        
+        .error-message.show {
+            display: block;
+        }
+        
+        .input-error {
+            border-color: #ef4444 !important;
+        }
+        
+        .input-success {
+            border-color: #22c55e !important;
+        }
+        
+        .fade-in {
+            animation: fadeIn 0.6s ease-in;
+        }
+        
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .slide-in {
+            animation: slideIn 0.5s ease-out;
+        }
+        
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+        
+        .impact-stat {
+            transition: transform 0.3s ease;
+        }
+        
+        .impact-stat:hover {
+            transform: translateY(-4px);
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-green-50 via-gray-50 to-green-50 min-h-screen py-8 px-4">
+    
+    <!-- Main Container -->
+    <div class="max-w-6xl mx-auto">
+        <div class="grid lg:grid-cols-2 gap-8 items-center">
+            
+            <!-- Left Side - Mission & Impact -->
+            <div class="fade-in hidden lg:block">
+                <!-- Logo & Header -->
+                <div class="mb-8">
+                    <div class="flex items-center gap-2 mb-4">
+                        <!-- RePlate Logo - Leaf Icon -->
+                        <svg class="w-12 h-12 text-green-primary" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M17 8C8 10 5.9 16.17 3.82 21.34l1.89.66.12-.34C6.89 20 8.28 14 15 12c7-2 9-5 10-7-1 3-4 5-8 6z"/>
+                            <path d="M3.82 21.34C5.9 16.17 8 10 17 8c4-1 7-3 8-6 0 0-.5 4-7 7-6.72 2-8.11 8-9.18 12.66l-.12.34-1.88-.66z" opacity="0.5"/>
+                        </svg>
+                        <h1 class="text-4xl font-bold text-gray-800">RePlate</h1>
+                    </div>
+                    <p class="text-xl text-gray-700 font-medium mb-2">Fighting food waste, one plate at a time</p>
+                    <p class="text-gray-600 leading-relaxed">Connect with nearby restaurants, bakeries, and grocery outlets to rescue surplus food while making a positive environmental impact.</p>
+                </div>
+                
+                <!-- Impact Statistics -->
+                <div class="bg-white rounded-2xl shadow-lg p-6 mb-6">
+                    <h3 class="text-lg font-semibold text-gray-800 mb-4 flex items-center gap-2">
+                        <svg class="w-5 h-5 text-green-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path>
+                        </svg>
+                        Our Community Impact
+                    </h3>
+                    <div class="grid grid-cols-2 gap-4">
+                        <div class="impact-stat bg-green-50 rounded-lg p-4">
+                            <p class="text-3xl font-bold text-green-primary">12.5K+</p>
+                            <p class="text-sm text-gray-600">Meals Rescued</p>
+                        </div>
+                        <div class="impact-stat bg-green-50 rounded-lg p-4">
+                            <p class="text-3xl font-bold text-green-primary">8.4T</p>
+                            <p class="text-sm text-gray-600">CO₂ Prevented</p>
+                        </div>
+                        <div class="impact-stat bg-green-50 rounded-lg p-4">
+                            <p class="text-3xl font-bold text-green-primary">450+</p>
+                            <p class="text-sm text-gray-600">Partner Outlets</p>
+                        </div>
+                        <div class="impact-stat bg-green-50 rounded-lg p-4">
+                            <p class="text-3xl font-bold text-green-primary">3.2K</p>
+                            <p class="text-sm text-gray-600">Active Members</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Problem Statement -->
+                <div class="bg-gradient-to-r from-green-100 to-green-50 rounded-2xl p-6 border-l-4 border-green-primary">
+                    <h3 class="font-semibold text-gray-800 mb-3 flex items-center gap-2">
+                        <svg class="w-5 h-5 text-green-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path>
+                        </svg>
+                        The Problem We're Solving
+                    </h3>
+                    <p class="text-sm text-gray-700 leading-relaxed">Large volumes of edible food are discarded daily by food providers due to overproduction and approaching expiry times. We bridge the gap between surplus food and those seeking affordable options.</p>
+                </div>
+            </div>
+            
+            <!-- Right Side - Login Form -->
+            <div class="slide-in">
+                <!-- Mobile Logo -->
+                <div class="text-center mb-6 lg:hidden">
+                    <div class="inline-flex items-center gap-2 mb-3">
+                        <svg class="w-10 h-10 text-green-primary" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M17 8C8 10 5.9 16.17 3.82 21.34l1.89.66.12-.34C6.89 20 8.28 14 15 12c7-2 9-5 10-7-1 3-4 5-8 6z"/>
+                            <path d="M3.82 21.34C5.9 16.17 8 10 17 8c4-1 7-3 8-6 0 0-.5 4-7 7-6.72 2-8.11 8-9.18 12.66l-.12.34-1.88-.66z" opacity="0.5"/>
+                        </svg>
+                        <h1 class="text-3xl font-bold text-gray-800">RePlate</h1>
+                    </div>
+                    <p class="text-gray-600 text-sm">Fighting food waste, one plate at a time</p>
+                </div>
+                
+                <!-- Login Card -->
+                <div class="bg-white rounded-2xl shadow-xl p-8 md:p-10">
+                    <div class="mb-6">
+                        <h2 class="text-2xl font-bold text-gray-800 mb-2">Welcome Back</h2>
+                        <p class="text-gray-600 text-sm">Log in to continue saving food and making an impact</p>
+                    </div>
+                    
+                    <!-- Login Form -->
+                    <form id="loginForm" novalidate>
+                        
+                        <!-- Email -->
+                        <div class="mb-4">
+                            <label for="email" class="block text-sm font-medium text-gray-700 mb-2">
+                                Email Address <span class="text-red-500">*</span>
+                            </label>
+                            <div class="relative">
+                                <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                    <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 12a4 4 0 10-8 0 4 4 0 008 0zm0 0v1.5a2.5 2.5 0 005 0V12a9 9 0 10-9 9m4.5-1.206a8.959 8.959 0 01-4.5 1.207"></path>
+                                    </svg>
+                                </div>
+                                <input 
+                                    type="email" 
+                                    id="email" 
+                                    name="email"
+                                    class="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-primary focus:border-transparent transition duration-200"
+                                    placeholder="you@example.com"
+                                    required
+                                />
+                            </div>
+                            <p class="error-message" id="emailError">Please enter a valid email address</p>
+                        </div>
+                        
+                        <!-- Password -->
+                        <div class="mb-4">
+                            <label for="password" class="block text-sm font-medium text-gray-700 mb-2">
+                                Password <span class="text-red-500">*</span>
+                            </label>
+                            <div class="relative">
+                                <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                    <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path>
+                                    </svg>
+                                </div>
+                                <input 
+                                    type="password" 
+                                    id="password" 
+                                    name="password"
+                                    class="w-full pl-10 pr-12 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-primary focus:border-transparent transition duration-200"
+                                    placeholder="Enter your password"
+                                    required
+                                />
+                                <button 
+                                    type="button" 
+                                    id="togglePassword"
+                                    class="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400 hover:text-gray-600 transition"
+                                >
+                                    <svg id="eyeIcon" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
+                                    </svg>
+                                    <svg id="eyeOffIcon" class="w-5 h-5 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29M3 3l3.59 3.59m0 0A9.953 9.953 0 0112 5c4.478 0 8.268 2.943 9.543 7a10.025 10.025 0 01-4.132 5.411m0 0L21 21"></path>
+                                    </svg>
+                                </button>
+                            </div>
+                            <p class="error-message" id="passwordError">Password is required</p>
+                        </div>
+                        
+                        <!-- Remember Me & Forgot Password -->
+                        <div class="flex items-center justify-between mb-6">
+                            <label class="flex items-center cursor-pointer">
+                                <input 
+                                    type="checkbox" 
+                                    id="rememberMe"
+                                    class="w-4 h-4 text-green-primary border-gray-300 rounded focus:ring-2 focus:ring-green-primary transition"
+                                />
+                                <span class="ml-2 text-sm text-gray-700">Remember me</span>
+                            </label>
+                            <a href="#" class="text-sm text-green-primary hover:text-green-dark font-medium transition">
+                                Forgot Password?
+                            </a>
+                        </div>
+                        
+                        <!-- Login Button -->
+                        <button 
+                            type="submit"
+                            class="w-full bg-green-primary hover:bg-green-dark text-white font-semibold py-3 px-4 rounded-lg transition duration-200 transform hover:scale-[1.02] active:scale-[0.98] focus:outline-none focus:ring-2 focus:ring-green-primary focus:ring-offset-2"
+                        >
+                            Sign In
+                        </button>
+                        
+                        <!-- Divider -->
+                        <div class="relative my-6">
+                            <div class="absolute inset-0 flex items-center">
+                                <div class="w-full border-t border-gray-300"></div>
+                            </div>
+                            <div class="relative flex justify-center text-sm">
+                                <span class="px-4 bg-white text-gray-500">Or continue with</span>
+                            </div>
+                        </div>
+                        
+                        <!-- Social Login Buttons -->
+                        <div class="grid grid-cols-2 gap-3 mb-6">
+                            <button 
+                                type="button"
+                                class="flex items-center justify-center gap-2 px-4 py-3 border border-gray-300 rounded-lg hover:bg-gray-50 transition duration-200 focus:outline-none focus:ring-2 focus:ring-green-primary"
+                            >
+                                <svg class="w-5 h-5" viewBox="0 0 24 24">
+                                    <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+                                    <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+                                    <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/>
+                                    <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
+                                </svg>
+                                <span class="text-sm font-medium text-gray-700">Google</span>
+                            </button>
+                            <button 
+                                type="button"
+                                class="flex items-center justify-center gap-2 px-4 py-3 border border-gray-300 rounded-lg hover:bg-gray-50 transition duration-200 focus:outline-none focus:ring-2 focus:ring-green-primary"
+                            >
+                                <svg class="w-5 h-5" fill="#1877F2" viewBox="0 0 24 24">
+                                    <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+                                </svg>
+                                <span class="text-sm font-medium text-gray-700">Facebook</span>
+                            </button>
+                        </div>
+                        
+                        <!-- Sign Up Link -->
+                        <p class="text-center text-sm text-gray-600">
+                            Don't have an account? 
+                            <a href="register-consumer.html" class="text-green-primary hover:text-green-dark font-semibold transition">
+                                Sign up now
+                            </a>
+                        </p>
+                    </form>
+                </div>
+                
+                <!-- Additional Info for Mobile -->
+                <div class="mt-6 lg:hidden">
+                    <div class="bg-gradient-to-r from-green-100 to-green-50 rounded-xl p-4 border-l-4 border-green-primary">
+                        <p class="text-xs text-gray-700 leading-relaxed">
+                            <span class="font-semibold">Join our mission:</span> Connect with local food providers to rescue surplus food, reduce waste, and make a positive environmental impact.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Success Modal -->
+    <div id="successModal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 px-4">
+        <div class="bg-white rounded-2xl p-8 max-w-md w-full text-center fade-in">
+            <div class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                <svg class="w-8 h-8 text-green-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                </svg>
+            </div>
+            <h3 class="text-2xl font-bold text-gray-800 mb-2">Welcome Back!</h3>
+            <p class="text-gray-600 mb-4">You've successfully logged in. Let's continue making an impact together.</p>
+            <div class="flex items-center justify-center gap-2 text-sm text-green-primary">
+                <svg class="w-4 h-4 animate-spin" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path>
+                </svg>
+                <span>Redirecting to dashboard...</span>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // Get form elements
+        const loginForm = document.getElementById('loginForm');
+        const emailInput = document.getElementById('email');
+        const passwordInput = document.getElementById('password');
+        const togglePassword = document.getElementById('togglePassword');
+        const eyeIcon = document.getElementById('eyeIcon');
+        const eyeOffIcon = document.getElementById('eyeOffIcon');
+        const rememberMeCheckbox = document.getElementById('rememberMe');
+        const successModal = document.getElementById('successModal');
+        
+        // Get error message elements
+        const emailError = document.getElementById('emailError');
+        const passwordError = document.getElementById('passwordError');
+        
+        // Validation Functions
+        function validateEmail(email) {
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return emailRegex.test(email);
+        }
+        
+        // Error/Success Display Functions
+        function showError(input, errorElement, message = '') {
+            input.classList.add('input-error');
+            input.classList.remove('input-success');
+            errorElement.textContent = message || errorElement.textContent;
+            errorElement.classList.add('show');
+        }
+        
+        function clearError(input, errorElement) {
+            input.classList.remove('input-error');
+            errorElement.classList.remove('show');
+        }
+        
+        function showSuccess(input) {
+            input.classList.remove('input-error');
+            input.classList.add('input-success');
+        }
+        
+        // Toggle Password Visibility
+        togglePassword.addEventListener('click', function() {
+            const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+            passwordInput.setAttribute('type', type);
+            
+            eyeIcon.classList.toggle('hidden');
+            eyeOffIcon.classList.toggle('hidden');
+        });
+        
+        // Real-time Email Validation
+        emailInput.addEventListener('input', function() {
+            const email = this.value.trim();
+            if (email.length > 0) {
+                if (validateEmail(email)) {
+                    clearError(this, emailError);
+                    showSuccess(this);
+                } else {
+                    showError(this, emailError, 'Please enter a valid email address');
+                }
+            } else {
+                clearError(this, emailError);
+                this.classList.remove('input-success');
+            }
+        });
+        
+        emailInput.addEventListener('blur', function() {
+            const email = this.value.trim();
+            if (email === '') {
+                showError(this, emailError, 'Email is required');
+            } else if (!validateEmail(email)) {
+                showError(this, emailError, 'Please enter a valid email address');
+            }
+        });
+        
+        // Real-time Password Validation
+        passwordInput.addEventListener('input', function() {
+            if (this.value.length > 0) {
+                clearError(this, passwordError);
+                showSuccess(this);
+            } else {
+                clearError(this, passwordError);
+                this.classList.remove('input-success');
+            }
+        });
+        
+        passwordInput.addEventListener('blur', function() {
+            if (this.value.trim() === '') {
+                showError(this, passwordError, 'Password is required');
+            }
+        });
+        
+        // Load saved email if "Remember Me" was checked
+        window.addEventListener('load', function() {
+            const savedEmail = localStorage.getItem('rememberedEmail');
+            if (savedEmail) {
+                emailInput.value = savedEmail;
+                rememberMeCheckbox.checked = true;
+                showSuccess(emailInput);
+            }
+        });
+        
+        // Form Submission
+        loginForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Get form values
+            const email = emailInput.value.trim();
+            const password = passwordInput.value;
+            const rememberMe = rememberMeCheckbox.checked;
+            
+            // Clear previous errors
+            clearError(emailInput, emailError);
+            clearError(passwordInput, passwordError);
+            
+            let isValid = true;
+            
+            // Validate email
+            if (!email) {
+                showError(emailInput, emailError, 'Email is required');
+                isValid = false;
+            } else if (!validateEmail(email)) {
+                showError(emailInput, emailError, 'Please enter a valid email address');
+                isValid = false;
+            }
+            
+            // Validate password
+            if (!password) {
+                showError(passwordInput, passwordError, 'Password is required');
+                isValid = false;
+            }
+            
+            // If all validations pass
+            if (isValid) {
+                console.log('Login attempt with:', { email, password, rememberMe });
+                
+                // Handle "Remember Me"
+                if (rememberMe) {
+                    localStorage.setItem('rememberedEmail', email);
+                } else {
+                    localStorage.removeItem('rememberedEmail');
+                }
+                
+                // Show success modal
+                successModal.classList.remove('hidden');
+                
+                // Simulate login and redirect
+                setTimeout(function() {
+                    console.log('Login successful! Redirecting to dashboard...');
+                    // Uncomment when you have dashboard page
+                    window.location.href = 'consumer-dashboard.html';
+                    
+                    // For demo purposes
+                    successModal.classList.add('hidden');
+                    alert('Login successful! Welcome to RePlate Dashboard.');
+                    loginForm.reset();
+                }, 2500);
+            } else {
+                // Scroll to first error
+                const firstError = document.querySelector('.input-error');
+                if (firstError) {
+                    firstError.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }
+            }
+        });
+        
+    </script>
+    <script>
+
+
+loginForm.addEventListener("submit", async function(e) {
+    e.preventDefault();
+
+    const email = document.getElementById("email").value;
+    const password = document.getElementById("password").value;
+
+    const res = await fetch("http://localhost:5000/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, password })
+    });
+
+    const data = await res.json();
+
+    if (data.user) {
+        localStorage.setItem("user", JSON.stringify(data.user));
+
+        successModal.classList.remove("hidden");
+
+        setTimeout(() => {
+            window.location.href = "consumer-dashboard.html";
+        }, 1500);
+    } else {
+        alert(data.msg);
+    }
+});
+
+// Toggle Password
+document.getElementById("togglePassword").addEventListener("click", function() {
+    const passwordInput = document.getElementById("password");
+    passwordInput.type = passwordInput.type === "password" ? "text" : "password";
+});
+</script>
+
+</body>
+</html>

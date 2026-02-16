@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Seller Login - RePlate | Business Partner Portal</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'orange-primary': '#f97316',
+                        'orange-dark': '#ea580c',
+                        'orange-light': '#fed7aa',
+                        'orange-bg': '#fff7ed',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        
+        .error-message {
+            display: none;
+            color: #ef4444;
+            font-size: 0.875rem;
+            margin-top: 0.25rem;
+        }
+        
+        .error-message.show {
+            display: block;
+        }
+        
+        .input-error {
+            border-color: #ef4444 !important;
+        }
+        
+        .input-success {
+            border-color: #f97316 !important;
+        }
+        
+        .fade-in {
+            animation: fadeIn 0.6s ease-in;
+        }
+        
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .slide-in {
+            animation: slideIn 0.5s ease-out;
+        }
+        
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+        
+        .benefit-card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .benefit-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 25px rgba(249, 115, 22, 0.15);
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-orange-50 via-gray-50 to-orange-50 min-h-screen py-8 px-4">
+    
+    <!-- Main Container -->
+    <div class="max-w-6xl mx-auto">
+        <div class="grid lg:grid-cols-2 gap-8 items-center">
+            
+            <!-- Left Side - Business Benefits & Info -->
+            <div class="fade-in hidden lg:block">
+                <!-- Logo & Header -->
+                <div class="mb-8">
+                    <div class="flex items-center gap-2 mb-4">
+                        <!-- RePlate Logo - Leaf Icon -->
+                        <svg class="w-12 h-12 text-orange-primary" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M17 8C8 10 5.9 16.17 3.82 21.34l1.89.66.12-.34C6.89 20 8.28 14 15 12c7-2 9-5 10-7-1 3-4 5-8 6z"/>
+                            <path d="M3.82 21.34C5.9 16.17 8 10 17 8c4-1 7-3 8-6 0 0-.5 4-7 7-6.72 2-8.11 8-9.18 12.66l-.12.34-1.88-.66z" opacity="0.5"/>
+                        </svg>
+                        <h1 class="text-4xl font-bold text-gray-800">RePlate</h1>
+                    </div>
+                    <p class="text-xl text-gray-700 font-semibold mb-2">Business Partner Portal</p>
+                    <p class="text-gray-600 leading-relaxed">Transform surplus inventory into revenue while reducing food waste and helping your community.</p>
+                </div>
+                
+                <!-- Partner Benefits -->
+                <div class="space-y-4 mb-6">
+                    <h3 class="text-lg font-semibold text-gray-800 mb-4 flex items-center gap-2">
+                        <svg class="w-5 h-5 text-orange-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                        </svg>
+                        Why Partner with RePlate?
+                    </h3>
+                    
+                    <div class="benefit-card bg-white rounded-xl shadow-md p-4 border-l-4 border-orange-primary">
+                        <div class="flex items-start gap-3">
+                            <div class="bg-orange-100 rounded-lg p-2">
+                                <svg class="w-5 h-5 text-orange-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                </svg>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-gray-800 mb-1">Increase Revenue</h4>
+                                <p class="text-sm text-gray-600">Monetize surplus food instead of discarding it. Turn waste into profit.</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="benefit-card bg-white rounded-xl shadow-md p-4 border-l-4 border-orange-primary">
+                        <div class="flex items-start gap-3">
+                            <div class="bg-orange-100 rounded-lg p-2">
+                                <svg class="w-5 h-5 text-orange-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                </svg>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-gray-800 mb-1">Environmental Impact</h4>
+                                <p class="text-sm text-gray-600">Reduce your carbon footprint and contribute to sustainability goals.</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="benefit-card bg-white rounded-xl shadow-md p-4 border-l-4 border-orange-primary">
+                        <div class="flex items-start gap-3">
+                            <div class="bg-orange-100 rounded-lg p-2">
+                                <svg class="w-5 h-5 text-orange-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
+                                </svg>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-gray-800 mb-1">Real-Time Analytics</h4>
+                                <p class="text-sm text-gray-600">Track sales, measure impact, and optimize your inventory management.</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="benefit-card bg-white rounded-xl shadow-md p-4 border-l-4 border-orange-primary">
+                        <div class="flex items-start gap-3">
+                            <div class="bg-orange-100 rounded-lg p-2">
+                                <svg class="w-5 h-5 text-orange-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
+                                </svg>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-gray-800 mb-1">Build Community Trust</h4>
+                                <p class="text-sm text-gray-600">Enhance your brand reputation as a socially responsible business.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Support Info -->
+                <div class="bg-gradient-to-r from-orange-100 to-orange-50 rounded-2xl p-6 border-l-4 border-orange-primary">
+                    <h3 class="font-semibold text-gray-800 mb-3 flex items-center gap-2">
+                        <svg class="w-5 h-5 text-orange-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18.364 5.636l-3.536 3.536m0 5.656l3.536 3.536M9.172 9.172L5.636 5.636m3.536 9.192l-3.536 3.536M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-5 0a4 4 0 11-8 0 4 4 0 018 0z"></path>
+                        </svg>
+                        Need Help?
+                    </h3>
+                    <p class="text-sm text-gray-700 leading-relaxed mb-3">Our dedicated support team is here to help you succeed.</p>
+                    <div class="flex items-center gap-4 text-sm">
+                        <a href="tel:+911234567890" class="text-orange-primary hover:text-orange-dark font-medium flex items-center gap-1">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path>
+                            </svg>
+                            Call Support
+                        </a>
+                        <a href="mailto:support@replate.com" class="text-orange-primary hover:text-orange-dark font-medium flex items-center gap-1">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+                            </svg>
+                            Email Us
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Right Side - Login Form -->
+            <div class="slide-in">
+                <!-- Mobile Logo -->
+                <div class="text-center mb-6 lg:hidden">
+                    <div class="inline-flex items-center gap-2 mb-3">
+                        <svg class="w-10 h-10 text-orange-primary" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M17 8C8 10 5.9 16.17 3.82 21.34l1.89.66.12-.34C6.89 20 8.28 14 15 12c7-2 9-5 10-7-1 3-4 5-8 6z"/>
+                            <path d="M3.82 21.34C5.9 16.17 8 10 17 8c4-1 7-3 8-6 0 0-.5 4-7 7-6.72 2-8.11 8-9.18 12.66l-.12.34-1.88-.66z" opacity="0.5"/>
+                        </svg>
+                        <h1 class="text-3xl font-bold text-gray-800">RePlate</h1>
+                    </div>
+                    <p class="text-gray-600 text-sm font-semibold">Business Partner Portal</p>
+                </div>
+                
+                <!-- Login Card -->
+                <div class="bg-white rounded-2xl shadow-xl p-8 md:p-10">
+                    <div class="mb-6">
+                        <h2 class="text-2xl font-bold text-gray-800 mb-2">Seller Login</h2>
+                        <p class="text-gray-600 text-sm">Access your dashboard to manage listings and track impact</p>
+                    </div>
+                    
+                    <!-- Login Form -->
+                    <form id="sellerLoginForm" novalidate>
+                        
+                        <!-- Business Email -->
+                        <div class="mb-4">
+                            <label for="email" class="block text-sm font-medium text-gray-700 mb-2">
+                                Business Email <span class="text-red-500">*</span>
+                            </label>
+                            <div class="relative">
+                                <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                    <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+                                    </svg>
+                                </div>
+                                <input 
+                                    type="email" 
+                                    id="email" 
+                                    name="email"
+                                    class="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-primary focus:border-transparent transition duration-200"
+                                    placeholder="business@example.com"
+                                    required
+                                />
+                            </div>
+                            <p class="error-message" id="emailError">Please enter a valid email address</p>
+                        </div>
+                        
+                        <!-- Password -->
+                        <div class="mb-4">
+                            <label for="password" class="block text-sm font-medium text-gray-700 mb-2">
+                                Password <span class="text-red-500">*</span>
+                            </label>
+                            <div class="relative">
+                                <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                    <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path>
+                                    </svg>
+                                </div>
+                                <input 
+                                    type="password" 
+                                    id="password" 
+                                    name="password"
+                                    class="w-full pl-10 pr-12 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-primary focus:border-transparent transition duration-200"
+                                    placeholder="Enter your password"
+                                    required
+                                />
+                                <button 
+                                    type="button" 
+                                    id="togglePassword"
+                                    class="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400 hover:text-gray-600 transition"
+                                >
+                                    <svg id="eyeIcon" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
+                                    </svg>
+                                    <svg id="eyeOffIcon" class="w-5 h-5 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29M3 3l3.59 3.59m0 0A9.953 9.953 0 0112 5c4.478 0 8.268 2.943 9.543 7a10.025 10.025 0 01-4.132 5.411m0 0L21 21"></path>
+                                    </svg>
+                                </button>
+                            </div>
+                            <p class="error-message" id="passwordError">Password is required</p>
+                        </div>
+                        
+                        <!-- Remember Me & Forgot Password -->
+                        <div class="flex items-center justify-between mb-6">
+                            <label class="flex items-center cursor-pointer">
+                                <input 
+                                    type="checkbox" 
+                                    id="rememberMe"
+                                    class="w-4 h-4 text-orange-primary border-gray-300 rounded focus:ring-2 focus:ring-orange-primary transition"
+                                />
+                                <span class="ml-2 text-sm text-gray-700">Remember me</span>
+                            </label>
+                            <a href="#" class="text-sm text-orange-primary hover:text-orange-dark font-medium transition">
+                                Forgot Password?
+                            </a>
+                        </div>
+                        
+                        <!-- Login Button -->
+                        <button 
+                            type="submit"
+                            class="w-full bg-orange-primary hover:bg-orange-dark text-white font-semibold py-3 px-4 rounded-lg transition duration-200 transform hover:scale-[1.02] active:scale-[0.98] focus:outline-none focus:ring-2 focus:ring-orange-primary focus:ring-offset-2"
+                        >
+                            Access Dashboard
+                        </button>
+                        
+                        <!-- Account Status Notice -->
+                        <div class="mt-6 bg-orange-50 border border-orange-200 rounded-lg p-4">
+                            <div class="flex items-start gap-3">
+                                <svg class="w-5 h-5 text-orange-primary flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                </svg>
+                                <div class="text-sm text-gray-700">
+                                    <p class="font-semibold mb-1">Account Approval Required</p>
+                                    <p class="text-xs">New registrations are reviewed within 24-48 hours. You'll receive an email once approved.</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Divider -->
+                        <div class="relative my-6">
+                            <div class="absolute inset-0 flex items-center">
+                                <div class="w-full border-t border-gray-300"></div>
+                            </div>
+                            <div class="relative flex justify-center text-sm">
+                                <span class="px-4 bg-white text-gray-500">New to RePlate?</span>
+                            </div>
+                        </div>
+                        
+                        <!-- Register Link -->
+                        <a 
+                            href="register-seller.html"
+                            class="w-full block text-center px-4 py-3 border-2 border-orange-primary text-orange-primary hover:bg-orange-50 font-semibold rounded-lg transition duration-200"
+                        >
+                            Register Your Business
+                        </a>
+                        
+                        <!-- Consumer Login Link -->
+                        <p class="text-center text-sm text-gray-600 mt-6">
+                            Looking to buy surplus food? 
+                            <a href="login_consumer.html" class="text-orange-primary hover:text-orange-dark font-semibold transition">
+                                Consumer Login
+                            </a>
+                        </p>
+                    </form>
+                </div>
+                
+                <!-- Mobile Benefits -->
+                <div class="mt-6 lg:hidden">
+                    <div class="bg-gradient-to-r from-orange-100 to-orange-50 rounded-xl p-4 border-l-4 border-orange-primary">
+                        <p class="text-xs text-gray-700 leading-relaxed">
+                            <span class="font-semibold">Join 450+ partner businesses</span> who are reducing waste, increasing revenue, and making a positive environmental impact with RePlate.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Success Modal -->
+    <div id="successModal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 px-4">
+        <div class="bg-white rounded-2xl p-8 max-w-md w-full text-center fade-in">
+            <div class="w-16 h-16 bg-orange-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                <svg class="w-8 h-8 text-orange-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                </svg>
+            </div>
+            <h3 class="text-2xl font-bold text-gray-800 mb-2">Welcome Back!</h3>
+            <p class="text-gray-600 mb-4">Successfully logged in. Redirecting to your business dashboard...</p>
+            <div class="flex items-center justify-center gap-2 text-sm text-orange-primary">
+                <svg class="w-4 h-4 animate-spin" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path>
+                </svg>
+                <span>Loading dashboard...</span>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // Get form elements
+        const sellerLoginForm = document.getElementById('sellerLoginForm');
+        const emailInput = document.getElementById('email');
+        const passwordInput = document.getElementById('password');
+        const togglePassword = document.getElementById('togglePassword');
+        const eyeIcon = document.getElementById('eyeIcon');
+        const eyeOffIcon = document.getElementById('eyeOffIcon');
+        const rememberMeCheckbox = document.getElementById('rememberMe');
+        const successModal = document.getElementById('successModal');
+        
+        // Get error message elements
+        const emailError = document.getElementById('emailError');
+        const passwordError = document.getElementById('passwordError');
+        
+        // Validation Functions
+        function validateEmail(email) {
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return emailRegex.test(email);
+        }
+        
+        // Error/Success Display Functions
+        function showError(input, errorElement, message = '') {
+            input.classList.add('input-error');
+            input.classList.remove('input-success');
+            errorElement.textContent = message || errorElement.textContent;
+            errorElement.classList.add('show');
+        }
+        
+        function clearError(input, errorElement) {
+            input.classList.remove('input-error');
+            errorElement.classList.remove('show');
+        }
+        
+        function showSuccess(input) {
+            input.classList.remove('input-error');
+            input.classList.add('input-success');
+        }
+        
+        // Toggle Password Visibility
+        togglePassword.addEventListener('click', function() {
+            const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+            passwordInput.setAttribute('type', type);
+            
+            eyeIcon.classList.toggle('hidden');
+            eyeOffIcon.classList.toggle('hidden');
+        });
+        
+        // Real-time Email Validation
+        emailInput.addEventListener('input', function() {
+            const email = this.value.trim();
+            if (email.length > 0) {
+                if (validateEmail(email)) {
+                    clearError(this, emailError);
+                    showSuccess(this);
+                } else {
+                    showError(this, emailError, 'Please enter a valid email address');
+                }
+            } else {
+                clearError(this, emailError);
+                this.classList.remove('input-success');
+            }
+        });
+        
+        emailInput.addEventListener('blur', function() {
+            const email = this.value.trim();
+            if (email === '') {
+                showError(this, emailError, 'Business email is required');
+            } else if (!validateEmail(email)) {
+                showError(this, emailError, 'Please enter a valid email address');
+            }
+        });
+        
+        // Real-time Password Validation
+        passwordInput.addEventListener('input', function() {
+            if (this.value.length > 0) {
+                clearError(this, passwordError);
+                showSuccess(this);
+            } else {
+                clearError(this, passwordError);
+                this.classList.remove('input-success');
+            }
+        });
+        
+        passwordInput.addEventListener('blur', function() {
+            if (this.value.trim() === '') {
+                showError(this, passwordError, 'Password is required');
+            }
+        });
+        
+        // Load saved email if "Remember Me" was checked
+        window.addEventListener('load', function() {
+            const savedEmail = localStorage.getItem('sellerRememberedEmail');
+            if (savedEmail) {
+                emailInput.value = savedEmail;
+                rememberMeCheckbox.checked = true;
+                showSuccess(emailInput);
+            }
+        });
+        
+    </script>
+
+    <script>
+
+sellerLoginForm.addEventListener("submit", async function(e) {
+    e.preventDefault();
+
+    const email = document.getElementById("email").value;
+    const password = document.getElementById("password").value;
+
+    const res = await fetch("http://localhost:5000/seller-login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, password })
+    });
+
+    const data = await res.json();
+
+    if (data.seller) {
+        localStorage.setItem("seller", JSON.stringify(data.seller));
+        window.location.href = "seller-dashboard.html";
+    } else {
+        alert(data.msg);
+    }
+});
+</script>
+
+</body>
+</html>

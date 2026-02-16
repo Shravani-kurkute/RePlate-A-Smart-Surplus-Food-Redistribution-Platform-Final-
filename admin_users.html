@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Users Management - RePlate Admin</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#3B82F6',
+                        secondary: '#1E40AF',
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-gray-50">
+    <!-- Top Navbar -->
+    <nav class="bg-white shadow-md fixed w-full top-0 z-50">
+        <div class="flex items-center justify-between px-6 py-4">
+            <div class="flex items-center space-x-4">
+                <button id="sidebarToggle" class="lg:hidden text-gray-600">
+                    <i class="fas fa-bars text-xl"></i>
+                </button>
+                <div class="flex items-center space-x-2">
+                    <i class="fas fa-leaf text-primary text-2xl"></i>
+                    <span class="text-xl font-bold text-gray-800">RePlate <span class="text-primary">Admin</span></span>
+                </div>
+            </div>
+            
+            <div class="flex-1 max-w-xl mx-8 hidden md:block">
+                <div class="relative">
+                    <input type="text" placeholder="Search..." class="w-full px-4 py-2 pl-10 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
+                    <i class="fas fa-search absolute left-3 top-3 text-gray-400"></i>
+                </div>
+            </div>
+            
+            <div class="flex items-center space-x-6">
+                <div class="relative">
+                    <i class="fas fa-bell text-gray-600 text-xl cursor-pointer"></i>
+                    <span class="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">3</span>
+                </div>
+                <div class="relative">
+                    <button id="profileBtn" class="flex items-center space-x-2 focus:outline-none">
+                        <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='40'%3E%3Ccircle cx='20' cy='20' r='20' fill='%233B82F6'/%3E%3Ctext x='20' y='26' font-size='16' fill='white' text-anchor='middle' font-family='Arial'%3EA%3C/text%3E%3C/svg%3E" class="w-10 h-10 rounded-full">
+                        <span class="hidden md:block text-sm font-medium">Admin User</span>
+                        <i class="fas fa-chevron-down text-xs"></i>
+                    </button>
+                    <div id="profileDropdown" class="hidden absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg py-2">
+                        <a href="admin_settings.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"><i class="fas fa-cog mr-2"></i>Settings</a>
+                        <a href="selection.html" onclick="logout()" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"><i class="fas fa-sign-out-alt mr-2"></i>Logout</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="flex pt-16">
+        <!-- Sidebar -->
+        <aside id="sidebar" class="bg-white w-64 min-h-screen shadow-lg fixed lg:sticky top-16 -left-64 lg:left-0 transition-all duration-300 z-40">
+            <nav class="p-4 space-y-2">
+                <a href="admin_dashboard.html" class="flex items-center space-x-3 px-4 py-3 text-gray-700 hover:bg-gray-100 rounded-lg">
+                    <i class="fas fa-chart-line"></i>
+                    <span>Dashboard</span>
+                </a>
+                <a href="admin_sellers.html" class="flex items-center space-x-3 px-4 py-3 text-gray-700 hover:bg-gray-100 rounded-lg">
+                    <i class="fas fa-user-check"></i>
+                    <span>Approve Sellers</span>
+                </a>
+                <a href="admin_listings.html" class="flex items-center space-x-3 px-4 py-3 text-gray-700 hover:bg-gray-100 rounded-lg">
+                    <i class="fas fa-list"></i>
+                    <span>Manage Listings</span>
+                </a>
+                <a href="admin_users.html" class="flex items-center space-x-3 px-4 py-3 bg-blue-50 text-primary rounded-lg font-medium">
+                    <i class="fas fa-users"></i>
+                    <span>Users Management</span>
+                </a>
+                <a href="admin_orders.html" class="flex items-center space-x-3 px-4 py-3 text-gray-700 hover:bg-gray-100 rounded-lg">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span>Orders Management</span>
+                </a>
+                <a href="admin_analytics.html" class="flex items-center space-x-3 px-4 py-3 text-gray-700 hover:bg-gray-100 rounded-lg">
+                    <i class="fas fa-leaf"></i>
+                    <span>Carbon Analytics</span>
+                </a>
+                <a href="admin_cities.html" class="flex items-center space-x-3 px-4 py-3 text-gray-700 hover:bg-gray-100 rounded-lg">
+                    <i class="fas fa-city"></i>
+                    <span>City Insights</span>
+                </a>
+                <a href="admin_reports.html" class="flex items-center space-x-3 px-4 py-3 text-gray-700 hover:bg-gray-100 rounded-lg">
+                    <i class="fas fa-file-alt"></i>
+                    <span>Reports</span>
+                </a>
+                <a href="admin_settings.html" class="flex items-center space-x-3 px-4 py-3 text-gray-700 hover:bg-gray-100 rounded-lg">
+                    <i class="fas fa-cog"></i>
+                    <span>Settings</span>
+                </a>
+                <a href="selection.html" onclick="logout()" class="flex items-center space-x-3 px-4 py-3 text-red-600 hover:bg-red-50 rounded-lg">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <span>Logout</span>
+                </a>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="flex-1 p-6 lg:ml-0">
+            <div class="mb-6">
+                <h1 class="text-3xl font-bold text-gray-800">Users Management</h1>
+                <p class="text-gray-600 mt-1">Monitor and manage all consumer accounts.</p>
+            </div>
+
+            <!-- Stats Cards -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
+                <div class="bg-white rounded-lg shadow-md p-6 border-l-4 border-green-500">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="text-gray-600 text-sm font-medium">Active Users</p>
+                            <h3 class="text-3xl font-bold text-gray-800 mt-2">2,784</h3>
+                        </div>
+                        <div class="bg-green-100 rounded-full p-4">
+                            <i class="fas fa-user-check text-green-600 text-2xl"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-lg shadow-md p-6 border-l-4 border-red-500">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="text-gray-600 text-sm font-medium">Blocked Users</p>
+                            <h3 class="text-3xl font-bold text-gray-800 mt-2">63</h3>
+                        </div>
+                        <div class="bg-red-100 rounded-full p-4">
+                            <i class="fas fa-user-slash text-red-600 text-2xl"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-lg shadow-md p-6 border-l-4 border-blue-500">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="text-gray-600 text-sm font-medium">Total Users</p>
+                            <h3 class="text-3xl font-bold text-gray-800 mt-2">2,847</h3>
+                        </div>
+                        <div class="bg-blue-100 rounded-full p-4">
+                            <i class="fas fa-users text-blue-600 text-2xl"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Filters -->
+            <div class="bg-white rounded-lg shadow-md p-6 mb-6">
+                <div class="flex flex-wrap gap-4">
+                    <div class="flex space-x-2">
+                        <button onclick="filterUsers('all')" id="filterAll" class="px-4 py-2 rounded-lg bg-primary text-white font-medium transition">
+                            All Users
+                        </button>
+                        <button onclick="filterUsers('active')" id="filterActive" class="px-4 py-2 rounded-lg bg-gray-200 text-gray-700 hover:bg-gray-300 transition">
+                            Active
+                        </button>
+                        <button onclick="filterUsers('blocked')" id="filterBlocked" class="px-4 py-2 rounded-lg bg-gray-200 text-gray-700 hover:bg-gray-300 transition">
+                            Blocked
+                        </button>
+                    </div>
+                    
+                    <div class="flex-1 max-w-md">
+                        <div class="relative">
+                            <input type="text" id="searchUsers" onkeyup="searchUsers()" placeholder="Search by name or email..." class="w-full px-4 py-2 pl-10 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
+                            <i class="fas fa-search absolute left-3 top-3 text-gray-400"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Users Table -->
+            <div class="bg-white rounded-lg shadow-md overflow-hidden">
+                <div class="overflow-x-auto">
+                    <table class="w-full">
+                        <thead class="bg-gray-100 border-b">
+                            <tr>
+                                <th class="px-6 py-4 text-left text-sm font-semibold text-gray-700">User Name</th>
+                                <th class="px-6 py-4 text-left text-sm font-semibold text-gray-700">Email</th>
+                                <th class="px-6 py-4 text-left text-sm font-semibold text-gray-700">City</th>
+                                <th class="px-6 py-4 text-left text-sm font-semibold text-gray-700">Total Orders</th>
+                                <th class="px-6 py-4 text-left text-sm font-semibold text-gray-700">CO₂ Contribution</th>
+                                <th class="px-6 py-4 text-left text-sm font-semibold text-gray-700">Status</th>
+                                <th class="px-6 py-4 text-left text-sm font-semibold text-gray-700">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-gray-200" id="usersTable">
+                            <tr class="hover:bg-gray-50" data-status="active">
+                                <td class="px-6 py-4 text-sm font-medium text-gray-800">John Doe</td>
+                                <td class="px-6 py-4 text-sm text-gray-600">john.doe@email.com</td>
+                                <td class="px-6 py-4 text-sm text-gray-600">Mumbai</td>
+                                <td class="px-6 py-4 text-sm text-gray-600">24</td>
+                                <td class="px-6 py-4 text-sm font-semibold text-green-600">42 kg</td>
+                                <td class="px-6 py-4">
+                                    <span class="bg-green-100 text-green-700 px-3 py-1 rounded-full text-xs font-medium">Active</span>
+                                </td>
+                                <td class="px-6 py-4">
+                                    <button onclick="blockUser('u001')" class="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600 transition text-sm">
+                                        <i class="fas fa-ban mr-1"></i>Block
+                                    </button>
+                                </td>
+                            </tr>
+
+                            <tr class="hover:bg-gray-50" data-status="active">
+                                <td class="px-6 py-4 text-sm font-medium text-gray-800">Sarah Smith</td>
+                                <td class="px-6 py-4 text-sm text-gray-600">sarah.smith@email.com</td>
+                                <td class="px-6 py-4 text-sm text-gray-600">Delhi</td>
+                                <td class="px-6 py-4 text-sm text-gray-600">18</td>
+                                <td class="px-6 py-4 text-sm font-semibold text-green-600">31 kg</td>
+                                <td class="px-6 py-4">
+                                    <span class="bg-green-100 text-green-700 px-3 py-1 rounded-full text-xs font-medium">Active</span>
+                                </td>
+                                <td class="px-6 py-4">
+                                    <button onclick="blockUser('u002')" class="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600 transition text-sm">
+                                        <i class="fas fa-ban mr-1"></i>Block
+                                    </button>
+                                </td>
+                            </tr>
+
+                            <tr class="hover:bg-gray-50" data-status="active">
+                                <td class="px-6 py-4 text-sm font-medium text-gray-800">Raj Kumar</td>
+                                <td class="px-6 py-4 text-sm text-gray-600">raj.kumar@email.com</td>
+                                <td class="px-6 py-4 text-sm text-gray-600">Bangalore</td>
+                                <td class="px-6 py-4 text-sm text-gray-600">32</td>
+                                <td class="px-6 py-4 text-sm font-semibold text-green-600">58 kg</td>
+                                <td class="px-6 py-4">
+                                    <span class="bg-green-100 text-green-700 px-3 py-1 rounded-full text-xs font-medium">Active</span>
+                                </td>
+                                <td class="px-6 py-4">
+                                    <button onclick="blockUser('u003')" class="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600 transition text-sm">
+                                        <i class="fas fa-ban mr-1"></i>Block
+                                    </button>
+                                </td>
+                            </tr>
+
+                            <tr class="hover:bg-gray-50" data-status="blocked">
+                                <td class="px-6 py-4 text-sm font-medium text-gray-800">Mike Johnson</td>
+                                <td class="px-6 py-4 text-sm text-gray-600">mike.j@email.com</td>
+                                <td class="px-6 py-4 text-sm text-gray-600">Pune</td>
+                                <td class="px-6 py-4 text-sm text-gray-600">5</td>
+                                <td class="px-6 py-4 text-sm font-semibold text-green-600">8 kg</td>
+                                <td class="px-6 py-4">
+                                    <span class="bg-red-100 text-red-700 px-3 py-1 rounded-full text-xs font-medium">Blocked</span>
+                                </td>
+                                <td class="px-6 py-4">
+                                    <button onclick="unblockUser('u004')" class="bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600 transition text-sm">
+                                        <i class="fas fa-check mr-1"></i>Unblock
+                                    </button>
+                                </td>
+                            </tr>
+
+                            <tr class="hover:bg-gray-50" data-status="active">
+                                <td class="px-6 py-4 text-sm font-medium text-gray-800">Priya Patel</td>
+                                <td class="px-6 py-4 text-sm text-gray-600">priya.p@email.com</td>
+                                <td class="px-6 py-4 text-sm text-gray-600">Ahmedabad</td>
+                                <td class="px-6 py-4 text-sm text-gray-600">15</td>
+                                <td class="px-6 py-4 text-sm font-semibold text-green-600">27 kg</td>
+                                <td class="px-6 py-4">
+                                    <span class="bg-green-100 text-green-700 px-3 py-1 rounded-full text-xs font-medium">Active</span>
+                                </td>
+                                <td class="px-6 py-4">
+                                    <button onclick="blockUser('u005')" class="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600 transition text-sm">
+                                        <i class="fas fa-ban mr-1"></i>Block
+                                    </button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Toast -->
+    <div id="toast" class="hidden fixed bottom-6 right-6 bg-gray-800 text-white px-6 py-3 rounded-lg shadow-lg z-50">
+        <p id="toastMessage"></p>
+    </div>
+
+    <script>
+        document.getElementById('profileBtn').addEventListener('click', function(e) {
+            e.stopPropagation();
+            document.getElementById('profileDropdown').classList.toggle('hidden');
+        });
+
+        document.addEventListener('click', function() {
+            document.getElementById('profileDropdown').classList.add('hidden');
+        });
+
+        document.getElementById('sidebarToggle').addEventListener('click', function() {
+            const sidebar = document.getElementById('sidebar');
+            sidebar.classList.toggle('-left-64');
+            sidebar.classList.toggle('left-0');
+        });
+
+        function filterUsers(status) {
+            const rows = document.querySelectorAll('#usersTable tr');
+            const buttons = ['filterAll', 'filterActive', 'filterBlocked'];
+            
+            buttons.forEach(btnId => {
+                const btn = document.getElementById(btnId);
+                if (btnId === 'filter' + status.charAt(0).toUpperCase() + status.slice(1)) {
+                    btn.className = 'px-4 py-2 rounded-lg bg-primary text-white font-medium transition';
+                } else {
+                    btn.className = 'px-4 py-2 rounded-lg bg-gray-200 text-gray-700 hover:bg-gray-300 transition';
+                }
+            });
+
+            rows.forEach(row => {
+                if (status === 'all') {
+                    row.style.display = '';
+                } else {
+                    const rowStatus = row.getAttribute('data-status');
+                    row.style.display = rowStatus === status ? '' : 'none';
+                }
+            });
+        }
+
+        function searchUsers() {
+            const input = document.getElementById('searchUsers').value.toLowerCase();
+            const rows = document.querySelectorAll('#usersTable tr');
+
+            rows.forEach(row => {
+                const text = row.textContent.toLowerCase();
+                row.style.display = text.includes(input) ? '' : 'none';
+            });
+        }
+
+        function blockUser(userId) {
+            if (confirm('Are you sure you want to block this user?')) {
+                showToast('User blocked successfully');
+            }
+        }
+
+        function unblockUser(userId) {
+            if (confirm('Are you sure you want to unblock this user?')) {
+                showToast('User unblocked successfully');
+            }
+        }
+
+        function logout() {
+            localStorage.removeItem('adminToken');
+            sessionStorage.clear();
+            showToast('Admin logged out successfully');
+            setTimeout(() => {
+                window.location.href = 'login.html';
+            }, 1500);
+        }
+
+        function showToast(message) {
+            const toast = document.getElementById('toast');
+            const toastMessage = document.getElementById('toastMessage');
+            toastMessage.textContent = message;
+            toast.classList.remove('hidden');
+            setTimeout(() => {
+                toast.classList.add('hidden');
+            }, 3000);
+        }
+    </script>
+</body>
+</html>

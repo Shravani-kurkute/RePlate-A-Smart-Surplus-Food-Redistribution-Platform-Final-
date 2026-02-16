@@ -1,0 +1,790 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Notifications - RePlate</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#10B981',
+                        secondary: '#059669',
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-gray-50">
+    <!-- Top Navbar -->
+    <nav class="bg-white shadow-md fixed w-full top-0 z-50">
+        <div class="flex items-center justify-between px-6 py-4">
+            <div class="flex items-center space-x-4">
+                <button id="sidebarToggle" class="lg:hidden text-gray-600">
+                    <i class="fas fa-bars text-xl"></i>
+                </button>
+                <div class="flex items-center space-x-2">
+                    <i class="fas fa-leaf text-primary text-2xl"></i>
+                    <span class="text-xl font-bold text-gray-800">Re<span class="text-primary">Plate</span></span>
+                </div>
+            </div>
+            
+            <div class="flex items-center space-x-6">
+                <div class="relative">
+                    <i class="fas fa-bell text-primary text-xl cursor-pointer"></i>
+                    <span id="notifBadge" class="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">5</span>
+                </div>
+                <div class="relative">
+                    <button id="profileBtn" class="flex items-center space-x-2 focus:outline-none">
+                        <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='40'%3E%3Ccircle cx='20' cy='20' r='20' fill='%2310B981'/%3E%3Ctext x='20' y='26' font-size='16' fill='white' text-anchor='middle' font-family='Arial'%3EJ%3C/text%3E%3C/svg%3E" class="w-10 h-10 rounded-full">
+                        <span class="hidden md:block text-sm font-medium">John Doe</span>
+                        <i class="fas fa-chevron-down text-xs"></i>
+                    </button>
+                    <div id="profileDropdown" class="hidden absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg py-2">
+                        <a href="profile.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"><i class="fas fa-user mr-2"></i>Profile</a>
+                        <a href="#" onclick="logout()" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"><i class="fas fa-sign-out-alt mr-2"></i>Logout</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="flex pt-16">
+        <!-- Sidebar -->
+        <aside id="sidebar" class="bg-white w-64 min-h-screen shadow-lg fixed lg:sticky top-16 -left-64 lg:left-0 transition-all duration-300 z-40">
+            <nav class="p-4 space-y-2">
+                <a href="consumer-dashboard.html" class="flex items-center space-x-3 px-4 py-3 text-gray-700 hover:bg-gray-100 rounded-lg">
+                    <i class="fas fa-chart-line"></i>
+                    <span>Dashboard</span>
+                </a>
+                <a href="consumer_marketplace.html" class="flex items-center space-x-3 px-4 py-3 text-gray-700 hover:bg-gray-100 rounded-lg">
+                    <i class="fas fa-store"></i>
+                    <span>Marketplace</span>
+                </a>
+                <a href="consumer_my-orders.html" class="flex items-center space-x-3 px-4 py-3 text-gray-700 hover:bg-gray-100 rounded-lg">
+                    <i class="fas fa-shopping-bag"></i>
+                    <span>My Orders</span>
+                </a>
+                <a href="consumer_my-impact.html" class="flex items-center space-x-3 px-4 py-3 text-gray-700 hover:bg-gray-100 rounded-lg">
+                    <i class="fas fa-leaf"></i>
+                    <span>My Impact</span>
+                </a>
+                <a href="consumer_profile.html" class="flex items-center space-x-3 px-4 py-3 text-gray-700 hover:bg-gray-100 rounded-lg">
+                    <i class="fas fa-user"></i>
+                    <span>Profile</span>
+                </a>
+                <a href="consumer_notifications.html" class="flex items-center space-x-3 px-4 py-3 bg-green-50 text-primary rounded-lg font-medium">
+                    <i class="fas fa-bell"></i>
+                    <span>Notifications</span>
+                    <span class="ml-auto bg-red-500 text-white text-xs rounded-full px-2 py-0.5">5</span>
+                </a>
+                <a href="selection.html" onclick="logout()" class="flex items-center space-x-3 px-4 py-3 text-red-600 hover:bg-red-50 rounded-lg">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <span>Logout</span>
+                </a>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="flex-1 p-6 lg:ml-0">
+            <div class="mb-6">
+                <h1 class="text-3xl font-bold text-gray-800">Notifications & Updates</h1>
+                <p class="text-gray-600 mt-1">Stay updated with your orders, impact milestones, and nearby deals.</p>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="flex flex-wrap gap-4 mb-6">
+                <button onclick="markAllRead()" class="bg-primary text-white px-6 py-2 rounded-lg hover:bg-secondary transition shadow-md">
+                    <i class="fas fa-check-double mr-2"></i>Mark All as Read
+                </button>
+                <button onclick="clearAllNotifications()" class="bg-red-500 text-white px-6 py-2 rounded-lg hover:bg-red-600 transition shadow-md">
+                    <i class="fas fa-trash mr-2"></i>Clear All Notifications
+                </button>
+            </div>
+
+            <!-- Unread Notifications Section -->
+            <div class="mb-8">
+                <div class="flex items-center justify-between mb-4">
+                    <h2 class="text-2xl font-bold text-gray-800">
+                        <i class="fas fa-envelope text-primary mr-2"></i>Unread Notifications
+                    </h2>
+                    <span class="bg-red-500 text-white px-3 py-1 rounded-full text-sm font-semibold" id="unreadCount">5 New</span>
+                </div>
+
+                <div id="unreadNotifications" class="space-y-4">
+                    <!-- Notification Card 1 - Order Confirmed -->
+                    <div class="bg-gradient-to-r from-green-50 to-white rounded-lg shadow-md p-5 border-l-4 border-primary hover:shadow-lg transition transform hover:-translate-y-1" data-notif-id="1">
+                        <div class="flex items-start justify-between">
+                            <div class="flex items-start space-x-4 flex-1">
+                                <div class="bg-primary rounded-full p-3">
+                                    <i class="fas fa-check-circle text-white text-xl"></i>
+                                </div>
+                                <div class="flex-1">
+                                    <div class="flex items-center space-x-2 mb-1">
+                                        <h3 class="text-lg font-bold text-gray-800">Order Confirmed</h3>
+                                        <span class="bg-primary text-white text-xs px-2 py-0.5 rounded-full">Order</span>
+                                    </div>
+                                    <p class="text-gray-600 mb-2">Your order #RP-2847 from "Green Bistro" has been confirmed. Get ready for pickup!</p>
+                                    <div class="flex items-center space-x-4 text-sm text-gray-500">
+                                        <span><i class="fas fa-clock mr-1"></i>2 minutes ago</span>
+                                        <span><i class="fas fa-receipt mr-1"></i>Order #RP-2847</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="flex flex-col space-y-2 ml-4">
+                                <button onclick="markAsRead(1)" class="bg-gray-200 text-gray-700 px-4 py-1 rounded-lg hover:bg-gray-300 transition text-sm whitespace-nowrap">
+                                    <i class="fas fa-check mr-1"></i>Mark Read
+                                </button>
+                                <button onclick="viewOrderDetails('RP-2847')" class="bg-primary text-white px-4 py-1 rounded-lg hover:bg-secondary transition text-sm whitespace-nowrap">
+                                    <i class="fas fa-eye mr-1"></i>View Order
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Notification Card 2 - Pickup Reminder -->
+                    <div class="bg-gradient-to-r from-orange-50 to-white rounded-lg shadow-md p-5 border-l-4 border-orange-500 hover:shadow-lg transition transform hover:-translate-y-1" data-notif-id="2">
+                        <div class="flex items-start justify-between">
+                            <div class="flex items-start space-x-4 flex-1">
+                                <div class="bg-orange-500 rounded-full p-3">
+                                    <i class="fas fa-clock text-white text-xl"></i>
+                                </div>
+                                <div class="flex-1">
+                                    <div class="flex items-center space-x-2 mb-1">
+                                        <h3 class="text-lg font-bold text-gray-800">Pickup Reminder</h3>
+                                        <span class="bg-orange-500 text-white text-xs px-2 py-0.5 rounded-full">Pickup</span>
+                                    </div>
+                                    <p class="text-gray-600 mb-2">Don't forget! Your order is ready for pickup at "Healthy Bites" between 6:00 PM - 8:00 PM today.</p>
+                                    <div class="flex items-center space-x-4 text-sm text-gray-500">
+                                        <span><i class="fas fa-clock mr-1"></i>1 hour ago</span>
+                                        <span><i class="fas fa-receipt mr-1"></i>Order #RP-2841</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="flex flex-col space-y-2 ml-4">
+                                <button onclick="markAsRead(2)" class="bg-gray-200 text-gray-700 px-4 py-1 rounded-lg hover:bg-gray-300 transition text-sm whitespace-nowrap">
+                                    <i class="fas fa-check mr-1"></i>Mark Read
+                                </button>
+                                <button onclick="viewOrderDetails('RP-2841')" class="bg-orange-500 text-white px-4 py-1 rounded-lg hover:bg-orange-600 transition text-sm whitespace-nowrap">
+                                    <i class="fas fa-eye mr-1"></i>View Order
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Notification Card 3 - Carbon Milestone -->
+                    <div class="bg-gradient-to-r from-teal-50 to-white rounded-lg shadow-md p-5 border-l-4 border-teal-500 hover:shadow-lg transition transform hover:-translate-y-1" data-notif-id="3">
+                        <div class="flex items-start justify-between">
+                            <div class="flex items-start space-x-4 flex-1">
+                                <div class="bg-teal-500 rounded-full p-3">
+                                    <i class="fas fa-leaf text-white text-xl"></i>
+                                </div>
+                                <div class="flex-1">
+                                    <div class="flex items-center space-x-2 mb-1">
+                                        <h3 class="text-lg font-bold text-gray-800">Carbon Milestone Achieved! 🌱</h3>
+                                        <span class="bg-teal-500 text-white text-xs px-2 py-0.5 rounded-full">Impact</span>
+                                    </div>
+                                    <p class="text-gray-600 mb-2">Congratulations! You've saved 50 kg of CO₂ emissions. You're making a real difference for our planet!</p>
+                                    <div class="flex items-center space-x-4 text-sm text-gray-500">
+                                        <span><i class="fas fa-clock mr-1"></i>3 hours ago</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="flex flex-col space-y-2 ml-4">
+                                <button onclick="markAsRead(3)" class="bg-gray-200 text-gray-700 px-4 py-1 rounded-lg hover:bg-gray-300 transition text-sm whitespace-nowrap">
+                                    <i class="fas fa-check mr-1"></i>Mark Read
+                                </button>
+                                <button onclick="viewImpact()" class="bg-teal-500 text-white px-4 py-1 rounded-lg hover:bg-teal-600 transition text-sm whitespace-nowrap">
+                                    <i class="fas fa-chart-line mr-1"></i>View Impact
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Notification Card 4 - New Discount Nearby -->
+                    <div class="bg-gradient-to-r from-purple-50 to-white rounded-lg shadow-md p-5 border-l-4 border-purple-500 hover:shadow-lg transition transform hover:-translate-y-1" data-notif-id="4">
+                        <div class="flex items-start justify-between">
+                            <div class="flex items-start space-x-4 flex-1">
+                                <div class="bg-purple-500 rounded-full p-3">
+                                    <i class="fas fa-tag text-white text-xl"></i>
+                                </div>
+                                <div class="flex-1">
+                                    <div class="flex items-center space-x-2 mb-1">
+                                        <h3 class="text-lg font-bold text-gray-800">New Discount Nearby!</h3>
+                                        <span class="bg-purple-500 text-white text-xs px-2 py-0.5 rounded-full">System</span>
+                                    </div>
+                                    <p class="text-gray-600 mb-2">"Fresh Corner Cafe" just listed fresh pastries at 60% off! Only 2 km away. Grab them before they're gone!</p>
+                                    <div class="flex items-center space-x-4 text-sm text-gray-500">
+                                        <span><i class="fas fa-clock mr-1"></i>5 hours ago</span>
+                                        <span><i class="fas fa-map-marker-alt mr-1"></i>2 km away</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="flex flex-col space-y-2 ml-4">
+                                <button onclick="markAsRead(4)" class="bg-gray-200 text-gray-700 px-4 py-1 rounded-lg hover:bg-gray-300 transition text-sm whitespace-nowrap">
+                                    <i class="fas fa-check mr-1"></i>Mark Read
+                                </button>
+                                <button onclick="viewMarketplace()" class="bg-purple-500 text-white px-4 py-1 rounded-lg hover:bg-purple-600 transition text-sm whitespace-nowrap">
+                                    <i class="fas fa-store mr-1"></i>View Deal
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Notification Card 5 - Admin Announcement -->
+                    <div class="bg-gradient-to-r from-blue-50 to-white rounded-lg shadow-md p-5 border-l-4 border-blue-500 hover:shadow-lg transition transform hover:-translate-y-1" data-notif-id="5">
+                        <div class="flex items-start justify-between">
+                            <div class="flex items-start space-x-4 flex-1">
+                                <div class="bg-blue-500 rounded-full p-3">
+                                    <i class="fas fa-bullhorn text-white text-xl"></i>
+                                </div>
+                                <div class="flex-1">
+                                    <div class="flex items-center space-x-2 mb-1">
+                                        <h3 class="text-lg font-bold text-gray-800">Platform Update</h3>
+                                        <span class="bg-blue-500 text-white text-xs px-2 py-0.5 rounded-full">System</span>
+                                    </div>
+                                    <p class="text-gray-600 mb-2">We've added 15 new restaurants to your area! Explore more sustainable food options near you.</p>
+                                    <div class="flex items-center space-x-4 text-sm text-gray-500">
+                                        <span><i class="fas fa-clock mr-1"></i>1 day ago</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="flex flex-col space-y-2 ml-4">
+                                <button onclick="markAsRead(5)" class="bg-gray-200 text-gray-700 px-4 py-1 rounded-lg hover:bg-gray-300 transition text-sm whitespace-nowrap">
+                                    <i class="fas fa-check mr-1"></i>Mark Read
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- All Notifications Section -->
+            <div>
+                <div class="mb-4">
+                    <h2 class="text-2xl font-bold text-gray-800 mb-4">
+                        <i class="fas fa-list text-primary mr-2"></i>All Notifications
+                    </h2>
+                    
+                    <!-- Filters and Search -->
+                    <div class="flex flex-wrap gap-4 mb-4">
+                        <div class="flex space-x-2">
+                            <button onclick="filterNotifications('all')" id="filterAll" class="px-4 py-2 rounded-lg bg-primary text-white font-medium transition">
+                                All
+                            </button>
+                            <button onclick="filterNotifications('order')" id="filterOrder" class="px-4 py-2 rounded-lg bg-gray-200 text-gray-700 hover:bg-gray-300 transition">
+                                Orders
+                            </button>
+                            <button onclick="filterNotifications('impact')" id="filterImpact" class="px-4 py-2 rounded-lg bg-gray-200 text-gray-700 hover:bg-gray-300 transition">
+                                Impact
+                            </button>
+                            <button onclick="filterNotifications('system')" id="filterSystem" class="px-4 py-2 rounded-lg bg-gray-200 text-gray-700 hover:bg-gray-300 transition">
+                                System
+                            </button>
+                        </div>
+                        
+                        <div class="flex-1 max-w-md">
+                            <div class="relative">
+                                <input type="text" id="searchNotif" onkeyup="searchNotifications()" placeholder="Search notifications..." class="w-full px-4 py-2 pl-10 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
+                                <i class="fas fa-search absolute left-3 top-3 text-gray-400"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Notifications Table -->
+                <div class="bg-white rounded-lg shadow-md overflow-hidden">
+                    <div class="overflow-x-auto">
+                        <table class="w-full">
+                            <thead class="bg-gray-100 border-b">
+                                <tr>
+                                    <th class="px-6 py-4 text-left text-sm font-semibold text-gray-700">Type</th>
+                                    <th class="px-6 py-4 text-left text-sm font-semibold text-gray-700">Message</th>
+                                    <th class="px-6 py-4 text-left text-sm font-semibold text-gray-700">Date</th>
+                                    <th class="px-6 py-4 text-left text-sm font-semibold text-gray-700">Status</th>
+                                    <th class="px-6 py-4 text-left text-sm font-semibold text-gray-700">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="notificationsTable" class="divide-y divide-gray-200">
+                                <!-- Row 1 -->
+                                <tr class="hover:bg-gray-50 transition" data-type="order" data-status="unread">
+                                    <td class="px-6 py-4">
+                                        <span class="bg-green-100 text-green-700 px-3 py-1 rounded-full text-xs font-medium">
+                                            <i class="fas fa-check-circle mr-1"></i>Order
+                                        </span>
+                                    </td>
+                                    <td class="px-6 py-4">
+                                        <p class="text-gray-800 font-medium">Order Confirmed</p>
+                                        <p class="text-gray-600 text-sm">Your order #RP-2847 from "Green Bistro" has been confirmed.</p>
+                                    </td>
+                                    <td class="px-6 py-4 text-sm text-gray-600 whitespace-nowrap">
+                                        Feb 12, 2026<br>2:30 PM
+                                    </td>
+                                    <td class="px-6 py-4">
+                                        <span class="bg-red-100 text-red-700 px-3 py-1 rounded-full text-xs font-medium">
+                                            <i class="fas fa-circle text-xs mr-1"></i>Unread
+                                        </span>
+                                    </td>
+                                    <td class="px-6 py-4">
+                                        <button onclick="viewOrderDetails('RP-2847')" class="text-primary hover:text-secondary text-sm font-medium">
+                                            <i class="fas fa-eye mr-1"></i>View
+                                        </button>
+                                    </td>
+                                </tr>
+
+                                <!-- Row 2 -->
+                                <tr class="hover:bg-gray-50 transition" data-type="order" data-status="unread">
+                                    <td class="px-6 py-4">
+                                        <span class="bg-orange-100 text-orange-700 px-3 py-1 rounded-full text-xs font-medium">
+                                            <i class="fas fa-clock mr-1"></i>Pickup
+                                        </span>
+                                    </td>
+                                    <td class="px-6 py-4">
+                                        <p class="text-gray-800 font-medium">Pickup Reminder</p>
+                                        <p class="text-gray-600 text-sm">Your order is ready for pickup at "Healthy Bites" between 6:00 PM - 8:00 PM.</p>
+                                    </td>
+                                    <td class="px-6 py-4 text-sm text-gray-600 whitespace-nowrap">
+                                        Feb 12, 2026<br>1:30 PM
+                                    </td>
+                                    <td class="px-6 py-4">
+                                        <span class="bg-red-100 text-red-700 px-3 py-1 rounded-full text-xs font-medium">
+                                            <i class="fas fa-circle text-xs mr-1"></i>Unread
+                                        </span>
+                                    </td>
+                                    <td class="px-6 py-4">
+                                        <button onclick="viewOrderDetails('RP-2841')" class="text-primary hover:text-secondary text-sm font-medium">
+                                            <i class="fas fa-eye mr-1"></i>View
+                                        </button>
+                                    </td>
+                                </tr>
+
+                                <!-- Row 3 -->
+                                <tr class="hover:bg-gray-50 transition" data-type="impact" data-status="unread">
+                                    <td class="px-6 py-4">
+                                        <span class="bg-teal-100 text-teal-700 px-3 py-1 rounded-full text-xs font-medium">
+                                            <i class="fas fa-leaf mr-1"></i>Impact
+                                        </span>
+                                    </td>
+                                    <td class="px-6 py-4">
+                                        <p class="text-gray-800 font-medium">Carbon Milestone Achieved! 🌱</p>
+                                        <p class="text-gray-600 text-sm">You've saved 50 kg of CO₂ emissions. Great work!</p>
+                                    </td>
+                                    <td class="px-6 py-4 text-sm text-gray-600 whitespace-nowrap">
+                                        Feb 12, 2026<br>11:30 AM
+                                    </td>
+                                    <td class="px-6 py-4">
+                                        <span class="bg-red-100 text-red-700 px-3 py-1 rounded-full text-xs font-medium">
+                                            <i class="fas fa-circle text-xs mr-1"></i>Unread
+                                        </span>
+                                    </td>
+                                    <td class="px-6 py-4">
+                                        <button onclick="viewImpact()" class="text-primary hover:text-secondary text-sm font-medium">
+                                            <i class="fas fa-chart-line mr-1"></i>View
+                                        </button>
+                                    </td>
+                                </tr>
+
+                                <!-- Row 4 -->
+                                <tr class="hover:bg-gray-50 transition" data-type="system" data-status="unread">
+                                    <td class="px-6 py-4">
+                                        <span class="bg-purple-100 text-purple-700 px-3 py-1 rounded-full text-xs font-medium">
+                                            <i class="fas fa-tag mr-1"></i>System
+                                        </span>
+                                    </td>
+                                    <td class="px-6 py-4">
+                                        <p class="text-gray-800 font-medium">New Discount Nearby!</p>
+                                        <p class="text-gray-600 text-sm">"Fresh Corner Cafe" listed fresh pastries at 60% off!</p>
+                                    </td>
+                                    <td class="px-6 py-4 text-sm text-gray-600 whitespace-nowrap">
+                                        Feb 12, 2026<br>9:30 AM
+                                    </td>
+                                    <td class="px-6 py-4">
+                                        <span class="bg-red-100 text-red-700 px-3 py-1 rounded-full text-xs font-medium">
+                                            <i class="fas fa-circle text-xs mr-1"></i>Unread
+                                        </span>
+                                    </td>
+                                    <td class="px-6 py-4">
+                                        <button onclick="viewMarketplace()" class="text-primary hover:text-secondary text-sm font-medium">
+                                            <i class="fas fa-store mr-1"></i>View
+                                        </button>
+                                    </td>
+                                </tr>
+
+                                <!-- Row 5 -->
+                                <tr class="hover:bg-gray-50 transition" data-type="system" data-status="unread">
+                                    <td class="px-6 py-4">
+                                        <span class="bg-blue-100 text-blue-700 px-3 py-1 rounded-full text-xs font-medium">
+                                            <i class="fas fa-bullhorn mr-1"></i>System
+                                        </span>
+                                    </td>
+                                    <td class="px-6 py-4">
+                                        <p class="text-gray-800 font-medium">Platform Update</p>
+                                        <p class="text-gray-600 text-sm">We've added 15 new restaurants to your area!</p>
+                                    </td>
+                                    <td class="px-6 py-4 text-sm text-gray-600 whitespace-nowrap">
+                                        Feb 11, 2026<br>3:00 PM
+                                    </td>
+                                    <td class="px-6 py-4">
+                                        <span class="bg-red-100 text-red-700 px-3 py-1 rounded-full text-xs font-medium">
+                                            <i class="fas fa-circle text-xs mr-1"></i>Unread
+                                        </span>
+                                    </td>
+                                    <td class="px-6 py-4">
+                                        <button class="text-gray-400 text-sm">
+                                            -
+                                        </button>
+                                    </td>
+                                </tr>
+
+                                <!-- Row 6 - Read -->
+                                <tr class="hover:bg-gray-50 transition bg-gray-50" data-type="order" data-status="read">
+                                    <td class="px-6 py-4">
+                                        <span class="bg-green-100 text-green-700 px-3 py-1 rounded-full text-xs font-medium">
+                                            <i class="fas fa-check-circle mr-1"></i>Order
+                                        </span>
+                                    </td>
+                                    <td class="px-6 py-4">
+                                        <p class="text-gray-800 font-medium">Order Completed</p>
+                                        <p class="text-gray-600 text-sm">Your order #RP-2832 has been marked as completed. Thanks for saving food!</p>
+                                    </td>
+                                    <td class="px-6 py-4 text-sm text-gray-600 whitespace-nowrap">
+                                        Feb 10, 2026<br>7:15 PM
+                                    </td>
+                                    <td class="px-6 py-4">
+                                        <span class="bg-gray-200 text-gray-700 px-3 py-1 rounded-full text-xs font-medium">
+                                            <i class="fas fa-check-double text-xs mr-1"></i>Read
+                                        </span>
+                                    </td>
+                                    <td class="px-6 py-4">
+                                        <button onclick="viewOrderDetails('RP-2832')" class="text-primary hover:text-secondary text-sm font-medium">
+                                            <i class="fas fa-eye mr-1"></i>View
+                                        </button>
+                                    </td>
+                                </tr>
+
+                                <!-- Row 7 - Read -->
+                                <tr class="hover:bg-gray-50 transition bg-gray-50" data-type="impact" data-status="read">
+                                    <td class="px-6 py-4">
+                                        <span class="bg-teal-100 text-teal-700 px-3 py-1 rounded-full text-xs font-medium">
+                                            <i class="fas fa-leaf mr-1"></i>Impact
+                                        </span>
+                                    </td>
+                                    <td class="px-6 py-4">
+                                        <p class="text-gray-800 font-medium">Weekly Impact Summary</p>
+                                        <p class="text-gray-600 text-sm">This week you saved 3.2 kg of food and 8 kg of CO₂!</p>
+                                    </td>
+                                    <td class="px-6 py-4 text-sm text-gray-600 whitespace-nowrap">
+                                        Feb 9, 2026<br>6:00 PM
+                                    </td>
+                                    <td class="px-6 py-4">
+                                        <span class="bg-gray-200 text-gray-700 px-3 py-1 rounded-full text-xs font-medium">
+                                            <i class="fas fa-check-double text-xs mr-1"></i>Read
+                                        </span>
+                                    </td>
+                                    <td class="px-6 py-4">
+                                        <button onclick="viewImpact()" class="text-primary hover:text-secondary text-sm font-medium">
+                                            <i class="fas fa-chart-line mr-1"></i>View
+                                        </button>
+                                    </td>
+                                </tr>
+
+                                <!-- Row 8 - Read -->
+                                <tr class="hover:bg-gray-50 transition bg-gray-50" data-type="order" data-status="read">
+                                    <td class="px-6 py-4">
+                                        <span class="bg-green-100 text-green-700 px-3 py-1 rounded-full text-xs font-medium">
+                                            <i class="fas fa-check-circle mr-1"></i>Order
+                                        </span>
+                                    </td>
+                                    <td class="px-6 py-4">
+                                        <p class="text-gray-800 font-medium">Order Confirmed</p>
+                                        <p class="text-gray-600 text-sm">Your order #RP-2825 from "Sunset Deli" has been confirmed.</p>
+                                    </td>
+                                    <td class="px-6 py-4 text-sm text-gray-600 whitespace-nowrap">
+                                        Feb 8, 2026<br>2:45 PM
+                                    </td>
+                                    <td class="px-6 py-4">
+                                        <span class="bg-gray-200 text-gray-700 px-3 py-1 rounded-full text-xs font-medium">
+                                            <i class="fas fa-check-double text-xs mr-1"></i>Read
+                                        </span>
+                                    </td>
+                                    <td class="px-6 py-4">
+                                        <button onclick="viewOrderDetails('RP-2825')" class="text-primary hover:text-secondary text-sm font-medium">
+                                            <i class="fas fa-eye mr-1"></i>View
+                                        </button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="hidden fixed bottom-6 right-6 bg-gray-800 text-white px-6 py-3 rounded-lg shadow-lg z-50 transform transition-all">
+        <p id="toastMessage"></p>
+    </div>
+
+    <script>
+        // Dummy notification data structure (Backend ready)
+        const notificationsData = [
+            {
+                notificationId: "n001",
+                userId: "u123",
+                type: "order",
+                title: "Order Confirmed",
+                message: "Your order #RP-2847 from 'Green Bistro' has been confirmed. Get ready for pickup!",
+                relatedOrderId: "RP-2847",
+                status: "unread",
+                createdAt: "2026-02-12T14:30:00Z"
+            },
+            {
+                notificationId: "n002",
+                userId: "u123",
+                type: "pickup",
+                title: "Pickup Reminder",
+                message: "Don't forget! Your order is ready for pickup at 'Healthy Bites' between 6:00 PM - 8:00 PM today.",
+                relatedOrderId: "RP-2841",
+                status: "unread",
+                createdAt: "2026-02-12T13:30:00Z"
+            },
+            {
+                notificationId: "n003",
+                userId: "u123",
+                type: "impact",
+                title: "Carbon Milestone Achieved!",
+                message: "Congratulations! You've saved 50 kg of CO₂ emissions. You're making a real difference for our planet!",
+                relatedOrderId: null,
+                status: "unread",
+                createdAt: "2026-02-12T11:30:00Z"
+            },
+            {
+                notificationId: "n004",
+                userId: "u123",
+                type: "system",
+                title: "New Discount Nearby!",
+                message: "'Fresh Corner Cafe' just listed fresh pastries at 60% off! Only 2 km away.",
+                relatedOrderId: null,
+                status: "unread",
+                createdAt: "2026-02-12T09:30:00Z"
+            },
+            {
+                notificationId: "n005",
+                userId: "u123",
+                type: "system",
+                title: "Platform Update",
+                message: "We've added 15 new restaurants to your area! Explore more sustainable food options.",
+                relatedOrderId: null,
+                status: "unread",
+                createdAt: "2026-02-11T15:00:00Z"
+            },
+            {
+                notificationId: "n006",
+                userId: "u123",
+                type: "order",
+                title: "Order Completed",
+                message: "Your order #RP-2832 has been marked as completed. Thanks for saving food!",
+                relatedOrderId: "RP-2832",
+                status: "read",
+                createdAt: "2026-02-10T19:15:00Z"
+            }
+        ];
+
+        // Profile dropdown toggle
+        document.getElementById('profileBtn').addEventListener('click', function(e) {
+            e.stopPropagation();
+            document.getElementById('profileDropdown').classList.toggle('hidden');
+        });
+
+        document.addEventListener('click', function() {
+            document.getElementById('profileDropdown').classList.add('hidden');
+        });
+
+        // Sidebar toggle for mobile
+        document.getElementById('sidebarToggle').addEventListener('click', function() {
+            const sidebar = document.getElementById('sidebar');
+            sidebar.classList.toggle('-left-64');
+            sidebar.classList.toggle('left-0');
+        });
+
+        // Mark single notification as read
+        function markAsRead(notifId) {
+            const card = document.querySelector(`[data-notif-id="${notifId}"]`);
+            if (card) {
+                card.style.opacity = '0.5';
+                setTimeout(() => {
+                    card.remove();
+                    updateUnreadCount();
+                    showToast('Notification marked as read');
+                }, 300);
+            }
+            
+            // Backend API call would go here
+            // fetch(`/api/notifications/${notifId}/read`, { method: 'PUT' })
+        }
+
+        // Mark all notifications as read
+        function markAllRead() {
+            const unreadSection = document.getElementById('unreadNotifications');
+            const cards = unreadSection.querySelectorAll('[data-notif-id]');
+            
+            cards.forEach((card, index) => {
+                setTimeout(() => {
+                    card.style.opacity = '0.5';
+                    setTimeout(() => {
+                        card.remove();
+                    }, 300);
+                }, index * 100);
+            });
+
+            setTimeout(() => {
+                updateUnreadCount();
+                showToast('All notifications marked as read');
+                
+                // Update table rows to read status
+                const tableRows = document.querySelectorAll('tr[data-status="unread"]');
+                tableRows.forEach(row => {
+                    row.setAttribute('data-status', 'read');
+                    row.classList.add('bg-gray-50');
+                    const statusBadge = row.querySelector('td:nth-child(4)');
+                    statusBadge.innerHTML = `<span class="bg-gray-200 text-gray-700 px-3 py-1 rounded-full text-xs font-medium">
+                        <i class="fas fa-check-double text-xs mr-1"></i>Read
+                    </span>`;
+                });
+            }, cards.length * 100 + 300);
+
+            // Backend API call
+            // fetch('/api/notifications/mark-all-read', { method: 'PUT' })
+        }
+
+        // Clear all notifications
+        function clearAllNotifications() {
+            if (confirm('Are you sure you want to clear all notifications? This action cannot be undone.')) {
+                const unreadSection = document.getElementById('unreadNotifications');
+                const tableBody = document.getElementById('notificationsTable');
+                
+                unreadSection.innerHTML = '<p class="text-gray-500 text-center py-8">No unread notifications</p>';
+                tableBody.innerHTML = '<tr><td colspan="5" class="px-6 py-8 text-center text-gray-500">No notifications found</td></tr>';
+                
+                updateUnreadCount();
+                showToast('All notifications cleared');
+
+                // Backend API call
+                // fetch('/api/notifications/clear-all', { method: 'DELETE' })
+            }
+        }
+
+        // Update unread count
+        function updateUnreadCount() {
+            const unreadCards = document.querySelectorAll('#unreadNotifications [data-notif-id]');
+            const count = unreadCards.length;
+            
+            document.getElementById('unreadCount').textContent = count > 0 ? `${count} New` : 'None';
+            document.getElementById('notifBadge').textContent = count;
+            
+            if (count === 0) {
+                document.getElementById('notifBadge').classList.add('hidden');
+                document.getElementById('unreadNotifications').innerHTML = 
+                    '<p class="text-gray-500 text-center py-8"><i class="fas fa-check-circle text-4xl text-green-500 mb-3"></i><br>All caught up! No unread notifications.</p>';
+            }
+        }
+
+        // Filter notifications
+        function filterNotifications(type) {
+            const rows = document.querySelectorAll('#notificationsTable tr[data-type]');
+            const buttons = ['filterAll', 'filterOrder', 'filterImpact', 'filterSystem'];
+            
+            // Update button styles
+            buttons.forEach(btnId => {
+                const btn = document.getElementById(btnId);
+                if (btnId === 'filter' + type.charAt(0).toUpperCase() + type.slice(1) || 
+                    (type === 'all' && btnId === 'filterAll')) {
+                    btn.className = 'px-4 py-2 rounded-lg bg-primary text-white font-medium transition';
+                } else {
+                    btn.className = 'px-4 py-2 rounded-lg bg-gray-200 text-gray-700 hover:bg-gray-300 transition';
+                }
+            });
+
+            // Filter rows
+            rows.forEach(row => {
+                if (type === 'all') {
+                    row.style.display = '';
+                } else {
+                    const rowType = row.getAttribute('data-type');
+                    row.style.display = rowType === type ? '' : 'none';
+                }
+            });
+        }
+
+        // Search notifications
+        function searchNotifications() {
+            const input = document.getElementById('searchNotif').value.toLowerCase();
+            const rows = document.querySelectorAll('#notificationsTable tr[data-type]');
+
+            rows.forEach(row => {
+                const text = row.textContent.toLowerCase();
+                row.style.display = text.includes(input) ? '' : 'none';
+            });
+        }
+
+        // View order details
+        function viewOrderDetails(orderId) {
+            showToast(`Redirecting to order ${orderId}...`);
+            setTimeout(() => {
+                window.location.href = `orders.html?orderId=${orderId}`;
+            }, 1000);
+        }
+
+        // View impact page
+        function viewImpact() {
+            showToast('Redirecting to your impact dashboard...');
+            setTimeout(() => {
+                window.location.href = 'impact.html';
+            }, 1000);
+        }
+
+        // View marketplace
+        function viewMarketplace() {
+            showToast('Redirecting to marketplace...');
+            setTimeout(() => {
+                window.location.href = 'marketplace.html';
+            }, 1000);
+        }
+
+        // Logout function
+        function logout() {
+            // Clear session/local storage
+            localStorage.removeItem('authToken');
+            sessionStorage.clear();
+            
+            showToast('Logging out...');
+            setTimeout(() => {
+                window.location.href = 'login.html';
+            }, 1000);
+        }
+
+        // Show toast notification
+        function showToast(message) {
+            const toast = document.getElementById('toast');
+            const toastMessage = document.getElementById('toastMessage');
+            
+            toastMessage.textContent = message;
+            toast.classList.remove('hidden');
+            
+            setTimeout(() => {
+                toast.classList.add('hidden');
+            }, 3000);
+        }
+
+        // Initialize on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            updateUnreadCount();
+        });
+    </script>
+</body>
+</html>

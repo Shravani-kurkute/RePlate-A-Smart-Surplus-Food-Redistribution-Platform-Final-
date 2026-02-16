@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Details - RePlate</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .sidebar-active {
+            background-color: #d1fae5;
+            color: #059669;
+            border-left: 4px solid #10b981;
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-green-50 to-emerald-50 min-h-screen">
+    
+    <!-- Top Navbar -->
+    <nav class="bg-white shadow-sm fixed top-0 left-0 right-0 z-50">
+        <div class="flex items-center justify-between px-6 py-4">
+            <div class="flex items-center space-x-4">
+                <div class="flex items-center space-x-2">
+                    <div class="w-10 h-10 bg-green-500 rounded-xl flex items-center justify-center">
+                        <i class="fas fa-leaf text-white text-xl"></i>
+                    </div>
+                    <div>
+                        <h1 class="text-xl font-bold text-gray-800">RePlate</h1>
+                        <p class="text-xs text-gray-500">Consumer Dashboard</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="flex items-center space-x-6">
+                <button class="relative">
+                    <i class="fas fa-bell text-gray-600 text-xl"></i>
+                    <span class="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">3</span>
+                </button>
+                
+                <div class="flex items-center space-x-2 bg-green-50 px-4 py-2 rounded-full cursor-pointer">
+                    <i class="fas fa-leaf text-green-600"></i>
+                    <span class="text-sm font-medium text-green-700"><a href="consumer_my-impact.html">My Impact</a></span>
+                </div>
+
+                <div class="flex items-center space-x-3 cursor-pointer">
+                    <div class="w-10 h-10 bg-green-500 rounded-full flex items-center justify-center">
+                        <span class="text-white font-bold">JD</span>
+                    </div>
+                    <div>
+                        <p class="text-sm font-semibold text-gray-800">John Doe</p>
+                        <p class="text-xs text-gray-500">Consumer</p>
+                    </div>
+                    <i class="fas fa-chevron-down text-gray-400 text-sm"></i>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Container -->
+    <div class="flex pt-20">
+        <!-- Left Sidebar -->
+        <aside class="w-64 bg-white h-screen fixed left-0 shadow-lg">
+            <div class="p-6 space-y-2">
+                <a href="consumer-dashboard.html" class="flex items-center space-x-3 px-4 py-3 rounded-lg hover:bg-gray-100 text-gray-600">
+                    <i class="fas fa-home"></i>
+                    <span class="font-medium">Dashboard</span>
+                </a>
+                <a href="consumer_marketplace.html" class="flex items-center space-x-3 px-4 py-3 rounded-lg hover:bg-gray-100 text-gray-600">
+                    <i class="fas fa-shopping-bag"></i>
+                    <span class="font-medium">Marketplace</span>
+                </a>
+                <a href="consumer_my-orders.html" class="flex items-center space-x-3 px-4 py-3 rounded-lg sidebar-active">
+                    <i class="fas fa-receipt"></i>
+                    <span class="font-medium">My Orders</span>
+                </a>
+                <a href="consumer_my-impact.html" class="flex items-center space-x-3 px-4 py-3 rounded-lg hover:bg-gray-100 text-gray-600">
+                    <i class="fas fa-chart-line"></i>
+                    <span class="font-medium">My Impact</span>
+                </a>
+                <a href="consumer_profile.html" class="flex items-center space-x-3 px-4 py-3 rounded-lg hover:bg-gray-100 text-gray-600">
+                    <i class="fas fa-user"></i>
+                    <span class="font-medium">Profile</span>
+                </a>
+                <hr class="my-4">
+                <a href="selection.html" class="flex items-center space-x-3 px-4 py-3 rounded-lg hover:bg-red-50 text-red-600">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <span class="font-medium">Logout</span>
+                </a>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="ml-64 flex-1 p-8">
+            <!-- Back Button -->
+            <a href="my-orders.html" class="flex items-center text-gray-600 hover:text-green-600 mb-6">
+                <i class="fas fa-arrow-left mr-2"></i>
+                <span class="font-medium">Back to My Orders</span>
+            </a>
+
+            <!-- Order Header -->
+            <div class="bg-white rounded-2xl p-8 shadow-sm mb-6">
+                <div class="flex items-center justify-between mb-6">
+                    <div>
+                        <h1 class="text-3xl font-bold text-gray-800 mb-2">Order #ORD-12456</h1>
+                        <p class="text-gray-600">Placed on 12 Feb 2026 at 7:30 PM</p>
+                    </div>
+                    <div>
+                        <span class="px-6 py-3 bg-blue-100 text-blue-700 rounded-full text-sm font-bold">
+                            <i class="fas fa-clock mr-1"></i> Booked
+                        </span>
+                    </div>
+                </div>
+
+                <!-- Order Timeline -->
+                <div class="relative">
+                    <div class="absolute left-4 top-0 bottom-0 w-0.5 bg-gray-200"></div>
+                    <div class="space-y-6">
+                        <div class="relative flex items-start space-x-4">
+                            <div class="w-8 h-8 bg-green-500 rounded-full flex items-center justify-center z-10">
+                                <i class="fas fa-check text-white text-sm"></i>
+                            </div>
+                            <div class="flex-1">
+                                <p class="font-semibold text-gray-800">Order Confirmed</p>
+                                <p class="text-sm text-gray-500">12 Feb 2026, 7:30 PM</p>
+                            </div>
+                        </div>
+                        <div class="relative flex items-start space-x-4">
+                            <div class="w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center z-10">
+                                <i class="fas fa-utensils text-white text-sm"></i>
+                            </div>
+                            <div class="flex-1">
+                                <p class="font-semibold text-gray-800">Ready for Pickup</p>
+                                <p class="text-sm text-gray-500">Expected: 8:00 PM - 9:00 PM</p>
+                            </div>
+                        </div>
+                        <div class="relative flex items-start space-x-4">
+                            <div class="w-8 h-8 bg-gray-300 rounded-full flex items-center justify-center z-10">
+                                <i class="fas fa-box text-white text-sm"></i>
+                            </div>
+                            <div class="flex-1">
+                                <p class="font-semibold text-gray-400">Order Picked Up</p>
+                                <p class="text-sm text-gray-400">Pending</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                <!-- Left Column -->
+                <div class="lg:col-span-2 space-y-6">
+                    <!-- Food Items -->
+                    <div class="bg-white rounded-2xl p-6 shadow-sm">
+                        <h3 class="text-xl font-bold text-gray-800 mb-6">Order Items</h3>
+                        <div class="space-y-4">
+                            <div class="flex items-start space-x-4 border-b border-gray-100 pb-4">
+                                <img src="https://images.unsplash.com/photo-1585937421612-70a008356fbe?w=100&h=100&fit=crop" 
+                                     alt="Paneer Butter Masala" class="w-20 h-20 rounded-lg object-cover">
+                                <div class="flex-1">
+                                    <h4 class="font-bold text-gray-800 mb-1">Paneer Butter Masala</h4>
+                                    <p class="text-sm text-gray-500 mb-2">Main Course • North Indian</p>
+                                    <div class="flex items-center space-x-2">
+                                        <span class="text-xs bg-green-100 text-green-700 px-2 py-1 rounded-full">Vegetarian</span>
+                                        <span class="text-xs bg-orange-100 text-orange-700 px-2 py-1 rounded-full">Medium Spice</span>
+                                    </div>
+                                </div>
+                                <div class="text-right">
+                                    <p class="text-sm text-gray-500 mb-1">Qty: 1</p>
+                                    <p class="text-xs text-gray-400 line-through">₹400</p>
+                                    <p class="text-lg font-bold text-green-600">₹160</p>
+                                    <p class="text-xs text-green-600">60% off</p>
+                                </div>
+                            </div>
+
+                            <div class="flex items-start space-x-4 pb-4">
+                                <img src="https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8?w=100&h=100&fit=crop" 
+                                     alt="Veg Biryani" class="w-20 h-20 rounded-lg object-cover">
+                                <div class="flex-1">
+                                    <h4 class="font-bold text-gray-800 mb-1">Veg Biryani</h4>
+                                    <p class="text-sm text-gray-500 mb-2">Main Course • Indian</p>
+                                    <div class="flex items-center space-x-2">
+                                        <span class="text-xs bg-green-100 text-green-700 px-2 py-1 rounded-full">Vegetarian</span>
+                                        <span class="text-xs bg-red-100 text-red-700 px-2 py-1 rounded-full">Spicy</span>
+                                    </div>
+                                </div>
+                                <div class="text-right">
+                                    <p class="text-sm text-gray-500 mb-1">Qty: 2</p>
+                                    <p class="text-xs text-gray-400 line-through">₹600</p>
+                                    <p class="text-lg font-bold text-green-600">₹300</p>
+                                    <p class="text-xs text-green-600">50% off</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Payment Summary -->
+                    <div class="bg-white rounded-2xl p-6 shadow-sm">
+                        <h3 class="text-xl font-bold text-gray-800 mb-6">Payment Summary</h3>
+                        <div class="space-y-3">
+                            <div class="flex justify-between text-gray-600">
+                                <span>Item Total (3 items)</span>
+                                <span>₹1,000</span>
+                            </div>
+                            <div class="flex justify-between text-green-600">
+                                <span>Discount</span>
+                                <span>- ₹540</span>
+                            </div>
+                            <div class="flex justify-between text-gray-600">
+                                <span>Packaging Fee</span>
+                                <span>₹20</span>
+                            </div>
+                            <hr class="my-3">
+                            <div class="flex justify-between text-xl font-bold text-gray-800">
+                                <span>Total Paid</span>
+                                <span>₹480</span>
+                            </div>
+                            <div class="bg-gray-50 rounded-lg p-3 mt-4">
+                                <p class="text-sm text-gray-600 mb-1">Payment Method</p>
+                                <p class="font-semibold text-gray-800">Pay on Pickup</p>
+                            </div>
+                            <div class="bg-yellow-50 border-l-4 border-yellow-400 p-3 rounded mt-4">
+                                <p class="text-sm font-semibold text-yellow-800">
+                                    <i class="fas fa-piggy-bank mr-2"></i> You saved ₹540!
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Environmental Impact -->
+                    <div class="bg-gradient-to-r from-green-500 to-emerald-600 rounded-2xl p-6 shadow-lg">
+                        <h3 class="text-white font-bold mb-4 text-lg flex items-center">
+                            <i class="fas fa-leaf mr-2"></i> Environmental Impact
+                        </h3>
+                        <div class="grid grid-cols-3 gap-4 mb-4">
+                            <div class="bg-white/20 rounded-lg p-4 text-center">
+                                <i class="fas fa-utensils text-white text-2xl mb-2"></i>
+                                <p class="text-green-100 text-xs mb-1">Food Saved</p>
+                                <p class="text-white text-xl font-bold">1.5 kg</p>
+                            </div>
+                            <div class="bg-white/20 rounded-lg p-4 text-center">
+                                <i class="fas fa-cloud text-white text-2xl mb-2"></i>
+                                <p class="text-green-100 text-xs mb-1">CO₂ Reduced</p>
+                                <p class="text-white text-xl font-bold">8.9 kg</p>
+                            </div>
+                            <div class="bg-white/20 rounded-lg p-4 text-center">
+                                <i class="fas fa-tree text-white text-2xl mb-2"></i>
+                                <p class="text-green-100 text-xs mb-1">Trees Equivalent</p>
+                                <p class="text-white text-xl font-bold">0.4</p>
+                            </div>
+                        </div>
+                        <p class="text-green-100 text-sm text-center">
+                            🌱 Equivalent to saving 200 liters of water!
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Right Column -->
+                <div class="space-y-6">
+                    <!-- Seller Details -->
+                    <div class="bg-white rounded-2xl p-6 shadow-sm">
+                        <h3 class="text-lg font-bold text-gray-800 mb-4">Seller Details</h3>
+                        <div class="flex items-center space-x-3 mb-4">
+                            <div class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center">
+                                <i class="fas fa-store text-green-600 text-2xl"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-gray-800">Green Cafe</h4>
+                                <div class="flex items-center mt-1">
+                                    <i class="fas fa-star text-yellow-400 text-xs"></i>
+                                    <span class="text-xs text-gray-600 ml-1">4.8 (120 reviews)</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="space-y-3">
+                            <div class="flex items-start">
+                                <i class="fas fa-map-marker-alt text-green-600 w-5 mt-1"></i>
+                                <div class="flex-1">
+                                    <p class="text-sm font-semibold text-gray-800">Pickup Address</p>
+                                    <p class="text-sm text-gray-600">Koregaon Park, Lane 5</p>
+                                    <p class="text-sm text-gray-600">Pune, Maharashtra - 411001</p>
+                                </div>
+                            </div>
+                            <div class="flex items-center">
+                                <i class="fas fa-phone text-green-600 w-5"></i>
+                                <div class="flex-1">
+                                    <p class="text-sm font-semibold text-gray-800">Contact</p>
+                                    <p class="text-sm text-gray-600">+91 9876543210</p>
+                                </div>
+                            </div>
+                            <div class="flex items-center">
+                                <i class="fas fa-route text-green-600 w-5"></i>
+                                <div class="flex-1">
+                                    <p class="text-sm font-semibold text-gray-800">Distance</p>
+                                    <p class="text-sm text-gray-600">1.2 km away</p>
+                                </div>
+                            </div>
+                        </div>
+                        <button class="w-full mt-4 bg-green-600 hover:bg-green-700 text-white font-semibold py-3 rounded-lg transition-colors">
+                            <i class="fas fa-directions mr-2"></i> Get Directions
+                        </button>
+                    </div>
+
+                    <!-- Pickup Information -->
+                    <div class="bg-white rounded-2xl p-6 shadow-sm">
+                        <h3 class="text-lg font-bold text-gray-800 mb-4">Pickup Information</h3>
+                        <div class="space-y-4">
+                            <div>
+                                <p class="text-sm text-gray-500 mb-1">Pickup Time Slot</p>
+                                <p class="text-xl font-bold text-green-600">8:00 PM - 9:00 PM</p>
+                                <p class="text-sm text-gray-600">Today, 12 Feb 2026</p>
+                            </div>
+                            <div class="bg-yellow-50 border-l-4 border-yellow-400 p-3 rounded">
+                                <p class="text-xs text-yellow-800 font-semibold mb-1">
+                                    <i class="fas fa-exclamation-triangle mr-1"></i> Important
+                                </p>
+                                <p class="text-xs text-yellow-700">Please collect your order before 9:00 PM</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Actions -->
+                    <div class="space-y-3">
+                        <button class="w-full bg-green-600 hover:bg-green-700 text-white font-semibold py-3 rounded-xl transition-colors">
+                            <i class="fas fa-redo mr-2"></i> Reorder
+                        </button>
+                        <button class="w-full border-2 border-red-600 text-red-600 hover:bg-red-50 font-semibold py-3 rounded-xl transition-colors">
+                            <i class="fas fa-times-circle mr-2"></i> Cancel Order
+                        </button>
+                        <button class="w-full border-2 border-gray-300 text-gray-600 hover:bg-gray-50 font-semibold py-3 rounded-xl transition-colors">
+                            <i class="fas fa-headset mr-2"></i> Help & Support
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // Dummy data for backend integration
+        const orderDetails = {
+            orderId: "ORD-12456",
+            userId: "USER001",
+            status: "Booked",
+            placedAt: "2026-02-12T19:30:00Z",
+            items: [
+                {
+                    itemId: "ITEM001",
+                    name: "Paneer Butter Masala",
+                    category: "Main Course",
+                    cuisine: "North Indian",
+                    quantity: 1,
+                    originalPrice: 400,
+                    discountedPrice: 160,
+                    discount: 60
+                },
+                {
+                    itemId: "ITEM002",
+                    name: "Veg Biryani",
+                    category: "Main Course",
+                    cuisine: "Indian",
+                    quantity: 2,
+                    originalPrice: 600,
+                    discountedPrice: 300,
+                    discount: 50
+                }
+            ],
+            seller: {
+                id: "SELLER001",
+                name: "Green Cafe",
+                rating: 4.8,
+                reviews: 120,
+                address: "Koregaon Park, Lane 5, Pune - 411001",
+                phone: "+91 9876543210",
+                distance: 1.2
+            },
+            pickup: {
+                timeSlot: "8:00 PM - 9:00 PM",
+                date: "2026-02-12"
+            },
+            payment: {
+                subtotal: 1000,
+                discount: 540,
+                packagingFee: 20,
+                total: 480,
+                method: "Pay on Pickup",
+                status: "Pending"
+            },
+            impact: {
+                foodSaved: 1.5,
+                co2Reduced: 8.9,
+                treesEquivalent: 0.4
+            }
+        };
+
+        // API endpoints:
+        // GET /api/order/:orderId - Get order details
+        // POST /api/order/:orderId/cancel - Cancel order
+        // POST /api/order/:orderId/reorder - Create new order from existing
+    </script>
+</body>
+</html>
